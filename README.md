@@ -17,8 +17,8 @@ mvnw clean package
   
 ## Release Plans
 - [ ] Finish main plugin framework
-- [ ] Plugin loading
-- [ ] Tests
+- [x] Plugin loading
+- [x] Tests
 - [ ] Roll out release
   
 ## Sources

@@ -32,6 +32,7 @@ import net.minecraft.world.WorldSettings;
 import net.minecraft.world.WorldType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.thallium.plugin.loader.PluginLoader;
 
 public class DedicatedServer extends MinecraftServer implements IServer
 {
@@ -250,6 +251,20 @@ public class DedicatedServer extends MinecraftServer implements IServer
                 this.settings.setProperty("max-build-height", Integer.valueOf(this.getBuildLimit()));
                 logger.info("Preparing level \"" + this.getFolderName() + "\"");
                 this.loadAllWorlds(this.getFolderName(), this.getFolderName(), k, worldtype, s2);
+                logger.info("Starting to load plugins");
+                File[] pluginFiles = pluginsFolder.listFiles(new FilenameFilter() {
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith(".jar");
+                    }
+                });
+                for (File pluginFile : pluginFiles){
+                    try {
+                        PluginLoader.loadPluginExternal(pluginFile);
+                    } catch (Exception e) {
+                        logger.info("Failed to load plugin " + pluginFile.getName());
+                        e.printStackTrace();
+                    }
+                }
                 long i1 = System.nanoTime() - j;
                 String s3 = String.format("%.3fs", new Object[] {Double.valueOf((double)i1 / 1.0E9D)});
                 logger.info("Done (" + s3 + ")! For help, type \"help\" or \"?\"");
@@ -266,15 +281,6 @@ public class DedicatedServer extends MinecraftServer implements IServer
                     logger.info("Starting remote control listener");
                     this.theRConThreadMain = new RConThreadMain(this);
                     this.theRConThreadMain.startThread();
-                }
-                logger.info("Starting to load plugins");
-                File[] pluginFiles = pluginsFolder.listFiles(new FilenameFilter() {
-                    public boolean accept(File dir, String name) {
-                        return name.endsWith(".jar");
-                    }
-                });
-                for (File pluginFile : pluginFiles){
-                    PluginLoader.
                 }
                 if (this.getMaxTickTime() > 0L)
                 {
