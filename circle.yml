@@ -1,6 +1,10 @@
 dependencies:
+  pre:
+    - chmod +x mvnw
   override:
     - ./mvnw clean install
 test:
+  pre:
+    - chmod +x mvnw
   override:
     - ./mvnw clean package
