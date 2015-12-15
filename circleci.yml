@@ -1,0 +1,6 @@
+dependencies:
+  override:
+    - mvnw clean install
+test:
+  override:
+    - mvnw clean package
