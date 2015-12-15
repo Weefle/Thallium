@@ -10,4 +10,4 @@ test:
     - ./mvnw clean package
 general:
   artifacts:
-  - "selenium/screenshots"
+  - "~/Thallium/target/"
