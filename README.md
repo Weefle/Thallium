@@ -1,2 +1,2 @@
 # Thallium
-a multi-threaded minecraft server for servers who want the full power of minecraft
+Thallium is a multi-threaded, thread-safe implementation of the Minecraft Server bringing you latest features in the Minecraft platform and Java.
