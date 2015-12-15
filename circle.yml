@@ -8,3 +8,6 @@ test:
     - chmod +x mvnw
   override:
     - ./mvnw clean package
+general:
+  artifacts:
+  - "selenium/screenshots"
