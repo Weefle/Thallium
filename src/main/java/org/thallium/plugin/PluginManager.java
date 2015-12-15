@@ -24,4 +24,12 @@ public class PluginManager {
     public MinecraftPlugin getPlugin(String name){
         return PluginLoader.nameToPlugin.get(name);
     }
+
+    public void disablePlugin(String name){
+        getPlugin(name).stop();
+    }
+
+    public void enablePlugin(String name){
+        getPlugin(name).start();
+    }
 }

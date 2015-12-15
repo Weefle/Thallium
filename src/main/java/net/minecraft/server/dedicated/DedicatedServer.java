@@ -1,10 +1,8 @@
 package net.minecraft.server.dedicated;
 
 import com.google.common.collect.Lists;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Proxy;
 import java.util.Collections;
@@ -46,6 +44,7 @@ public class DedicatedServer extends MinecraftServer implements IServer
     private boolean canSpawnStructures;
     private WorldSettings.GameType gameType;
     private boolean guiIsEnabled;
+    private File pluginsFolder = new File(System.getProperty("user.dir"), "plugins");
 
     public DedicatedServer(File workDir)
     {
@@ -119,6 +118,11 @@ public class DedicatedServer extends MinecraftServer implements IServer
         }
         else
         {
+            logger.info("Loading plugins folder");
+            if(!pluginsFolder.exists()){
+                logger.info("Plugins folder doesn't exist, creating one!");
+                pluginsFolder.mkdir();
+            }
             if (this.isSinglePlayer())
             {
                 this.setHostname("127.0.0.1");
@@ -263,7 +267,15 @@ public class DedicatedServer extends MinecraftServer implements IServer
                     this.theRConThreadMain = new RConThreadMain(this);
                     this.theRConThreadMain.startThread();
                 }
-
+                logger.info("Starting to load plugins");
+                File[] pluginFiles = pluginsFolder.listFiles(new FilenameFilter() {
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith(".jar");
+                    }
+                });
+                for (File pluginFile : pluginFiles){
+                    PluginLoader.
+                }
                 if (this.getMaxTickTime() > 0L)
                 {
                     Thread thread1 = new Thread(new ServerHangWatchdog(this));

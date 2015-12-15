@@ -1,12 +1,16 @@
 package net.minecraft.network.play.server;
 
 import java.io.IOException;
+
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.WorldSettings;
 import net.minecraft.world.WorldType;
+import org.thallium.event.PlayerJoinEvent;
 
 public class S01PacketJoinGame implements Packet<INetHandlerPlayClient>
 {
@@ -18,12 +22,13 @@ public class S01PacketJoinGame implements Packet<INetHandlerPlayClient>
     private int maxPlayers;
     private WorldType worldType;
     private boolean reducedDebugInfo;
+    private EntityPlayerMP player;
 
     public S01PacketJoinGame()
     {
     }
 
-    public S01PacketJoinGame(int entityIdIn, WorldSettings.GameType gameTypeIn, boolean hardcoreModeIn, int dimensionIn, EnumDifficulty difficultyIn, int maxPlayersIn, WorldType worldTypeIn, boolean reducedDebugInfoIn)
+    public S01PacketJoinGame(int entityIdIn, WorldSettings.GameType gameTypeIn, boolean hardcoreModeIn, int dimensionIn, EnumDifficulty difficultyIn, int maxPlayersIn, WorldType worldTypeIn, boolean reducedDebugInfoIn, EntityPlayerMP player)
     {
         this.entityId = entityIdIn;
         this.dimension = dimensionIn;
@@ -33,6 +38,8 @@ public class S01PacketJoinGame implements Packet<INetHandlerPlayClient>
         this.hardcoreMode = hardcoreModeIn;
         this.worldType = worldTypeIn;
         this.reducedDebugInfo = reducedDebugInfoIn;
+        this.player = player;
+        MinecraftServer.getServer().getAPIHandler().getEventManager().callEvent(new PlayerJoinEvent(this.player, player.getEntityWorld()));
     }
 
     /**
@@ -56,6 +63,10 @@ public class S01PacketJoinGame implements Packet<INetHandlerPlayClient>
         }
 
         this.reducedDebugInfo = buf.readBoolean();
+    }
+
+    public EntityPlayerMP getPlayer(){
+        return this.player;
     }
 
     /**

@@ -1,4 +1,4 @@
-# Thallium
+# Thallium [![Circle CI](https://circleci.com/gh/TorchPowered/Thallium/tree/master.svg?style=svg)](https://circleci.com/gh/TorchPowered/Thallium/tree/master)
 **Early in development, huge bugs may occur!**  
 **A maven wrapper has been provided, no maven distribution is needed!**  
 Thallium is a multi-threaded, thread-safe implementation of the Minecraft Server bringing you latest features in the Minecraft platform and Java.  

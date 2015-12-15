@@ -40,4 +40,12 @@ public abstract class MinecraftPlugin {
         onEnd();
         this.thread.stop();
     }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getVersion(){
+        return version;
+    }
 }

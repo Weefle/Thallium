@@ -42,17 +42,17 @@ public class MinecraftServerGui extends JComponent
      */
     public static void createServerGui(final DedicatedServer serverIn)
     {
-        try
+       /** try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
         catch (Exception var3)
         {
             ;
-        }
+        }**/
 
         MinecraftServerGui minecraftservergui = new MinecraftServerGui(serverIn);
-        JFrame jframe = new JFrame("Minecraft server");
+        JFrame jframe = new JFrame("Thallium server");
         jframe.add(minecraftservergui);
         jframe.pack();
         jframe.setLocationRelativeTo((Component)null);
