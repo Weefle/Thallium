@@ -22,9 +22,9 @@ public abstract class MinecraftPlugin {
         return LogManager.getLogger(name);
     }
 
-    abstract void onStart();
+    public abstract void onStart();
 
-    abstract void onEnd();
+    public abstract void onEnd();
 
     public void setThread(Thread thread){
         this.thread = thread;
