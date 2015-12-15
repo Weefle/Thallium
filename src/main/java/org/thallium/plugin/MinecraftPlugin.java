@@ -18,7 +18,7 @@ public abstract class MinecraftPlugin {
         this.version = version;
     }
 
-    Logger getLogger(){
+    public Logger getLogger(){
         return LogManager.getLogger(name);
     }
 
