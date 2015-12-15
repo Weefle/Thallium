@@ -6,8 +6,14 @@ Thallium is a multi-threaded, thread-safe implementation of the Minecraft Server
 ## Building
 We use Maven to handle our dependencies. Since we have a maven wrapper, you do not need anything else to run a build.  
 Here's the command for your command prompt/terminal. Please execute the commands accordingly on your respective operating systems.  
-**WINDOWS ONLY:** ```Shell mvnw clean package```  
-**UNIX ONLY:** ```Shell ./mvnw clean package```  
+**WINDOWS ONLY:**
+```Shell
+mvnw clean package
+```
+**UNIX ONLY:** 
+```Shell
+./mvnw clean package
+```  
   
 ## Release Plans
 - [ ] Finish main plugin framework
