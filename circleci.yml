@@ -1,0 +1,6 @@
+dependencies:
+  override:
+    - mvnw install
+test:
+  override:
+    - mvnw package
