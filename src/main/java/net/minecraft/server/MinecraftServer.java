@@ -78,6 +78,7 @@ import net.minecraft.world.storage.WorldInfo;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.thallium.ThalliumHandler;
 
 public abstract class MinecraftServer implements Runnable, ICommandSender, IThreadListener, IPlayerUsage
 {
@@ -503,6 +504,11 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     public void initiateShutdown()
     {
         this.serverRunning = false;
+    }
+
+    /** Gets the API handler (Thallium Handler) **/
+    public ThalliumHandler getAPIHandler(){
+        return new ThalliumHandler();
     }
 
     public void run()
