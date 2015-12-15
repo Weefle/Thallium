@@ -261,10 +261,11 @@ public class DedicatedServer extends MinecraftServer implements IServer
                     try {
                         PluginLoader.loadPluginExternal(pluginFile);
                     } catch (Exception e) {
-                        logger.info("Failed to load plugin " + pluginFile.getName());
+                        logger.fatal("Failed to load plugin " + pluginFile.getName());
                         e.printStackTrace();
                     }
                 }
+                logger.info("Plugins are now loaded");
                 long i1 = System.nanoTime() - j;
                 String s3 = String.format("%.3fs", new Object[] {Double.valueOf((double)i1 / 1.0E9D)});
                 logger.info("Done (" + s3 + ")! For help, type \"help\" or \"?\"");
