@@ -36,8 +36,11 @@ import net.minecraft.util.IChatComponent;
 import org.thallium.command.CommandAbout;
 import org.thallium.command.CommandPlugin;
 
+import java.util.ArrayList;
+
 public class ServerCommandManager extends CommandHandler implements IAdminCommand
 {
+    public static ArrayList<ICommand> quenedCommands = new ArrayList<ICommand>();
     public ServerCommandManager()
     {
         this.registerCommand(new CommandTime());
@@ -103,6 +106,9 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
             this.registerCommand(new CommandSetPlayerTimeout());
             this.registerCommand(new CommandAbout());
             this.registerCommand(new CommandPlugin());
+            for(ICommand command : quenedCommands){
+                this.registerCommand(command);
+            }
         }
         else
         {

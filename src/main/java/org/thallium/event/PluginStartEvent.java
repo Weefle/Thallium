@@ -5,6 +5,7 @@ import org.thallium.plugin.MinecraftPlugin;
 
 /**
  * Represents a event once a plugin starts
+ * @author PizzaCrust
  */
 public class PluginStartEvent implements PluginEvent{
     private MinecraftPlugin plugin;

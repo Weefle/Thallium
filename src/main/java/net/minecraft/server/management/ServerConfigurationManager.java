@@ -178,8 +178,11 @@ public abstract class ServerConfigurationManager
         }
 
         playerIn.addSelfToInternalCraftingInventory();
-
-        MinecraftServer.getServer().getAPIHandler().getEventManager().callEvent(new PlayerJoinEvent(playerIn, playerIn.getEntityWorld()));
+        PlayerJoinEvent event = new PlayerJoinEvent(playerIn, playerIn.getEntityWorld());
+        MinecraftServer.getServer().getAPIHandler().getEventManager().callEvent(event);
+        if(event.isCancelled()){
+            playerIn.playerNetServerHandler.kickPlayerFromServer("Join event was cancelled.");
+        }
         if (nbttagcompound != null && nbttagcompound.hasKey("Riding", 10))
         {
             Entity entity = EntityList.createEntityFromNBT(nbttagcompound.getCompoundTag("Riding"), worldserver);

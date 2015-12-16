@@ -51,6 +51,7 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldInfo;
+import org.thallium.event.EntityAddedEvent;
 
 public abstract class World implements IBlockAccess
 {
@@ -1093,6 +1094,11 @@ public abstract class World implements IBlockAccess
 
     protected void onEntityAdded(Entity entityIn)
     {
+        EntityAddedEvent event = new EntityAddedEvent(entityIn);
+        MinecraftServer.getServer().getAPIHandler().getEventManager().callEvent(event);
+        if(event.isCancelled()){
+            return;
+        }
         for (int i = 0; i < this.worldAccesses.size(); ++i)
         {
             ((IWorldAccess)this.worldAccesses.get(i)).onEntityAdded(entityIn);

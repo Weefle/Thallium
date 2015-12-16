@@ -31,8 +31,12 @@ public class PluginLoader {
         });
         pluginThread.setDaemon(true);
         minecraftPlugin.setThread(pluginThread);
+        PluginStartEvent event = new PluginStartEvent(minecraftPlugin);
+        MinecraftServer.getServer().getAPIHandler().getEventManager().callEvent(event);
+        if(event.isCancelled()){
+            return;
+        }
         minecraftPlugin.start();
-        MinecraftServer.getServer().getAPIHandler().getEventManager().callEvent(new PluginStartEvent(minecraftPlugin));
         plugins.add(minecraftPlugin);
         nameToPlugin.put(minecraftPlugin.getName(), minecraftPlugin);
     }
