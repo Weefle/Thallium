@@ -70,6 +70,7 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ItemInWorldManager;
+import net.minecraft.server.management.UserListOps;
 import net.minecraft.server.management.UserListOpsEntry;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.stats.StatBase;
@@ -241,6 +242,16 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     {
         super.removeExperienceLevel(levels);
         this.lastExperience = -1;
+    }
+
+    public boolean isOp(){
+        String[] oppedUsernames = mcServer.getConfigurationManager().getOppedPlayerNames();
+        for(String name : oppedUsernames){
+            if(name.equals(getName())){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addSelfToInternalCraftingInventory()

@@ -79,6 +79,8 @@ import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.thallium.ThalliumHandler;
+import org.thallium.plugin.MinecraftPlugin;
+import org.thallium.plugin.loader.PluginLoader;
 
 public abstract class MinecraftServer implements Runnable, ICommandSender, IThreadListener, IPlayerUsage
 {
@@ -447,8 +449,11 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     {
         if (!this.worldIsBeingDeleted)
         {
+            logger.info("Stopping plugins");
+            for(MinecraftPlugin plugin : PluginLoader.plugins){
+                plugin.stop();
+            }
             logger.info("Stopping server");
-
             if (this.getNetworkSystem() != null)
             {
                 this.getNetworkSystem().terminateEndpoints();

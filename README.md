@@ -21,7 +21,8 @@ mvnw clean package
 - [x] Plugin loading
 - [x] Tests
 - [ ] Lua plugin support
-- [ ] Add basic commands (/plugins, /about, /reload)
+- [x] Add basic commands (/plugins and /about)
+- [x] Plugins disable when the server stop
 - [ ] Roll out release
   
 ## Sources
