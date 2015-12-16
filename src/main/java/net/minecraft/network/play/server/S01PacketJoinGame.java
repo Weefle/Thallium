@@ -39,7 +39,6 @@ public class S01PacketJoinGame implements Packet<INetHandlerPlayClient>
         this.worldType = worldTypeIn;
         this.reducedDebugInfo = reducedDebugInfoIn;
         this.player = player;
-        MinecraftServer.getServer().getAPIHandler().getEventManager().callEvent(new PlayerJoinEvent(this.player, player.getEntityWorld()));
     }
 
     /**

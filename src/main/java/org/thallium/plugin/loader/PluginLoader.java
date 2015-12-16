@@ -26,7 +26,7 @@ public class PluginLoader {
     public static void loadPluginInternally(final MinecraftPlugin minecraftPlugin){
         Thread pluginThread = new Thread(new Runnable() {
             public void run() {
-                minecraftPlugin.start();
+                minecraftPlugin.onStart();
             }
         });
         pluginThread.setDaemon(true);
@@ -53,10 +53,11 @@ public class PluginLoader {
         String mainClassPath = properties.getProperty("main");
         URLClassLoader classLoader = getClassLoaderFromJar(file);
         Class theClass = classLoader.loadClass(mainClassPath);
-        if(!theClass.isAssignableFrom(MinecraftPlugin.class)){
+        Object instance = theClass.newInstance();
+        if(!(instance instanceof MinecraftPlugin)){
             throw new Exception();
         }
-        MinecraftPlugin plugin = MinecraftPlugin.class.cast(theClass);
+        MinecraftPlugin plugin = (MinecraftPlugin) instance;
         loadPluginInternally(plugin);
     }
 }

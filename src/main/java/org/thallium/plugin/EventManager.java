@@ -29,7 +29,7 @@ public class EventManager {
         for (Method method : methods){
             Class[] parameterTypes = method.getParameterTypes();
             for (Class parameterClass : parameterTypes){
-                if(parameterClass.isAssignableFrom(Event.class)){
+                if(parameterClass.getSuperclass().isAssignableFrom(Event.class)){
                     eventMethods.add(method);
                 }
             }
@@ -48,7 +48,7 @@ public class EventManager {
                 for (Class parameterClass : parameterClasses){
                     if(parameterClass == PlayerJoinEvent.class){
                         try {
-                            method.invoke(method.getDeclaringClass().newInstance(), null);
+                            method.invoke(method.getDeclaringClass().newInstance(), (PlayerJoinEvent) event);
                         } catch (Exception e){
                             ThalliumHandler.apiLogger.info("Failed to pass event PlayerJoinEvent!");
                             e.printStackTrace();

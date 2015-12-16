@@ -59,6 +59,7 @@ import net.minecraft.world.storage.IPlayerFileData;
 import net.minecraft.world.storage.WorldInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.thallium.event.PlayerJoinEvent;
 
 public abstract class ServerConfigurationManager
 {
@@ -133,7 +134,6 @@ public abstract class ServerConfigurationManager
         {
             s1 = netManager.getRemoteAddress().toString();
         }
-
         logger.info(playerIn.getName() + "[" + s1 + "] logged in with entity id " + playerIn.getEntityId() + " at (" + playerIn.posX + ", " + playerIn.posY + ", " + playerIn.posZ + ")");
         WorldServer worldserver = this.mcServer.worldServerForDimension(playerIn.dimension);
         WorldInfo worldinfo = worldserver.getWorldInfo();
@@ -179,6 +179,7 @@ public abstract class ServerConfigurationManager
 
         playerIn.addSelfToInternalCraftingInventory();
 
+        MinecraftServer.getServer().getAPIHandler().getEventManager().callEvent(new PlayerJoinEvent(playerIn, playerIn.getEntityWorld()));
         if (nbttagcompound != null && nbttagcompound.hasKey("Riding", 10))
         {
             Entity entity = EntityList.createEntityFromNBT(nbttagcompound.getCompoundTag("Riding"), worldserver);

@@ -16,10 +16,11 @@ mvnw clean package
 ```  
   
 ## Release Plans
-- [x] Finish main plugin framework
+- [ ] Finish main plugin framework
+- [x] Events
 - [x] Plugin loading
 - [x] Tests
-- [x] Roll out release
+- [ ] Roll out release
   
 ## Sources
 This repository contains decompiled source code using a internally renamed minecraft_server.jar, no copyright infringment is intended;   and we will remove the code if required. This code was decompiled by a application called the Mod Coder Pack v9.18 for Minecraft 1.8.8.
