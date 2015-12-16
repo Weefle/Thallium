@@ -52,6 +52,7 @@ import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldInfo;
 import org.thallium.event.EntityAddedEvent;
+import org.thallium.event.EntityRemovedEvent;
 
 public abstract class World implements IBlockAccess
 {
@@ -1107,6 +1108,11 @@ public abstract class World implements IBlockAccess
 
     protected void onEntityRemoved(Entity entityIn)
     {
+        EntityRemovedEvent event = new EntityRemovedEvent(entityIn);
+        MinecraftServer.getServer().getAPIHandler().getEventManager().callEvent(event);
+        if(event.isCancelled()){
+            return;
+        }
         for (int i = 0; i < this.worldAccesses.size(); ++i)
         {
             ((IWorldAccess)this.worldAccesses.get(i)).onEntityRemoved(entityIn);
