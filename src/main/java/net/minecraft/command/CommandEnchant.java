@@ -2,7 +2,7 @@ package net.minecraft.command;
 
 import java.util.List;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
@@ -29,7 +29,7 @@ public class CommandEnchant extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.enchant.usage";
     }
@@ -37,7 +37,7 @@ public class CommandEnchant extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 2)
         {
@@ -45,7 +45,7 @@ public class CommandEnchant extends CommandBase
         }
         else
         {
-            EntityPlayer entityplayer = getPlayer(sender, args[0]);
+            Player entityplayer = getPlayer(sender, args[0]);
             sender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, 0);
             int i;
 
@@ -122,7 +122,7 @@ public class CommandEnchant extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 1 ? getListOfStringsMatchingLastWord(args, this.getListOfPlayers()) : (args.length == 2 ? getListOfStringsMatchingLastWord(args, Enchantment.func_181077_c()) : null);
     }

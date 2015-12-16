@@ -19,7 +19,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.AnimalChest;
@@ -97,7 +97,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
         this.tasks.addTask(4, new EntityAIFollowParent(this, 1.0D));
         this.tasks.addTask(6, new EntityAIWander(this, 0.7D));
-        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+        this.tasks.addTask(7, new EntityAIWatchClosest(this, Player.class, 6.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.initHorseChest();
     }
@@ -698,7 +698,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         this.texturePrefix = null;
     }
 
-    public void openGUI(EntityPlayer playerEntity)
+    public void openGUI(Player playerEntity)
     {
         if (!this.worldObj.isRemote && (this.riddenByEntity == null || this.riddenByEntity == playerEntity) && this.isTame())
         {
@@ -710,7 +710,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer player)
+    public boolean interact(Player player)
     {
         ItemStack itemstack = player.inventory.getCurrentItem();
 
@@ -900,7 +900,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         }
     }
 
-    private void mountTo(EntityPlayer player)
+    private void mountTo(Player player)
     {
         player.rotationYaw = this.rotationYaw;
         player.rotationPitch = this.rotationPitch;
@@ -1210,7 +1210,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         }
     }
 
-    public boolean setTamedBy(EntityPlayer player)
+    public boolean setTamedBy(Player player)
     {
         this.setOwnerId(player.getUniqueID().toString());
         this.setHorseTamed(true);

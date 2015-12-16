@@ -1,7 +1,7 @@
 package net.minecraft.entity;
 
 import net.minecraft.block.BlockFence;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -88,7 +88,7 @@ public class EntityLeashKnot extends EntityHanging
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer playerIn)
+    public boolean interactFirst(Player playerIn)
     {
         ItemStack itemstack = playerIn.getHeldItem();
         boolean flag = false;

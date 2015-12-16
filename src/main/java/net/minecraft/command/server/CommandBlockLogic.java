@@ -4,11 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.Callable;
 import net.minecraft.command.CommandResultStats;
+import net.minecraft.command.CommandSender;
 import net.minecraft.command.ICommandManager;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
@@ -16,7 +16,7 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ReportedException;
 import net.minecraft.world.World;
 
-public abstract class CommandBlockLogic implements ICommandSender
+public abstract class CommandBlockLogic implements CommandSender
 {
     /** The formatting for the timestamp on commands run. */
     private static final SimpleDateFormat timestampFormat = new SimpleDateFormat("HH:mm:ss");
@@ -189,7 +189,7 @@ public abstract class CommandBlockLogic implements ICommandSender
     /**
      * Send a chat message to the CommandSender
      */
-    public void addChatMessage(IChatComponent component)
+    public void sendMessage(IChatComponent component)
     {
         if (this.trackOutput && this.getEntityWorld() != null && !this.getEntityWorld().isRemote)
         {
@@ -229,7 +229,7 @@ public abstract class CommandBlockLogic implements ICommandSender
         return this.trackOutput;
     }
 
-    public boolean tryOpenEditCommandBlock(EntityPlayer playerIn)
+    public boolean tryOpenEditCommandBlock(Player playerIn)
     {
         if (!playerIn.capabilities.isCreativeMode)
         {

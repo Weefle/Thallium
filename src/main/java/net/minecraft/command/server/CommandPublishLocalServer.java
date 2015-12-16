@@ -2,7 +2,7 @@ package net.minecraft.command.server;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.command.CommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldSettings;
 
@@ -19,7 +19,7 @@ public class CommandPublishLocalServer extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.publish.usage";
     }
@@ -27,7 +27,7 @@ public class CommandPublishLocalServer extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         String s = MinecraftServer.getServer().shareToLAN(WorldSettings.GameType.SURVIVAL, false);
 

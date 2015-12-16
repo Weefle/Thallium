@@ -4,7 +4,7 @@ import java.util.UUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.ai.EntityAISit;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.management.PreYggdrasilConverter;
@@ -222,9 +222,9 @@ public abstract class EntityTameable extends EntityAnimal implements IEntityOwna
      */
     public void onDeath(DamageSource cause)
     {
-        if (!this.worldObj.isRemote && this.worldObj.getGameRules().getBoolean("showDeathMessages") && this.hasCustomName() && this.getOwner() instanceof EntityPlayerMP)
+        if (!this.worldObj.isRemote && this.worldObj.getGameRules().getBoolean("showDeathMessages") && this.hasCustomName() && this.getOwner() instanceof PlayerMP)
         {
-            ((EntityPlayerMP)this.getOwner()).addChatMessage(this.getCombatTracker().getDeathMessage());
+            ((PlayerMP)this.getOwner()).sendMessage(this.getCombatTracker().getDeathMessage());
         }
 
         super.onDeath(cause);

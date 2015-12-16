@@ -21,8 +21,8 @@ import net.minecraft.entity.ai.attributes.ServersideAttributeMap;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -112,7 +112,7 @@ public abstract class EntityLivingBase extends Entity
     public float jumpMovementFactor = 0.02F;
 
     /** The most recent player that has attacked this entity */
-    protected EntityPlayer attackingPlayer;
+    protected Player attackingPlayer;
 
     /**
      * Set to 60 when hit by the player or the player's wolf, then decrements. Used to determine whether the entity
@@ -266,7 +266,7 @@ public abstract class EntityLivingBase extends Entity
         this.prevSwingProgress = this.swingProgress;
         super.onEntityUpdate();
         this.worldObj.theProfiler.startSection("livingEntityBaseTick");
-        boolean flag = this instanceof EntityPlayer;
+        boolean flag = this instanceof Player;
 
         if (this.isEntityAlive())
         {
@@ -290,7 +290,7 @@ public abstract class EntityLivingBase extends Entity
             this.extinguish();
         }
 
-        boolean flag1 = flag && ((EntityPlayer)this).capabilities.disableDamage;
+        boolean flag1 = flag && ((Player)this).capabilities.disableDamage;
 
         if (this.isEntityAlive())
         {
@@ -339,7 +339,7 @@ public abstract class EntityLivingBase extends Entity
             --this.hurtTime;
         }
 
-        if (this.hurtResistantTime > 0 && !(this instanceof EntityPlayerMP))
+        if (this.hurtResistantTime > 0 && !(this instanceof PlayerMP))
         {
             --this.hurtResistantTime;
         }
@@ -445,7 +445,7 @@ public abstract class EntityLivingBase extends Entity
     /**
      * Get the experience points the entity currently has.
      */
-    protected int getExperiencePoints(EntityPlayer player)
+    protected int getExperiencePoints(Player player)
     {
         return 0;
     }
@@ -914,10 +914,10 @@ public abstract class EntityLivingBase extends Entity
                         this.setRevengeTarget((EntityLivingBase)entity);
                     }
 
-                    if (entity instanceof EntityPlayer)
+                    if (entity instanceof Player)
                     {
                         this.recentlyHit = 100;
-                        this.attackingPlayer = (EntityPlayer)entity;
+                        this.attackingPlayer = (Player)entity;
                     }
                     else if (entity instanceof EntityWolf)
                     {
@@ -1031,7 +1031,7 @@ public abstract class EntityLivingBase extends Entity
         {
             int i = 0;
 
-            if (entity instanceof EntityPlayer)
+            if (entity instanceof Player)
             {
                 i = EnchantmentHelper.getLootingModifier((EntityLivingBase)entity);
             }
@@ -1121,7 +1121,7 @@ public abstract class EntityLivingBase extends Entity
         int j = MathHelper.floor_double(this.getEntityBoundingBox().minY);
         int k = MathHelper.floor_double(this.posZ);
         Block block = this.worldObj.getBlockState(new BlockPos(i, j, k)).getBlock();
-        return (block == Blocks.ladder || block == Blocks.vine) && (!(this instanceof EntityPlayer) || !((EntityPlayer)this).isSpectator());
+        return (block == Blocks.ladder || block == Blocks.vine) && (!(this instanceof Player) || !((Player)this).isSpectator());
     }
 
     /**
@@ -1245,7 +1245,7 @@ public abstract class EntityLivingBase extends Entity
     }
 
     /**
-     * Deals damage to the entity. If its a EntityPlayer then will take damage from the armor first and then health
+     * Deals damage to the entity. If its a Player then will take damage from the armor first and then health
      * second with the reduced value. Args: damageAmount
      */
     protected void damageEntity(DamageSource damageSrc, float damageAmount)
@@ -1416,7 +1416,7 @@ public abstract class EntityLivingBase extends Entity
     }
 
     /**
-     * returns the inventory of this entity (only used in EntityPlayerMP it seems)
+     * returns the inventory of this entity (only used in PlayerMP it seems)
      */
     public abstract ItemStack[] getInventory();
 
@@ -1533,9 +1533,9 @@ public abstract class EntityLivingBase extends Entity
     {
         if (this.isServerWorld())
         {
-            if (!this.isInWater() || this instanceof EntityPlayer && ((EntityPlayer)this).capabilities.isFlying)
+            if (!this.isInWater() || this instanceof Player && ((Player)this).capabilities.isFlying)
             {
-                if (!this.isInLava() || this instanceof EntityPlayer && ((EntityPlayer)this).capabilities.isFlying)
+                if (!this.isInLava() || this instanceof Player && ((Player)this).capabilities.isFlying)
                 {
                     float f4 = 0.91F;
 
@@ -1576,7 +1576,7 @@ public abstract class EntityLivingBase extends Entity
                             this.motionY = -0.15D;
                         }
 
-                        boolean flag = this.isSneaking() && this instanceof EntityPlayer;
+                        boolean flag = this.isSneaking() && this instanceof Player;
 
                         if (flag && this.motionY < 0.0D)
                         {

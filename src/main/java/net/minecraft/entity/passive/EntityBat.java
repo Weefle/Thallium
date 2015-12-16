@@ -4,7 +4,7 @@ import java.util.Calendar;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
@@ -139,7 +139,7 @@ public class EntityBat extends EntityAmbientCreature
             if (!this.worldObj.getBlockState(blockpos1).getBlock().isNormalCube())
             {
                 this.setIsBatHanging(false);
-                this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1015, blockpos, 0);
+                this.worldObj.playAuxSFXAtEntity((Player)null, 1015, blockpos, 0);
             }
             else
             {
@@ -151,7 +151,7 @@ public class EntityBat extends EntityAmbientCreature
                 if (this.worldObj.getClosestPlayerToEntity(this, 4.0D) != null)
                 {
                     this.setIsBatHanging(false);
-                    this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1015, blockpos, 0);
+                    this.worldObj.playAuxSFXAtEntity((Player)null, 1015, blockpos, 0);
                 }
             }
         }

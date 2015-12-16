@@ -4,8 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -25,8 +25,8 @@ public class ItemInWorldManager
     /** The world object that this object is connected to. */
     public World theWorld;
 
-    /** The EntityPlayerMP object that this object is connected to. */
-    public EntityPlayerMP thisPlayerMP;
+    /** The PlayerMP object that this object is connected to. */
+    public PlayerMP thisPlayerMP;
     private WorldSettings.GameType gameType = WorldSettings.GameType.NOT_SET;
 
     /** True if the player is destroying a block */
@@ -54,7 +54,7 @@ public class ItemInWorldManager
         this.gameType = type;
         type.configurePlayerCapabilities(this.thisPlayerMP.capabilities);
         this.thisPlayerMP.sendPlayerAbilities();
-        this.thisPlayerMP.mcServer.getConfigurationManager().sendPacketToAllPlayers(new S38PacketPlayerListItem(S38PacketPlayerListItem.Action.UPDATE_GAME_MODE, new EntityPlayerMP[] {this.thisPlayerMP}));
+        this.thisPlayerMP.mcServer.getConfigurationManager().sendPacketToAllPlayers(new S38PacketPlayerListItem(S38PacketPlayerListItem.Action.UPDATE_GAME_MODE, new PlayerMP[] {this.thisPlayerMP}));
     }
 
     public WorldSettings.GameType getGameType()
@@ -152,7 +152,7 @@ public class ItemInWorldManager
     {
         if (this.isCreative())
         {
-            if (!this.theWorld.extinguishFire((EntityPlayer)null, pos, side))
+            if (!this.theWorld.extinguishFire((Player)null, pos, side))
             {
                 this.tryHarvestBlock(pos);
             }
@@ -184,7 +184,7 @@ public class ItemInWorldManager
                 }
             }
 
-            this.theWorld.extinguishFire((EntityPlayer)null, pos, side);
+            this.theWorld.extinguishFire((Player)null, pos, side);
             this.initialDamage = this.curblockDamage;
             float f = 1.0F;
 
@@ -333,9 +333,9 @@ public class ItemInWorldManager
     }
 
     /**
-     * Attempts to right-click use an item by the given EntityPlayer in the given World
+     * Attempts to right-click use an item by the given Player in the given World
      */
-    public boolean tryUseItem(EntityPlayer player, World worldIn, ItemStack stack)
+    public boolean tryUseItem(Player player, World worldIn, ItemStack stack)
     {
         if (this.gameType == WorldSettings.GameType.SPECTATOR)
         {
@@ -368,7 +368,7 @@ public class ItemInWorldManager
 
                 if (!player.isUsingItem())
                 {
-                    ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
+                    ((PlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
                 }
 
                 return true;
@@ -383,7 +383,7 @@ public class ItemInWorldManager
     /**
      * Activate the clicked on block, otherwise use the held item.
      */
-    public boolean activateBlockOrUseItem(EntityPlayer player, World worldIn, ItemStack stack, BlockPos pos, EnumFacing side, float offsetX, float offsetY, float offsetZ)
+    public boolean activateBlockOrUseItem(Player player, World worldIn, ItemStack stack, BlockPos pos, EnumFacing side, float offsetX, float offsetY, float offsetZ)
     {
         if (this.gameType == WorldSettings.GameType.SPECTATOR)
         {

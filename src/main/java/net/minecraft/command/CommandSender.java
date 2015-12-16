@@ -6,7 +6,7 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public interface ICommandSender
+public interface CommandSender
 {
     /**
      * Gets the name of this command sender (usually username, but possibly "Rcon")
@@ -21,7 +21,7 @@ public interface ICommandSender
     /**
      * Send a chat message to the CommandSender
      */
-    void addChatMessage(IChatComponent component);
+    void sendMessage(IChatComponent component);
 
     /**
      * Returns {@code true} if the CommandSender is allowed to execute the command, {@code false} if not

@@ -22,8 +22,8 @@ import net.minecraft.entity.item.EntityPainting;
 import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.IAnimals;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.entity.projectile.EntityFireball;
@@ -105,7 +105,7 @@ public class EntityTrackerEntry
     private boolean ridingEntity;
     private boolean onGround;
     public boolean playerEntitiesUpdated;
-    public Set<EntityPlayerMP> trackingPlayers = Sets.<EntityPlayerMP>newHashSet();
+    public Set<PlayerMP> trackingPlayers = Sets.<PlayerMP>newHashSet();
 
     public EntityTrackerEntry(Entity trackedEntityIn, int trackingDistanceThresholdIn, int updateFrequencyIn, boolean sendVelocityUpdatesIn)
     {
@@ -132,7 +132,7 @@ public class EntityTrackerEntry
         return this.trackedEntity.getEntityId();
     }
 
-    public void updatePlayerList(List<EntityPlayer> p_73122_1_)
+    public void updatePlayerList(List<Player> p_73122_1_)
     {
         this.playerEntitiesUpdated = false;
 
@@ -161,9 +161,9 @@ public class EntityTrackerEntry
             {
                 MapData mapdata = Items.filled_map.getMapData(itemstack, this.trackedEntity.worldObj);
 
-                for (EntityPlayer entityplayer : p_73122_1_)
+                for (Player entityplayer : p_73122_1_)
                 {
-                    EntityPlayerMP entityplayermp = (EntityPlayerMP)entityplayer;
+                    PlayerMP entityplayermp = (PlayerMP)entityplayer;
                     mapdata.updateVisiblePlayers(entityplayermp, itemstack);
                     Packet packet = Items.filled_map.createMapDataPacket(itemstack, this.trackedEntity.worldObj, entityplayermp);
 
@@ -333,7 +333,7 @@ public class EntityTrackerEntry
      */
     public void sendPacketToTrackedPlayers(Packet packetIn)
     {
-        for (EntityPlayerMP entityplayermp : this.trackingPlayers)
+        for (PlayerMP entityplayermp : this.trackingPlayers)
         {
             entityplayermp.playerNetServerHandler.sendPacket(packetIn);
         }
@@ -343,21 +343,21 @@ public class EntityTrackerEntry
     {
         this.sendPacketToTrackedPlayers(packetIn);
 
-        if (this.trackedEntity instanceof EntityPlayerMP)
+        if (this.trackedEntity instanceof PlayerMP)
         {
-            ((EntityPlayerMP)this.trackedEntity).playerNetServerHandler.sendPacket(packetIn);
+            ((PlayerMP)this.trackedEntity).playerNetServerHandler.sendPacket(packetIn);
         }
     }
 
     public void sendDestroyEntityPacketToTrackedPlayers()
     {
-        for (EntityPlayerMP entityplayermp : this.trackingPlayers)
+        for (PlayerMP entityplayermp : this.trackingPlayers)
         {
             entityplayermp.removeEntity(this.trackedEntity);
         }
     }
 
-    public void removeFromTrackedPlayers(EntityPlayerMP playerMP)
+    public void removeFromTrackedPlayers(PlayerMP playerMP)
     {
         if (this.trackingPlayers.contains(playerMP))
         {
@@ -366,7 +366,7 @@ public class EntityTrackerEntry
         }
     }
 
-    public void updatePlayerEntity(EntityPlayerMP playerMP)
+    public void updatePlayerEntity(PlayerMP playerMP)
     {
         if (playerMP != this.trackedEntity)
         {
@@ -433,9 +433,9 @@ public class EntityTrackerEntry
                         }
                     }
 
-                    if (this.trackedEntity instanceof EntityPlayer)
+                    if (this.trackedEntity instanceof Player)
                     {
-                        EntityPlayer entityplayer = (EntityPlayer)this.trackedEntity;
+                        Player entityplayer = (Player)this.trackedEntity;
 
                         if (entityplayer.isPlayerSleeping())
                         {
@@ -462,23 +462,23 @@ public class EntityTrackerEntry
         }
     }
 
-    public boolean func_180233_c(EntityPlayerMP playerMP)
+    public boolean func_180233_c(PlayerMP playerMP)
     {
         double d0 = playerMP.posX - (double)(this.encodedPosX / 32);
         double d1 = playerMP.posZ - (double)(this.encodedPosZ / 32);
         return d0 >= (double)(-this.trackingDistanceThreshold) && d0 <= (double)this.trackingDistanceThreshold && d1 >= (double)(-this.trackingDistanceThreshold) && d1 <= (double)this.trackingDistanceThreshold && this.trackedEntity.isSpectatedByPlayer(playerMP);
     }
 
-    private boolean isPlayerWatchingThisChunk(EntityPlayerMP playerMP)
+    private boolean isPlayerWatchingThisChunk(PlayerMP playerMP)
     {
         return playerMP.getServerForPlayer().getPlayerManager().isPlayerWatchingChunk(playerMP, this.trackedEntity.chunkCoordX, this.trackedEntity.chunkCoordZ);
     }
 
-    public void updatePlayerEntities(List<EntityPlayer> p_73125_1_)
+    public void updatePlayerEntities(List<Player> p_73125_1_)
     {
         for (int i = 0; i < p_73125_1_.size(); ++i)
         {
-            this.updatePlayerEntity((EntityPlayerMP)p_73125_1_.get(i));
+            this.updatePlayerEntity((PlayerMP)p_73125_1_.get(i));
         }
     }
 
@@ -493,9 +493,9 @@ public class EntityTrackerEntry
         {
             return new S0EPacketSpawnObject(this.trackedEntity, 2, 1);
         }
-        else if (this.trackedEntity instanceof EntityPlayerMP)
+        else if (this.trackedEntity instanceof PlayerMP)
         {
-            return new S0CPacketSpawnPlayer((EntityPlayer)this.trackedEntity);
+            return new S0CPacketSpawnPlayer((Player)this.trackedEntity);
         }
         else if (this.trackedEntity instanceof EntityMinecart)
         {
@@ -632,7 +632,7 @@ public class EntityTrackerEntry
     /**
      * Remove a tracked player from our list and tell the tracked player to destroy us from their world.
      */
-    public void removeTrackedPlayerSymmetric(EntityPlayerMP playerMP)
+    public void removeTrackedPlayerSymmetric(PlayerMP playerMP)
     {
         if (this.trackingPlayers.contains(playerMP))
         {

@@ -2,7 +2,7 @@ package net.minecraft.server.management;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S21PacketChunkData;
 import net.minecraft.network.play.server.S22PacketMultiBlockChange;
@@ -22,7 +22,7 @@ public class PlayerManager
 {
     private static final Logger pmLogger = LogManager.getLogger();
     private final WorldServer theWorldServer;
-    private final List<EntityPlayerMP> players = Lists.<EntityPlayerMP>newArrayList();
+    private final List<PlayerMP> players = Lists.<PlayerMP>newArrayList();
     private final LongHashMap<PlayerManager.PlayerInstance> playerInstances = new LongHashMap();
     private final List<PlayerManager.PlayerInstance> playerInstancesToUpdate = Lists.<PlayerManager.PlayerInstance>newArrayList();
     private final List<PlayerManager.PlayerInstance> playerInstanceList = Lists.<PlayerManager.PlayerInstance>newArrayList();
@@ -129,9 +129,9 @@ public class PlayerManager
     }
 
     /**
-     * Adds an EntityPlayerMP to the PlayerManager and to all player instances within player visibility
+     * Adds an PlayerMP to the PlayerManager and to all player instances within player visibility
      */
-    public void addPlayer(EntityPlayerMP player)
+    public void addPlayer(PlayerMP player)
     {
         int i = (int)player.posX >> 4;
         int j = (int)player.posZ >> 4;
@@ -153,7 +153,7 @@ public class PlayerManager
     /**
      * Removes all chunks from the given player's chunk load queue that are not in viewing range of the player.
      */
-    public void filterChunkLoadQueue(EntityPlayerMP player)
+    public void filterChunkLoadQueue(PlayerMP player)
     {
         List<ChunkCoordIntPair> list = Lists.newArrayList(player.loadedChunks);
         int i = 0;
@@ -206,9 +206,9 @@ public class PlayerManager
     }
 
     /**
-     * Removes an EntityPlayerMP from the PlayerManager.
+     * Removes an PlayerMP from the PlayerManager.
      */
-    public void removePlayer(EntityPlayerMP player)
+    public void removePlayer(PlayerMP player)
     {
         int i = (int)player.managedPosX >> 4;
         int j = (int)player.managedPosZ >> 4;
@@ -243,7 +243,7 @@ public class PlayerManager
     /**
      * update chunks around a player being moved by server logic (e.g. cart, boat)
      */
-    public void updateMountedMovingPlayer(EntityPlayerMP player)
+    public void updateMountedMovingPlayer(PlayerMP player)
     {
         int i = (int)player.posX >> 4;
         int j = (int)player.posZ >> 4;
@@ -289,7 +289,7 @@ public class PlayerManager
         }
     }
 
-    public boolean isPlayerWatchingChunk(EntityPlayerMP player, int chunkX, int chunkZ)
+    public boolean isPlayerWatchingChunk(PlayerMP player, int chunkX, int chunkZ)
     {
         PlayerManager.PlayerInstance playermanager$playerinstance = this.getPlayerInstance(chunkX, chunkZ, false);
         return playermanager$playerinstance != null && playermanager$playerinstance.playersWatchingChunk.contains(player) && !player.loadedChunks.contains(playermanager$playerinstance.chunkCoords);
@@ -303,7 +303,7 @@ public class PlayerManager
         {
             int i = radius - this.playerViewRadius;
 
-            for (EntityPlayerMP entityplayermp : Lists.newArrayList(this.players))
+            for (PlayerMP entityplayermp : Lists.newArrayList(this.players))
             {
                 int j = (int)entityplayermp.posX >> 4;
                 int k = (int)entityplayermp.posZ >> 4;
@@ -352,7 +352,7 @@ public class PlayerManager
 
     class PlayerInstance
     {
-        private final List<EntityPlayerMP> playersWatchingChunk = Lists.<EntityPlayerMP>newArrayList();
+        private final List<PlayerMP> playersWatchingChunk = Lists.<PlayerMP>newArrayList();
         private final ChunkCoordIntPair chunkCoords;
         private short[] locationOfBlockChange = new short[64];
         private int numBlocksToUpdate;
@@ -365,7 +365,7 @@ public class PlayerManager
             PlayerManager.this.getWorldServer().theChunkProviderServer.loadChunk(chunkX, chunkZ);
         }
 
-        public void addPlayer(EntityPlayerMP player)
+        public void addPlayer(PlayerMP player)
         {
             if (this.playersWatchingChunk.contains(player))
             {
@@ -383,7 +383,7 @@ public class PlayerManager
             }
         }
 
-        public void removePlayer(EntityPlayerMP player)
+        public void removePlayer(PlayerMP player)
         {
             if (this.playersWatchingChunk.contains(player))
             {
@@ -454,7 +454,7 @@ public class PlayerManager
         {
             for (int i = 0; i < this.playersWatchingChunk.size(); ++i)
             {
-                EntityPlayerMP entityplayermp = (EntityPlayerMP)this.playersWatchingChunk.get(i);
+                PlayerMP entityplayermp = (PlayerMP)this.playersWatchingChunk.get(i);
 
                 if (!entityplayermp.loadedChunks.contains(this.chunkCoords))
                 {

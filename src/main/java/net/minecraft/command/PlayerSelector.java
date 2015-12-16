@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
@@ -55,18 +55,18 @@ public class PlayerSelector
     /**
      * Returns the one player that matches the given at-token.  Returns null if more than one player matches.
      */
-    public static EntityPlayerMP matchOnePlayer(ICommandSender sender, String token)
+    public static PlayerMP matchOnePlayer(CommandSender sender, String token)
     {
-        return (EntityPlayerMP)matchOneEntity(sender, token, EntityPlayerMP.class);
+        return (PlayerMP)matchOneEntity(sender, token, PlayerMP.class);
     }
 
-    public static <T extends Entity> T matchOneEntity(ICommandSender sender, String token, Class <? extends T > targetClass)
+    public static <T extends Entity> T matchOneEntity(CommandSender sender, String token, Class <? extends T > targetClass)
     {
         List<T> list = matchEntities(sender, token, targetClass);
         return (T)(list.size() == 1 ? (Entity)list.get(0) : null);
     }
 
-    public static IChatComponent matchEntitiesToChatComponent(ICommandSender sender, String token)
+    public static IChatComponent matchEntitiesToChatComponent(CommandSender sender, String token)
     {
         List<Entity> list = matchEntities(sender, token, Entity.class);
 
@@ -87,7 +87,7 @@ public class PlayerSelector
         }
     }
 
-    public static <T extends Entity> List<T> matchEntities(ICommandSender sender, String token, Class <? extends T > targetClass)
+    public static <T extends Entity> List<T> matchEntities(CommandSender sender, String token, Class <? extends T > targetClass)
     {
         Matcher matcher = tokenPattern.matcher(token);
 
@@ -132,7 +132,7 @@ public class PlayerSelector
         }
     }
 
-    private static List<World> getWorlds(ICommandSender sender, Map<String, String> argumentMap)
+    private static List<World> getWorlds(CommandSender sender, Map<String, String> argumentMap)
     {
         List<World> list = Lists.<World>newArrayList();
 
@@ -148,7 +148,7 @@ public class PlayerSelector
         return list;
     }
 
-    private static <T extends Entity> boolean isEntityTypeValid(ICommandSender commandSender, Map<String, String> params)
+    private static <T extends Entity> boolean isEntityTypeValid(CommandSender commandSender, Map<String, String> params)
     {
         String s = func_179651_b(params, "type");
         s = s != null && s.startsWith("!") ? s.substring(1) : s;
@@ -157,7 +157,7 @@ public class PlayerSelector
         {
             ChatComponentTranslation chatcomponenttranslation = new ChatComponentTranslation("commands.generic.entity.invalidType", new Object[] {s});
             chatcomponenttranslation.getChatStyle().setColor(EnumChatFormatting.RED);
-            commandSender.addChatMessage(chatcomponenttranslation);
+            commandSender.sendMessage(chatcomponenttranslation);
             return false;
         }
         else
@@ -188,7 +188,7 @@ public class PlayerSelector
                 {
                     public boolean apply(Entity p_apply_1_)
                     {
-                        return p_apply_1_ instanceof EntityPlayer;
+                        return p_apply_1_ instanceof Player;
                     }
                 });
             }
@@ -220,13 +220,13 @@ public class PlayerSelector
             {
                 public boolean apply(Entity p_apply_1_)
                 {
-                    if (!(p_apply_1_ instanceof EntityPlayerMP))
+                    if (!(p_apply_1_ instanceof PlayerMP))
                     {
                         return false;
                     }
                     else
                     {
-                        EntityPlayerMP entityplayermp = (EntityPlayerMP)p_apply_1_;
+                        PlayerMP entityplayermp = (PlayerMP)p_apply_1_;
                         return (i <= -1 || entityplayermp.experienceLevel >= i) && (j <= -1 || entityplayermp.experienceLevel <= j);
                     }
                 }
@@ -247,13 +247,13 @@ public class PlayerSelector
             {
                 public boolean apply(Entity p_apply_1_)
                 {
-                    if (!(p_apply_1_ instanceof EntityPlayerMP))
+                    if (!(p_apply_1_ instanceof PlayerMP))
                     {
                         return false;
                     }
                     else
                     {
-                        EntityPlayerMP entityplayermp = (EntityPlayerMP)p_apply_1_;
+                        PlayerMP entityplayermp = (PlayerMP)p_apply_1_;
                         return entityplayermp.theItemInWorldManager.getGameType().getID() == i;
                     }
                 }
@@ -330,7 +330,7 @@ public class PlayerSelector
                             return false;
                         }
 
-                        String s1 = p_apply_1_ instanceof EntityPlayerMP ? p_apply_1_.getName() : p_apply_1_.getUniqueID().toString();
+                        String s1 = p_apply_1_ instanceof PlayerMP ? p_apply_1_.getName() : p_apply_1_.getUniqueID().toString();
 
                         if (!scoreboard.entityHasObjective(s1, scoreobjective))
                         {
@@ -528,7 +528,7 @@ public class PlayerSelector
         return list;
     }
 
-    private static <T extends Entity> List<T> func_179658_a(List<T> p_179658_0_, Map<String, String> p_179658_1_, ICommandSender p_179658_2_, Class <? extends T > p_179658_3_, String p_179658_4_, final BlockPos p_179658_5_)
+    private static <T extends Entity> List<T> func_179658_a(List<T> p_179658_0_, Map<String, String> p_179658_1_, CommandSender p_179658_2_, Class <? extends T > p_179658_3_, String p_179658_4_, final BlockPos p_179658_5_)
     {
         int i = parseIntWithDefault(p_179658_1_, "c", !p_179658_4_.equals("a") && !p_179658_4_.equals("e") ? 1 : 0);
 

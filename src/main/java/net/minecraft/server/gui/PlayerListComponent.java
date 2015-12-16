@@ -2,7 +2,7 @@ package net.minecraft.server.gui;
 
 import java.util.Vector;
 import javax.swing.JList;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ITickable;
 
@@ -28,7 +28,7 @@ public class PlayerListComponent extends JList implements ITickable
 
             for (int i = 0; i < this.server.getConfigurationManager().func_181057_v().size(); ++i)
             {
-                vector.add(((EntityPlayerMP)this.server.getConfigurationManager().func_181057_v().get(i)).getName());
+                vector.add(((PlayerMP)this.server.getConfigurationManager().func_181057_v().get(i)).getName());
             }
 
             this.setListData(vector);

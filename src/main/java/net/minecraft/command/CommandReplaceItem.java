@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -40,7 +40,7 @@ public class CommandReplaceItem extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.replaceitem.usage";
     }
@@ -48,7 +48,7 @@ public class CommandReplaceItem extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 1)
         {
@@ -158,9 +158,9 @@ public class CommandReplaceItem extends CommandBase
                 Entity entity = func_175768_b(sender, args[1]);
                 sender.setCommandStat(CommandResultStats.Type.AFFECTED_ITEMS, 0);
 
-                if (entity instanceof EntityPlayer)
+                if (entity instanceof Player)
                 {
-                    ((EntityPlayer)entity).inventoryContainer.detectAndSendChanges();
+                    ((Player)entity).inventoryContainer.detectAndSendChanges();
                 }
 
                 if (!entity.replaceItemInInventory(j, itemstack))
@@ -168,9 +168,9 @@ public class CommandReplaceItem extends CommandBase
                     throw new CommandException("commands.replaceitem.failed", new Object[] {Integer.valueOf(j), Integer.valueOf(k), itemstack == null ? "Air" : itemstack.getChatComponent()});
                 }
 
-                if (entity instanceof EntityPlayer)
+                if (entity instanceof Player)
                 {
-                    ((EntityPlayer)entity).inventoryContainer.detectAndSendChanges();
+                    ((Player)entity).inventoryContainer.detectAndSendChanges();
                 }
             }
 
@@ -191,7 +191,7 @@ public class CommandReplaceItem extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 1 ? getListOfStringsMatchingLastWord(args, new String[] {"entity", "block"}): (args.length == 2 && args[0].equals("entity") ? getListOfStringsMatchingLastWord(args, this.getUsernames()) : (args.length >= 2 && args.length <= 4 && args[0].equals("block") ? func_175771_a(args, 1, pos) : ((args.length != 3 || !args[0].equals("entity")) && (args.length != 5 || !args[0].equals("block")) ? ((args.length != 4 || !args[0].equals("entity")) && (args.length != 6 || !args[0].equals("block")) ? null : getListOfStringsMatchingLastWord(args, Item.itemRegistry.getKeys())) : getListOfStringsMatchingLastWord(args, SHORTCUTS.keySet()))));
     }

@@ -27,7 +27,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.item.EntityPainting;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
@@ -131,7 +131,7 @@ public class Item
     /**
      * Called when a Block is right-clicked with this Item
      */
-    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack stack, Player playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         return false;
     }
@@ -144,7 +144,7 @@ public class Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, Player playerIn)
     {
         return itemStackIn;
     }
@@ -153,7 +153,7 @@ public class Item
      * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
      * the Item before the action is complete.
      */
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityPlayer playerIn)
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, Player playerIn)
     {
         return stack;
     }
@@ -236,7 +236,7 @@ public class Item
     /**
      * Returns true if the item can be used on the given entity, e.g. shears on sheep.
      */
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target)
+    public boolean itemInteractionForEntity(ItemStack stack, Player playerIn, EntityLivingBase target)
     {
         return false;
     }
@@ -324,7 +324,7 @@ public class Item
     /**
      * Called when item is crafted/smelted. Used only by maps so far.
      */
-    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn)
+    public void onCreated(ItemStack stack, World worldIn, Player playerIn)
     {
     }
 
@@ -355,7 +355,7 @@ public class Item
     /**
      * Called when the player stops using an Item (stops holding the right mouse button).
      */
-    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer playerIn, int timeLeft)
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, Player playerIn, int timeLeft)
     {
     }
 
@@ -399,7 +399,7 @@ public class Item
         return this.getItemStackLimit() == 1 && this.isDamageable();
     }
 
-    protected MovingObjectPosition getMovingObjectPositionFromPlayer(World worldIn, EntityPlayer playerIn, boolean useLiquids)
+    protected MovingObjectPosition getMovingObjectPositionFromPlayer(World worldIn, Player playerIn, boolean useLiquids)
     {
         float f = playerIn.rotationPitch;
         float f1 = playerIn.rotationYaw;

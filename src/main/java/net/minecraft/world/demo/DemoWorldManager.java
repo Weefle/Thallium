@@ -1,6 +1,6 @@
 package net.minecraft.world.demo;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.S2BPacketChangeGameState;
 import net.minecraft.server.management.ItemInWorldManager;
@@ -45,7 +45,7 @@ public class DemoWorldManager extends ItemInWorldManager
         {
             if (j <= 6L)
             {
-                this.thisPlayerMP.addChatMessage(new ChatComponentTranslation("demo.day." + j, new Object[0]));
+                this.thisPlayerMP.sendMessage(new ChatComponentTranslation("demo.day." + j, new Object[0]));
             }
         }
         else if (j == 1L)
@@ -65,7 +65,7 @@ public class DemoWorldManager extends ItemInWorldManager
         }
         else if (j == 5L && i % 24000L == 22000L)
         {
-            this.thisPlayerMP.addChatMessage(new ChatComponentTranslation("demo.day.warning", new Object[0]));
+            this.thisPlayerMP.sendMessage(new ChatComponentTranslation("demo.day.warning", new Object[0]));
         }
     }
 
@@ -76,7 +76,7 @@ public class DemoWorldManager extends ItemInWorldManager
     {
         if (this.field_73104_e > 100)
         {
-            this.thisPlayerMP.addChatMessage(new ChatComponentTranslation("demo.reminder", new Object[0]));
+            this.thisPlayerMP.sendMessage(new ChatComponentTranslation("demo.reminder", new Object[0]));
             this.field_73104_e = 0;
         }
     }
@@ -114,9 +114,9 @@ public class DemoWorldManager extends ItemInWorldManager
     }
 
     /**
-     * Attempts to right-click use an item by the given EntityPlayer in the given World
+     * Attempts to right-click use an item by the given Player in the given World
      */
-    public boolean tryUseItem(EntityPlayer player, World worldIn, ItemStack stack)
+    public boolean tryUseItem(Player player, World worldIn, ItemStack stack)
     {
         if (this.demoTimeExpired)
         {
@@ -132,7 +132,7 @@ public class DemoWorldManager extends ItemInWorldManager
     /**
      * Activate the clicked on block, otherwise use the held item.
      */
-    public boolean activateBlockOrUseItem(EntityPlayer player, World worldIn, ItemStack stack, BlockPos pos, EnumFacing side, float offsetX, float offsetY, float offsetZ)
+    public boolean activateBlockOrUseItem(Player player, World worldIn, ItemStack stack, BlockPos pos, EnumFacing side, float offsetX, float offsetY, float offsetZ)
     {
         if (this.demoTimeExpired)
         {

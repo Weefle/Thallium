@@ -2,7 +2,7 @@ package net.minecraft.command;
 
 import java.util.List;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
@@ -31,7 +31,7 @@ public class CommandGive extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.give.usage";
     }
@@ -39,7 +39,7 @@ public class CommandGive extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 2)
         {
@@ -47,7 +47,7 @@ public class CommandGive extends CommandBase
         }
         else
         {
-            EntityPlayer entityplayer = getPlayer(sender, args[0]);
+            Player entityplayer = getPlayer(sender, args[0]);
             Item item = getItemByText(sender, args[1]);
             int i = args.length >= 3 ? parseInt(args[2], 1, 64) : 1;
             int j = args.length >= 4 ? parseInt(args[3]) : 0;
@@ -102,7 +102,7 @@ public class CommandGive extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 1 ? getListOfStringsMatchingLastWord(args, this.getPlayers()) : (args.length == 2 ? getListOfStringsMatchingLastWord(args, Item.itemRegistry.getKeys()) : null);
     }

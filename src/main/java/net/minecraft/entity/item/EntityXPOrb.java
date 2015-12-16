@@ -2,7 +2,7 @@ package net.minecraft.entity.item;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
@@ -26,8 +26,8 @@ public class EntityXPOrb extends Entity
     /** This is how much XP this orb has. */
     private int xpValue;
 
-    /** The closest EntityPlayer to this orb. */
-    private EntityPlayer closestPlayer;
+    /** The closest Player to this orb. */
+    private Player closestPlayer;
 
     /** Threshold color for tracking players */
     private int xpTargetColor;
@@ -212,7 +212,7 @@ public class EntityXPOrb extends Entity
     /**
      * Called by a player entity when they collide with an entity
      */
-    public void onCollideWithPlayer(EntityPlayer entityIn)
+    public void onCollideWithPlayer(Player entityIn)
     {
         if (!this.worldObj.isRemote)
         {

@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.List;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.command.CommandSender;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.UserListBansEntry;
 import net.minecraft.util.BlockPos;
@@ -33,7 +33,7 @@ public class CommandBanPlayer extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.ban.usage";
     }
@@ -41,7 +41,7 @@ public class CommandBanPlayer extends CommandBase
     /**
      * Returns true if the given command sender is allowed to use this command.
      */
-    public boolean canCommandSenderUseCommand(ICommandSender sender)
+    public boolean canCommandSenderUseCommand(CommandSender sender)
     {
         return MinecraftServer.getServer().getConfigurationManager().getBannedPlayers().isLanServer() && super.canCommandSenderUseCommand(sender);
     }
@@ -49,7 +49,7 @@ public class CommandBanPlayer extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length >= 1 && args[0].length() > 0)
         {
@@ -71,7 +71,7 @@ public class CommandBanPlayer extends CommandBase
 
                 UserListBansEntry userlistbansentry = new UserListBansEntry(gameprofile, (Date)null, sender.getName(), (Date)null, s);
                 minecraftserver.getConfigurationManager().getBannedPlayers().addEntry(userlistbansentry);
-                EntityPlayerMP entityplayermp = minecraftserver.getConfigurationManager().getPlayerByUsername(args[0]);
+                PlayerMP entityplayermp = minecraftserver.getConfigurationManager().getPlayerByUsername(args[0]);
 
                 if (entityplayermp != null)
                 {
@@ -87,7 +87,7 @@ public class CommandBanPlayer extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length >= 1 ? getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames()) : null;
     }

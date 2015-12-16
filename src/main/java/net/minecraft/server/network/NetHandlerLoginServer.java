@@ -13,7 +13,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.crypto.SecretKey;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.login.INetHandlerLoginServer;
 import net.minecraft.network.login.client.C00PacketLoginStart;
@@ -46,7 +46,7 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer, ITickable
     private GameProfile loginGameProfile;
     private String serverId = "";
     private SecretKey secretKey;
-    private EntityPlayerMP field_181025_l;
+    private PlayerMP field_181025_l;
 
     public NetHandlerLoginServer(MinecraftServer p_i45298_1_, NetworkManager p_i45298_2_)
     {
@@ -66,7 +66,7 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer, ITickable
         }
         else if (this.currentLoginState == NetHandlerLoginServer.LoginState.DELAY_ACCEPT)
         {
-            EntityPlayerMP entityplayermp = this.server.getConfigurationManager().getPlayerByUUID(this.loginGameProfile.getId());
+            PlayerMP entityplayermp = this.server.getConfigurationManager().getPlayerByUUID(this.loginGameProfile.getId());
 
             if (entityplayermp == null)
             {
@@ -126,7 +126,7 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer, ITickable
             }
 
             this.networkManager.sendPacket(new S02PacketLoginSuccess(this.loginGameProfile));
-            EntityPlayerMP entityplayermp = this.server.getConfigurationManager().getPlayerByUUID(this.loginGameProfile.getId());
+            PlayerMP entityplayermp = this.server.getConfigurationManager().getPlayerByUUID(this.loginGameProfile.getId());
 
             if (entityplayermp != null)
             {

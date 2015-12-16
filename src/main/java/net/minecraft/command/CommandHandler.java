@@ -20,7 +20,7 @@ public class CommandHandler implements ICommandManager
     private final Map<String, ICommand> commandMap = Maps.<String, ICommand>newHashMap();
     private final Set<ICommand> commandSet = Sets.<ICommand>newHashSet();
 
-    public int executeCommand(ICommandSender sender, String rawCommand)
+    public int executeCommand(CommandSender sender, String rawCommand)
     {
         rawCommand = rawCommand.trim();
 
@@ -40,7 +40,7 @@ public class CommandHandler implements ICommandManager
         {
             ChatComponentTranslation chatcomponenttranslation = new ChatComponentTranslation("commands.generic.notFound", new Object[0]);
             chatcomponenttranslation.getChatStyle().setColor(EnumChatFormatting.RED);
-            sender.addChatMessage(chatcomponenttranslation);
+            sender.sendMessage(chatcomponenttranslation);
         }
         else if (icommand.canCommandSenderUseCommand(sender))
         {
@@ -76,14 +76,14 @@ public class CommandHandler implements ICommandManager
         {
             ChatComponentTranslation chatcomponenttranslation1 = new ChatComponentTranslation("commands.generic.permission", new Object[0]);
             chatcomponenttranslation1.getChatStyle().setColor(EnumChatFormatting.RED);
-            sender.addChatMessage(chatcomponenttranslation1);
+            sender.sendMessage(chatcomponenttranslation1);
         }
 
         sender.setCommandStat(CommandResultStats.Type.SUCCESS_COUNT, j);
         return j;
     }
 
-    protected boolean tryExecute(ICommandSender sender, String[] args, ICommand command, String input)
+    protected boolean tryExecute(CommandSender sender, String[] args, ICommand command, String input)
     {
         try
         {
@@ -94,19 +94,19 @@ public class CommandHandler implements ICommandManager
         {
             ChatComponentTranslation chatcomponenttranslation2 = new ChatComponentTranslation("commands.generic.usage", new Object[] {new ChatComponentTranslation(wrongusageexception.getMessage(), wrongusageexception.getErrorObjects())});
             chatcomponenttranslation2.getChatStyle().setColor(EnumChatFormatting.RED);
-            sender.addChatMessage(chatcomponenttranslation2);
+            sender.sendMessage(chatcomponenttranslation2);
         }
         catch (CommandException commandexception)
         {
             ChatComponentTranslation chatcomponenttranslation1 = new ChatComponentTranslation(commandexception.getMessage(), commandexception.getErrorObjects());
             chatcomponenttranslation1.getChatStyle().setColor(EnumChatFormatting.RED);
-            sender.addChatMessage(chatcomponenttranslation1);
+            sender.sendMessage(chatcomponenttranslation1);
         }
         catch (Throwable var9)
         {
             ChatComponentTranslation chatcomponenttranslation = new ChatComponentTranslation("commands.generic.exception", new Object[0]);
             chatcomponenttranslation.getChatStyle().setColor(EnumChatFormatting.RED);
-            sender.addChatMessage(chatcomponenttranslation);
+            sender.sendMessage(chatcomponenttranslation);
             logger.warn("Couldn\'t process command: \'" + input + "\'");
         }
 
@@ -144,7 +144,7 @@ public class CommandHandler implements ICommandManager
         return astring;
     }
 
-    public List<String> getTabCompletionOptions(ICommandSender sender, String input, BlockPos pos)
+    public List<String> getTabCompletionOptions(CommandSender sender, String input, BlockPos pos)
     {
         String[] astring = input.split(" ", -1);
         String s = astring[0];
@@ -179,7 +179,7 @@ public class CommandHandler implements ICommandManager
         }
     }
 
-    public List<ICommand> getPossibleCommands(ICommandSender sender)
+    public List<ICommand> getPossibleCommands(CommandSender sender)
     {
         List<ICommand> list = Lists.<ICommand>newArrayList();
 

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
@@ -39,12 +39,12 @@ public abstract class CommandBase implements ICommand
     /**
      * Returns true if the given command sender is allowed to use this command.
      */
-    public boolean canCommandSenderUseCommand(ICommandSender sender)
+    public boolean canCommandSenderUseCommand(CommandSender sender)
     {
         return sender.canCommandSenderUseCommand(this.getRequiredPermissionLevel(), this.getCommandName());
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return null;
     }
@@ -114,7 +114,7 @@ public abstract class CommandBase implements ICommand
         }
     }
 
-    public static BlockPos parseBlockPos(ICommandSender sender, String[] args, int startIndex, boolean centerBlock) throws NumberInvalidException
+    public static BlockPos parseBlockPos(CommandSender sender, String[] args, int startIndex, boolean centerBlock) throws NumberInvalidException
     {
         BlockPos blockpos = sender.getPosition();
         return new BlockPos(parseDouble((double)blockpos.getX(), args[startIndex], -30000000, 30000000, centerBlock), parseDouble((double)blockpos.getY(), args[startIndex + 1], 0, 256, false), parseDouble((double)blockpos.getZ(), args[startIndex + 2], -30000000, 30000000, centerBlock));
@@ -184,13 +184,13 @@ public abstract class CommandBase implements ICommand
     }
 
     /**
-     * Returns the given ICommandSender as a EntityPlayer or throw an exception.
+     * Returns the given CommandSender as a Player or throw an exception.
      */
-    public static EntityPlayerMP getCommandSenderAsPlayer(ICommandSender sender) throws PlayerNotFoundException
+    public static PlayerMP getCommandSenderAsPlayer(CommandSender sender) throws PlayerNotFoundException
     {
-        if (sender instanceof EntityPlayerMP)
+        if (sender instanceof PlayerMP)
         {
-            return (EntityPlayerMP)sender;
+            return (PlayerMP)sender;
         }
         else
         {
@@ -198,9 +198,9 @@ public abstract class CommandBase implements ICommand
         }
     }
 
-    public static EntityPlayerMP getPlayer(ICommandSender sender, String username) throws PlayerNotFoundException
+    public static PlayerMP getPlayer(CommandSender sender, String username) throws PlayerNotFoundException
     {
-        EntityPlayerMP entityplayermp = PlayerSelector.matchOnePlayer(sender, username);
+        PlayerMP entityplayermp = PlayerSelector.matchOnePlayer(sender, username);
 
         if (entityplayermp == null)
         {
@@ -229,12 +229,12 @@ public abstract class CommandBase implements ICommand
         }
     }
 
-    public static Entity func_175768_b(ICommandSender p_175768_0_, String p_175768_1_) throws EntityNotFoundException
+    public static Entity func_175768_b(CommandSender p_175768_0_, String p_175768_1_) throws EntityNotFoundException
     {
         return getEntity(p_175768_0_, p_175768_1_, Entity.class);
     }
 
-    public static <T extends Entity> T getEntity(ICommandSender commandSender, String p_175759_1_, Class <? extends T > p_175759_2_) throws EntityNotFoundException
+    public static <T extends Entity> T getEntity(CommandSender commandSender, String p_175759_1_, Class <? extends T > p_175759_2_) throws EntityNotFoundException
     {
         Entity entity = PlayerSelector.matchOneEntity(commandSender, p_175759_1_, p_175759_2_);
         MinecraftServer minecraftserver = MinecraftServer.getServer();
@@ -272,12 +272,12 @@ public abstract class CommandBase implements ICommand
         }
     }
 
-    public static List<Entity> func_175763_c(ICommandSender p_175763_0_, String p_175763_1_) throws EntityNotFoundException
+    public static List<Entity> func_175763_c(CommandSender p_175763_0_, String p_175763_1_) throws EntityNotFoundException
     {
         return (List<Entity>)(PlayerSelector.hasArguments(p_175763_1_) ? PlayerSelector.matchEntities(p_175763_0_, p_175763_1_, Entity.class) : Lists.newArrayList(new Entity[] {func_175768_b(p_175763_0_, p_175763_1_)}));
     }
 
-    public static String getPlayerName(ICommandSender sender, String query) throws PlayerNotFoundException
+    public static String getPlayerName(CommandSender sender, String query) throws PlayerNotFoundException
     {
         try
         {
@@ -300,7 +300,7 @@ public abstract class CommandBase implements ICommand
      * Attempts to retrieve an entity's name, first assuming that the entity is a player, and then exhausting all other
      * possibilities.
      */
-    public static String getEntityName(ICommandSender p_175758_0_, String p_175758_1_) throws EntityNotFoundException
+    public static String getEntityName(CommandSender p_175758_0_, String p_175758_1_) throws EntityNotFoundException
     {
         try
         {
@@ -326,12 +326,12 @@ public abstract class CommandBase implements ICommand
         }
     }
 
-    public static IChatComponent getChatComponentFromNthArg(ICommandSender sender, String[] args, int p_147178_2_) throws CommandException, PlayerNotFoundException
+    public static IChatComponent getChatComponentFromNthArg(CommandSender sender, String[] args, int p_147178_2_) throws CommandException, PlayerNotFoundException
     {
         return getChatComponentFromNthArg(sender, args, p_147178_2_, false);
     }
 
-    public static IChatComponent getChatComponentFromNthArg(ICommandSender sender, String[] args, int index, boolean p_147176_3_) throws PlayerNotFoundException
+    public static IChatComponent getChatComponentFromNthArg(CommandSender sender, String[] args, int index, boolean p_147176_3_) throws PlayerNotFoundException
     {
         IChatComponent ichatcomponent = new ChatComponentText("");
 
@@ -495,7 +495,7 @@ public abstract class CommandBase implements ICommand
      * string as an integer ID (deprecated).  Warns the sender if we matched by parsing the ID.  Throws if the item
      * wasn't found.  Returns the item if it was found.
      */
-    public static Item getItemByText(ICommandSender sender, String id) throws NumberInvalidException
+    public static Item getItemByText(CommandSender sender, String id) throws NumberInvalidException
     {
         ResourceLocation resourcelocation = new ResourceLocation(id);
         Item item = (Item)Item.itemRegistry.getObject(resourcelocation);
@@ -515,7 +515,7 @@ public abstract class CommandBase implements ICommand
      * string as an integer ID (deprecated).  Warns the sender if we matched by parsing the ID.  Throws if the block
      * wasn't found.  Returns the block if it was found.
      */
-    public static Block getBlockByText(ICommandSender sender, String id) throws NumberInvalidException
+    public static Block getBlockByText(CommandSender sender, String id) throws NumberInvalidException
     {
         ResourceLocation resourcelocation = new ResourceLocation(id);
 
@@ -715,12 +715,12 @@ public abstract class CommandBase implements ICommand
         return false;
     }
 
-    public static void notifyOperators(ICommandSender sender, ICommand command, String msgFormat, Object... msgParams)
+    public static void notifyOperators(CommandSender sender, ICommand command, String msgFormat, Object... msgParams)
     {
         notifyOperators(sender, command, 0, msgFormat, msgParams);
     }
 
-    public static void notifyOperators(ICommandSender sender, ICommand command, int p_152374_2_, String msgFormat, Object... msgParams)
+    public static void notifyOperators(CommandSender sender, ICommand command, int p_152374_2_, String msgFormat, Object... msgParams)
     {
         if (theAdmin != null)
         {

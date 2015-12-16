@@ -1,7 +1,7 @@
 package net.minecraft.command;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,7 +27,7 @@ public class CommandEntityData extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.entitydata.usage";
     }
@@ -35,7 +35,7 @@ public class CommandEntityData extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 2)
         {
@@ -45,7 +45,7 @@ public class CommandEntityData extends CommandBase
         {
             Entity entity = func_175768_b(sender, args[0]);
 
-            if (entity instanceof EntityPlayer)
+            if (entity instanceof Player)
             {
                 throw new CommandException("commands.entitydata.noPlayers", new Object[] {entity.getDisplayName()});
             }

@@ -2,7 +2,7 @@ package net.minecraft.entity.passive;
 
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -21,7 +21,7 @@ public class EntityMooshroom extends EntityCow
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer player)
+    public boolean interact(Player player)
     {
         ItemStack itemstack = player.inventory.getCurrentItem();
 

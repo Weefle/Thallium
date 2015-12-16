@@ -13,21 +13,21 @@ public interface ICommand extends Comparable<ICommand>
     /**
      * Gets the usage string for the command.
      */
-    String getCommandUsage(ICommandSender sender);
+    String getCommandUsage(CommandSender sender);
 
     List<String> getCommandAliases();
 
     /**
      * Callback when the command is invoked
      */
-    void processCommand(ICommandSender sender, String[] args) throws CommandException;
+    void processCommand(CommandSender sender, String[] args) throws CommandException;
 
     /**
      * Returns true if the given command sender is allowed to use this command.
      */
-    boolean canCommandSenderUseCommand(ICommandSender sender);
+    boolean canCommandSenderUseCommand(CommandSender sender);
 
-    List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos);
+    List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos);
 
     /**
      * Return whether the specified command parameter index is a username parameter.

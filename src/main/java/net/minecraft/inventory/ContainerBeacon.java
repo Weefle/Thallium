@@ -1,6 +1,6 @@
 package net.minecraft.inventory;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -48,7 +48,7 @@ public class ContainerBeacon extends Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer playerIn)
+    public void onContainerClosed(Player playerIn)
     {
         super.onContainerClosed(playerIn);
 
@@ -63,7 +63,7 @@ public class ContainerBeacon extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer playerIn)
+    public boolean canInteractWith(Player playerIn)
     {
         return this.tileBeacon.isUseableByPlayer(playerIn);
     }
@@ -71,7 +71,7 @@ public class ContainerBeacon extends Container
     /**
      * Take a stack from the specified inventory slot.
      */
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    public ItemStack transferStackInSlot(Player playerIn, int index)
     {
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(index);

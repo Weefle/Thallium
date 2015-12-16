@@ -2,7 +2,7 @@ package net.minecraft.item;
 
 import com.google.common.collect.Maps;
 import java.util.Map;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionHelper;
@@ -36,7 +36,7 @@ public class ItemFishFood extends ItemFood
         return ItemFishFood.FishType.byItemStack(stack) == ItemFishFood.FishType.PUFFERFISH ? PotionHelper.pufferfishEffect : null;
     }
 
-    protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player)
+    protected void onFoodEaten(ItemStack stack, World worldIn, Player player)
     {
         ItemFishFood.FishType itemfishfood$fishtype = ItemFishFood.FishType.byItemStack(stack);
 

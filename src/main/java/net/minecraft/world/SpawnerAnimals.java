@@ -9,7 +9,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -37,7 +37,7 @@ public final class SpawnerAnimals
             this.eligibleChunksForSpawning.clear();
             int i = 0;
 
-            for (EntityPlayer entityplayer : p_77192_1_.playerEntities)
+            for (Player entityplayer : p_77192_1_.playerEntities)
             {
                 if (!entityplayer.isSpectator())
                 {

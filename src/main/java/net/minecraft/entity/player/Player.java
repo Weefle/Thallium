@@ -75,7 +75,7 @@ import net.minecraft.world.LockCode;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
 
-public abstract class EntityPlayer extends EntityLivingBase
+public abstract class Player extends EntityLivingBase
 {
     /** Inventory of the player */
     public InventoryPlayer inventory = new InventoryPlayer(this);
@@ -101,7 +101,7 @@ public abstract class EntityPlayer extends EntityLivingBase
     public float cameraYaw;
 
     /**
-     * Used by EntityPlayer to prevent too many xp orbs from getting absorbed at once.
+     * Used by Player to prevent too many xp orbs from getting absorbed at once.
      */
     public int xpCooldown;
     public double prevChasingPosX;
@@ -171,7 +171,7 @@ public abstract class EntityPlayer extends EntityLivingBase
      */
     public EntityFishHook fishEntity;
 
-    public EntityPlayer(World worldIn, GameProfile gameProfileIn)
+    public Player(World worldIn, GameProfile gameProfileIn)
     {
         super(worldIn);
         this.entityUniqueID = getUUID(gameProfileIn);
@@ -708,7 +708,7 @@ public abstract class EntityPlayer extends EntityLivingBase
         this.addScore(amount);
         Collection<ScoreObjective> collection = this.getWorldScoreboard().getObjectivesFromCriteria(IScoreObjectiveCriteria.totalKillCount);
 
-        if (entityIn instanceof EntityPlayer)
+        if (entityIn instanceof Player)
         {
             this.triggerAchievement(StatList.playerKillsStat);
             collection.addAll(this.getWorldScoreboard().getObjectivesFromCriteria(IScoreObjectiveCriteria.playerKillCount));
@@ -1052,7 +1052,7 @@ public abstract class EntityPlayer extends EntityLivingBase
         }
     }
 
-    public boolean canAttackPlayer(EntityPlayer other)
+    public boolean canAttackPlayer(Player other)
     {
         Team team = this.getTeam();
         Team team1 = other.getTeam();
@@ -1092,7 +1092,7 @@ public abstract class EntityPlayer extends EntityLivingBase
     }
 
     /**
-     * Deals damage to the entity. If its a EntityPlayer then will take damage from the armor first and then health
+     * Deals damage to the entity. If its a Player then will take damage from the armor first and then health
      * second with the reduced value. Args: damageAmount
      */
     protected void damageEntity(DamageSource damageSrc, float damageAmount)
@@ -1304,9 +1304,9 @@ public abstract class EntityPlayer extends EntityLivingBase
                             this.setSprinting(false);
                         }
 
-                        if (targetEntity instanceof EntityPlayerMP && targetEntity.velocityChanged)
+                        if (targetEntity instanceof PlayerMP && targetEntity.velocityChanged)
                         {
-                            ((EntityPlayerMP)targetEntity).playerNetServerHandler.sendPacket(new S12PacketEntityVelocity(targetEntity));
+                            ((PlayerMP)targetEntity).playerNetServerHandler.sendPacket(new S12PacketEntityVelocity(targetEntity));
                             targetEntity.velocityChanged = false;
                             targetEntity.motionX = d0;
                             targetEntity.motionY = d1;
@@ -1422,28 +1422,28 @@ public abstract class EntityPlayer extends EntityLivingBase
     }
 
     @SuppressWarnings("incomplete-switch")
-    public EntityPlayer.EnumStatus trySleep(BlockPos bedLocation)
+    public Player.EnumStatus trySleep(BlockPos bedLocation)
     {
         if (!this.worldObj.isRemote)
         {
             if (this.isPlayerSleeping() || !this.isEntityAlive())
             {
-                return EntityPlayer.EnumStatus.OTHER_PROBLEM;
+                return Player.EnumStatus.OTHER_PROBLEM;
             }
 
             if (!this.worldObj.provider.isSurfaceWorld())
             {
-                return EntityPlayer.EnumStatus.NOT_POSSIBLE_HERE;
+                return Player.EnumStatus.NOT_POSSIBLE_HERE;
             }
 
             if (this.worldObj.isDaytime())
             {
-                return EntityPlayer.EnumStatus.NOT_POSSIBLE_NOW;
+                return Player.EnumStatus.NOT_POSSIBLE_NOW;
             }
 
             if (Math.abs(this.posX - (double)bedLocation.getX()) > 3.0D || Math.abs(this.posY - (double)bedLocation.getY()) > 2.0D || Math.abs(this.posZ - (double)bedLocation.getZ()) > 3.0D)
             {
-                return EntityPlayer.EnumStatus.TOO_FAR_AWAY;
+                return Player.EnumStatus.TOO_FAR_AWAY;
             }
 
             double d0 = 8.0D;
@@ -1452,7 +1452,7 @@ public abstract class EntityPlayer extends EntityLivingBase
 
             if (!list.isEmpty())
             {
-                return EntityPlayer.EnumStatus.NOT_SAFE;
+                return Player.EnumStatus.NOT_SAFE;
             }
         }
 
@@ -1505,7 +1505,7 @@ public abstract class EntityPlayer extends EntityLivingBase
             this.worldObj.updateAllPlayersSleepingFlag();
         }
 
-        return EntityPlayer.EnumStatus.OK;
+        return Player.EnumStatus.OK;
     }
 
     @SuppressWarnings("incomplete-switch")
@@ -2038,7 +2038,7 @@ public abstract class EntityPlayer extends EntityLivingBase
     /**
      * Get the experience points the entity currently has.
      */
-    protected int getExperiencePoints(EntityPlayer player)
+    protected int getExperiencePoints(Player player)
     {
         if (this.worldObj.getGameRules().getBoolean("keepInventory"))
         {
@@ -2063,7 +2063,7 @@ public abstract class EntityPlayer extends EntityLivingBase
      * Copies the values from the given player into this player if boolean par2 is true. Always clones Ender Chest
      * Inventory.
      */
-    public void clonePlayer(EntityPlayer oldPlayer, boolean respawnFromEnd)
+    public void clonePlayer(Player oldPlayer, boolean respawnFromEnd)
     {
         if (respawnFromEnd)
         {
@@ -2161,7 +2161,7 @@ public abstract class EntityPlayer extends EntityLivingBase
     public abstract boolean isSpectator();
 
     /**
-     * returns the inventory of this entity (only used in EntityPlayerMP it seems)
+     * returns the inventory of this entity (only used in PlayerMP it seems)
      */
     public ItemStack[] getInventory()
     {
@@ -2327,7 +2327,7 @@ public abstract class EntityPlayer extends EntityLivingBase
         SYSTEM(1, "options.chat.visibility.system"),
         HIDDEN(2, "options.chat.visibility.hidden");
 
-        private static final EntityPlayer.EnumChatVisibility[] ID_LOOKUP = new EntityPlayer.EnumChatVisibility[values().length];
+        private static final Player.EnumChatVisibility[] ID_LOOKUP = new Player.EnumChatVisibility[values().length];
         private final int chatVisibility;
         private final String resourceKey;
 
@@ -2342,13 +2342,13 @@ public abstract class EntityPlayer extends EntityLivingBase
             return this.chatVisibility;
         }
 
-        public static EntityPlayer.EnumChatVisibility getEnumChatVisibility(int id)
+        public static Player.EnumChatVisibility getEnumChatVisibility(int id)
         {
             return ID_LOOKUP[id % ID_LOOKUP.length];
         }
 
         static {
-            for (EntityPlayer.EnumChatVisibility entityplayer$enumchatvisibility : values())
+            for (Player.EnumChatVisibility entityplayer$enumchatvisibility : values())
             {
                 ID_LOOKUP[entityplayer$enumchatvisibility.chatVisibility] = entityplayer$enumchatvisibility;
             }

@@ -24,7 +24,7 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.IAnimals;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.entity.projectile.EntityFireball;
@@ -56,10 +56,10 @@ public class EntityTracker
 
     public void trackEntity(Entity p_72786_1_)
     {
-        if (p_72786_1_ instanceof EntityPlayerMP)
+        if (p_72786_1_ instanceof PlayerMP)
         {
             this.trackEntity(p_72786_1_, 512, 2);
-            EntityPlayerMP entityplayermp = (EntityPlayerMP)p_72786_1_;
+            PlayerMP entityplayermp = (PlayerMP)p_72786_1_;
 
             for (EntityTrackerEntry entitytrackerentry : this.trackedEntities)
             {
@@ -234,9 +234,9 @@ public class EntityTracker
 
     public void untrackEntity(Entity entityIn)
     {
-        if (entityIn instanceof EntityPlayerMP)
+        if (entityIn instanceof PlayerMP)
         {
-            EntityPlayerMP entityplayermp = (EntityPlayerMP)entityIn;
+            PlayerMP entityplayermp = (PlayerMP)entityIn;
 
             for (EntityTrackerEntry entitytrackerentry : this.trackedEntities)
             {
@@ -255,21 +255,21 @@ public class EntityTracker
 
     public void updateTrackedEntities()
     {
-        List<EntityPlayerMP> list = Lists.<EntityPlayerMP>newArrayList();
+        List<PlayerMP> list = Lists.<PlayerMP>newArrayList();
 
         for (EntityTrackerEntry entitytrackerentry : this.trackedEntities)
         {
             entitytrackerentry.updatePlayerList(this.theWorld.playerEntities);
 
-            if (entitytrackerentry.playerEntitiesUpdated && entitytrackerentry.trackedEntity instanceof EntityPlayerMP)
+            if (entitytrackerentry.playerEntitiesUpdated && entitytrackerentry.trackedEntity instanceof PlayerMP)
             {
-                list.add((EntityPlayerMP)entitytrackerentry.trackedEntity);
+                list.add((PlayerMP)entitytrackerentry.trackedEntity);
             }
         }
 
         for (int i = 0; i < ((List)list).size(); ++i)
         {
-            EntityPlayerMP entityplayermp = (EntityPlayerMP)list.get(i);
+            PlayerMP entityplayermp = (PlayerMP)list.get(i);
 
             for (EntityTrackerEntry entitytrackerentry1 : this.trackedEntities)
             {
@@ -281,7 +281,7 @@ public class EntityTracker
         }
     }
 
-    public void func_180245_a(EntityPlayerMP p_180245_1_)
+    public void func_180245_a(PlayerMP p_180245_1_)
     {
         for (EntityTrackerEntry entitytrackerentry : this.trackedEntities)
         {
@@ -316,7 +316,7 @@ public class EntityTracker
         }
     }
 
-    public void removePlayerFromTrackers(EntityPlayerMP p_72787_1_)
+    public void removePlayerFromTrackers(PlayerMP p_72787_1_)
     {
         for (EntityTrackerEntry entitytrackerentry : this.trackedEntities)
         {
@@ -324,7 +324,7 @@ public class EntityTracker
         }
     }
 
-    public void func_85172_a(EntityPlayerMP p_85172_1_, Chunk p_85172_2_)
+    public void func_85172_a(PlayerMP p_85172_1_, Chunk p_85172_2_)
     {
         for (EntityTrackerEntry entitytrackerentry : this.trackedEntities)
         {

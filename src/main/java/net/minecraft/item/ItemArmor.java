@@ -9,7 +9,7 @@ import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -36,7 +36,7 @@ public class ItemArmor extends Item
             if (list.size() > 0)
             {
                 EntityLivingBase entitylivingbase = (EntityLivingBase)list.get(0);
-                int l = entitylivingbase instanceof EntityPlayer ? 1 : 0;
+                int l = entitylivingbase instanceof Player ? 1 : 0;
                 int i1 = EntityLiving.getArmorPosition(stack);
                 ItemStack itemstack = stack.copy();
                 itemstack.stackSize = 1;
@@ -199,7 +199,7 @@ public class ItemArmor extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, Player playerIn)
     {
         int i = EntityLiving.getArmorPosition(itemStackIn) - 1;
         ItemStack itemstack = playerIn.getCurrentArmor(i);

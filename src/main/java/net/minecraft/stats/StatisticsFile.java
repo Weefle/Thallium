@@ -12,8 +12,8 @@ import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.network.play.server.S37PacketStatistics;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
@@ -73,7 +73,7 @@ public class StatisticsFile extends StatFileWriter
     /**
      * Triggers the logging of an achievement and attempts to announce to server
      */
-    public void unlockAchievement(EntityPlayer playerIn, StatBase statIn, int p_150873_3_)
+    public void unlockAchievement(Player playerIn, StatBase statIn, int p_150873_3_)
     {
         int i = statIn.isAchievement() ? this.readStat(statIn) : 0;
         super.unlockAchievement(playerIn, statIn, p_150873_3_);
@@ -209,7 +209,7 @@ public class StatisticsFile extends StatFileWriter
         }
     }
 
-    public void func_150876_a(EntityPlayerMP p_150876_1_)
+    public void func_150876_a(PlayerMP p_150876_1_)
     {
         int i = this.mcServer.getTickCounter();
         Map<StatBase, Integer> map = Maps.<StatBase, Integer>newHashMap();
@@ -227,7 +227,7 @@ public class StatisticsFile extends StatFileWriter
         p_150876_1_.playerNetServerHandler.sendPacket(new S37PacketStatistics(map));
     }
 
-    public void sendAchievements(EntityPlayerMP player)
+    public void sendAchievements(PlayerMP player)
     {
         Map<StatBase, Integer> map = Maps.<StatBase, Integer>newHashMap();
 

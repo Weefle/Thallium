@@ -1,7 +1,7 @@
 package net.minecraft.command;
 
 import java.util.List;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.network.play.server.S29PacketSoundEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
@@ -28,7 +28,7 @@ public class CommandPlaySound extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.playsound.usage";
     }
@@ -36,7 +36,7 @@ public class CommandPlaySound extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 2)
         {
@@ -46,7 +46,7 @@ public class CommandPlaySound extends CommandBase
         {
             int i = 0;
             String s = args[i++];
-            EntityPlayerMP entityplayermp = getPlayer(sender, args[i++]);
+            PlayerMP entityplayermp = getPlayer(sender, args[i++]);
             Vec3 vec3 = sender.getPositionVector();
             double d0 = vec3.xCoord;
 
@@ -120,7 +120,7 @@ public class CommandPlaySound extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 2 ? getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames()) : (args.length > 2 && args.length <= 5 ? func_175771_a(args, 2, pos) : null);
     }

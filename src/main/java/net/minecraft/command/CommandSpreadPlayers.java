@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.Set;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
@@ -38,7 +38,7 @@ public class CommandSpreadPlayers extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.spreadplayers.usage";
     }
@@ -46,7 +46,7 @@ public class CommandSpreadPlayers extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 6)
         {
@@ -80,7 +80,7 @@ public class CommandSpreadPlayers extends CommandBase
                 }
                 else
                 {
-                    EntityPlayer entityplayer = MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(s);
+                    Player entityplayer = MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(s);
 
                     if (entityplayer == null)
                     {
@@ -99,13 +99,13 @@ public class CommandSpreadPlayers extends CommandBase
             }
             else
             {
-                sender.addChatMessage(new ChatComponentTranslation("commands.spreadplayers.spreading." + (flag ? "teams" : "players"), new Object[] {Integer.valueOf(list.size()), Double.valueOf(d3), Double.valueOf(d0), Double.valueOf(d1), Double.valueOf(d2)}));
+                sender.sendMessage(new ChatComponentTranslation("commands.spreadplayers.spreading." + (flag ? "teams" : "players"), new Object[] {Integer.valueOf(list.size()), Double.valueOf(d3), Double.valueOf(d0), Double.valueOf(d1), Double.valueOf(d2)}));
                 this.func_110669_a(sender, list, new CommandSpreadPlayers.Position(d0, d1), d2, d3, ((Entity)list.get(0)).worldObj, flag);
             }
         }
     }
 
-    private void func_110669_a(ICommandSender p_110669_1_, List<Entity> p_110669_2_, CommandSpreadPlayers.Position p_110669_3_, double p_110669_4_, double p_110669_6_, World worldIn, boolean p_110669_9_) throws CommandException
+    private void func_110669_a(CommandSender p_110669_1_, List<Entity> p_110669_2_, CommandSpreadPlayers.Position p_110669_3_, double p_110669_4_, double p_110669_6_, World worldIn, boolean p_110669_9_) throws CommandException
     {
         Random random = new Random();
         double d0 = p_110669_3_.field_111101_a - p_110669_6_;
@@ -119,7 +119,7 @@ public class CommandSpreadPlayers extends CommandBase
 
         if (acommandspreadplayers$position.length > 1)
         {
-            p_110669_1_.addChatMessage(new ChatComponentTranslation("commands.spreadplayers.info." + (p_110669_9_ ? "teams" : "players"), new Object[] {String.format("%.2f", new Object[]{Double.valueOf(d4)}), Integer.valueOf(i)}));
+            p_110669_1_.sendMessage(new ChatComponentTranslation("commands.spreadplayers.info." + (p_110669_9_ ? "teams" : "players"), new Object[] {String.format("%.2f", new Object[]{Double.valueOf(d4)}), Integer.valueOf(i)}));
         }
     }
 
@@ -129,9 +129,9 @@ public class CommandSpreadPlayers extends CommandBase
 
         for (Entity entity : p_110667_1_)
         {
-            if (entity instanceof EntityPlayer)
+            if (entity instanceof Player)
             {
-                set.add(((EntityPlayer)entity).getTeam());
+                set.add(((Player)entity).getTeam());
             }
             else
             {
@@ -237,7 +237,7 @@ public class CommandSpreadPlayers extends CommandBase
 
             if (p_110671_4_)
             {
-                Team team = entity instanceof EntityPlayer ? ((EntityPlayer)entity).getTeam() : null;
+                Team team = entity instanceof Player ? ((Player)entity).getTeam() : null;
 
                 if (!map.containsKey(team))
                 {
@@ -284,7 +284,7 @@ public class CommandSpreadPlayers extends CommandBase
         return acommandspreadplayers$position;
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length >= 1 && args.length <= 2 ? func_181043_b(args, 0, pos) : null;
     }

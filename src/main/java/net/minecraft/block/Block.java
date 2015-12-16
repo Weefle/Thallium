@@ -13,7 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -545,7 +545,7 @@ public class Block
     /**
      * Get the hardness of this Block relative to the ability of the given player
      */
-    public float getPlayerRelativeBlockHardness(EntityPlayer playerIn, World worldIn, BlockPos pos)
+    public float getPlayerRelativeBlockHardness(Player playerIn, World worldIn, BlockPos pos)
     {
         float f = this.getBlockHardness(worldIn, pos);
         return f < 0.0F ? 0.0F : (!playerIn.canHarvestBlock(this) ? playerIn.getToolDigEfficiency(this) / f / 100.0F : playerIn.getToolDigEfficiency(this) / f / 30.0F);
@@ -801,7 +801,7 @@ public class Block
         return worldIn.getBlockState(pos).getBlock().blockMaterial.isReplaceable();
     }
 
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, Player playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         return false;
     }
@@ -822,7 +822,7 @@ public class Block
         return this.getStateFromMeta(meta);
     }
 
-    public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn)
+    public void onBlockClicked(World worldIn, BlockPos pos, Player playerIn)
     {
     }
 
@@ -915,7 +915,7 @@ public class Block
     {
     }
 
-    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te)
+    public void harvestBlock(World worldIn, Player player, BlockPos pos, IBlockState state, TileEntity te)
     {
         player.triggerAchievement(StatList.mineBlockStatArray[getIdFromBlock(this)]);
         player.addExhaustion(0.025F);
@@ -1051,7 +1051,7 @@ public class Block
         return this;
     }
 
-    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
+    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, Player player)
     {
     }
 

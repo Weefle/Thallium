@@ -12,7 +12,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -215,7 +215,7 @@ public abstract class EntityLiving extends EntityLivingBase
     /**
      * Get the experience points the entity currently has.
      */
-    protected int getExperiencePoints(EntityPlayer player)
+    protected int getExperiencePoints(Player player)
     {
         if (this.experienceValue > 0)
         {
@@ -533,7 +533,7 @@ public abstract class EntityLiving extends EntityLivingBase
 
                 if (itemstack.getItem() == Items.diamond && itemEntity.getThrower() != null)
                 {
-                    EntityPlayer entityplayer = this.worldObj.getPlayerEntityByName(itemEntity.getThrower());
+                    Player entityplayer = this.worldObj.getPlayerEntityByName(itemEntity.getThrower());
 
                     if (entityplayer != null)
                     {
@@ -768,7 +768,7 @@ public abstract class EntityLiving extends EntityLivingBase
     }
 
     /**
-     * returns the inventory of this entity (only used in EntityPlayerMP it seems)
+     * returns the inventory of this entity (only used in PlayerMP it seems)
      */
     public ItemStack[] getInventory()
     {
@@ -1060,7 +1060,7 @@ public abstract class EntityLiving extends EntityLivingBase
     /**
      * First layer of player interaction
      */
-    public final boolean interactFirst(EntityPlayer playerIn)
+    public final boolean interactFirst(Player playerIn)
     {
         if (this.getLeashed() && this.getLeashedToEntity() == playerIn)
         {
@@ -1102,7 +1102,7 @@ public abstract class EntityLiving extends EntityLivingBase
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    protected boolean interact(EntityPlayer player)
+    protected boolean interact(Player player)
     {
         return false;
     }

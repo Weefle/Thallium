@@ -1,7 +1,7 @@
 package net.minecraft.tileentity;
 
 import java.util.Random;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerDispenser;
@@ -210,16 +210,16 @@ public class TileEntityDispenser extends TileEntityLockable implements IInventor
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer player)
+    public boolean isUseableByPlayer(Player player)
     {
         return this.worldObj.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
     }
 
-    public void openInventory(EntityPlayer player)
+    public void openInventory(Player player)
     {
     }
 
-    public void closeInventory(EntityPlayer player)
+    public void closeInventory(Player player)
     {
     }
 
@@ -236,7 +236,7 @@ public class TileEntityDispenser extends TileEntityLockable implements IInventor
         return "minecraft:dispenser";
     }
 
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+    public Container createContainer(InventoryPlayer playerInventory, Player playerIn)
     {
         return new ContainerDispenser(playerInventory, this);
     }

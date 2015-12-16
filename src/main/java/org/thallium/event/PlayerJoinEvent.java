@@ -1,6 +1,6 @@
 package org.thallium.event;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.world.World;
 import org.thallium.event.types.PlayerEvent;
 
@@ -9,17 +9,17 @@ import org.thallium.event.types.PlayerEvent;
  * @author PizzaCrust
  */
 public class PlayerJoinEvent implements PlayerEvent {
-    private EntityPlayerMP player;
+    private PlayerMP player;
     private World world;
     private boolean cancelled;
 
-    public PlayerJoinEvent(EntityPlayerMP player, World worldJoinedTo){
+    public PlayerJoinEvent(PlayerMP player, World worldJoinedTo){
         this.player = player;
         this.world = worldJoinedTo;
         this.cancelled = false;
     }
 
-    public EntityPlayerMP getPlayer(){
+    public PlayerMP getPlayer(){
         return this.player;
     }
 

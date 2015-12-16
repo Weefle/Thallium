@@ -7,7 +7,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -157,7 +157,7 @@ public class BlockDoublePlant extends BlockBush implements IGrowable
         worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(HALF, BlockDoublePlant.EnumBlockHalf.UPPER), 2);
     }
 
-    public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te)
+    public void harvestBlock(World worldIn, Player player, BlockPos pos, IBlockState state, TileEntity te)
     {
         if (worldIn.isRemote || player.getCurrentEquippedItem() == null || player.getCurrentEquippedItem().getItem() != Items.shears || state.getValue(HALF) != BlockDoublePlant.EnumBlockHalf.LOWER || !this.onHarvest(worldIn, pos, state, player))
         {
@@ -165,7 +165,7 @@ public class BlockDoublePlant extends BlockBush implements IGrowable
         }
     }
 
-    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
+    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, Player player)
     {
         if (state.getValue(HALF) == BlockDoublePlant.EnumBlockHalf.UPPER)
         {
@@ -211,7 +211,7 @@ public class BlockDoublePlant extends BlockBush implements IGrowable
         super.onBlockHarvested(worldIn, pos, state, player);
     }
 
-    private boolean onHarvest(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
+    private boolean onHarvest(World worldIn, BlockPos pos, IBlockState state, Player player)
     {
         BlockDoublePlant.EnumPlantType blockdoubleplant$enumplanttype = (BlockDoublePlant.EnumPlantType)state.getValue(VARIANT);
 

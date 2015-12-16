@@ -3,8 +3,8 @@ package net.minecraft.entity.item;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityEndermite;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
@@ -50,9 +50,9 @@ public class EntityEnderPearl extends EntityThrowable
 
         if (!this.worldObj.isRemote)
         {
-            if (entitylivingbase instanceof EntityPlayerMP)
+            if (entitylivingbase instanceof PlayerMP)
             {
-                EntityPlayerMP entityplayermp = (EntityPlayerMP)entitylivingbase;
+                PlayerMP entityplayermp = (PlayerMP)entitylivingbase;
 
                 if (entityplayermp.playerNetServerHandler.getNetworkManager().isChannelOpen() && entityplayermp.worldObj == this.worldObj && !entityplayermp.isPlayerSleeping())
                 {
@@ -91,7 +91,7 @@ public class EntityEnderPearl extends EntityThrowable
     {
         EntityLivingBase entitylivingbase = this.getThrower();
 
-        if (entitylivingbase != null && entitylivingbase instanceof EntityPlayer && !entitylivingbase.isEntityAlive())
+        if (entitylivingbase != null && entitylivingbase instanceof Player && !entitylivingbase.isEntityAlive())
         {
             this.setDead();
         }

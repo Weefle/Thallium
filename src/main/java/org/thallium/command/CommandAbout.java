@@ -2,13 +2,12 @@ package org.thallium.command;
 
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.rcon.RConConsoleSource;
+import net.minecraft.command.CommandSender;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class CommandAbout implements ICommand{
         return "about";
     }
 
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(CommandSender sender) {
         return "/about";
     }
 
@@ -32,19 +31,19 @@ public class CommandAbout implements ICommand{
         return aliases;
     }
 
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        sender.addChatMessage(new ChatComponentText("Thallium Server (implementing net.minecraft.server 1.8.8)"));
+    public void processCommand(CommandSender sender, String[] args) throws CommandException {
+        sender.sendMessage(new ChatComponentText("Thallium Server (implementing net.minecraft.server 1.8.8)"));
     }
 
-    public boolean canCommandSenderUseCommand(ICommandSender sender) {
-        if(!(sender instanceof EntityPlayer)){
+    public boolean canCommandSenderUseCommand(CommandSender sender) {
+        if(!(sender instanceof Player)){
             return true;
         }
-        EntityPlayerMP player = (EntityPlayerMP) sender;
+        PlayerMP player = (PlayerMP) sender;
         return player.isOp();
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos) {
         return null;
     }
 

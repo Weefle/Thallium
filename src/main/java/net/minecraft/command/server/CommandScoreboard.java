@@ -7,14 +7,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.CommandResultStats;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.SyntaxErrorException;
-import net.minecraft.command.WrongUsageException;
+
+import net.minecraft.command.*;
+import net.minecraft.command.CommandSender;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
@@ -52,7 +49,7 @@ public class CommandScoreboard extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.scoreboard.usage";
     }
@@ -60,7 +57,7 @@ public class CommandScoreboard extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (!this.func_175780_b(sender, args))
         {
@@ -249,7 +246,7 @@ public class CommandScoreboard extends CommandBase
                     }
                     else if (args[1].equalsIgnoreCase("join"))
                     {
-                        if (args.length < 4 && (args.length != 3 || !(sender instanceof EntityPlayer)))
+                        if (args.length < 4 && (args.length != 3 || !(sender instanceof Player)))
                         {
                             throw new WrongUsageException("commands.scoreboard.teams.join.usage", new Object[0]);
                         }
@@ -258,7 +255,7 @@ public class CommandScoreboard extends CommandBase
                     }
                     else if (args[1].equalsIgnoreCase("leave"))
                     {
-                        if (args.length < 3 && !(sender instanceof EntityPlayer))
+                        if (args.length < 3 && !(sender instanceof Player))
                         {
                             throw new WrongUsageException("commands.scoreboard.teams.leave.usage", new Object[0]);
                         }
@@ -284,7 +281,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    private boolean func_175780_b(ICommandSender p_175780_1_, String[] p_175780_2_) throws CommandException
+    private boolean func_175780_b(CommandSender p_175780_1_, String[] p_175780_2_) throws CommandException
     {
         int i = -1;
 
@@ -324,7 +321,7 @@ public class CommandScoreboard extends CommandBase
                 {
                     ChatComponentTranslation chatcomponenttranslation = new ChatComponentTranslation(commandexception.getMessage(), commandexception.getErrorObjects());
                     chatcomponenttranslation.getChatStyle().setColor(EnumChatFormatting.RED);
-                    p_175780_1_.addChatMessage(chatcomponenttranslation);
+                    p_175780_1_.sendMessage(chatcomponenttranslation);
                 }
             }
 
@@ -381,7 +378,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void addObjective(ICommandSender sender, String[] args, int index) throws CommandException
+    protected void addObjective(CommandSender sender, String[] args, int index) throws CommandException
     {
         String s = args[index++];
         String s1 = args[index++];
@@ -433,7 +430,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void addTeam(ICommandSender sender, String[] args, int index) throws CommandException
+    protected void addTeam(CommandSender sender, String[] args, int index) throws CommandException
     {
         String s = args[index++];
         Scoreboard scoreboard = this.getScoreboard();
@@ -479,7 +476,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void setTeamOption(ICommandSender sender, String[] args, int index) throws CommandException
+    protected void setTeamOption(CommandSender sender, String[] args, int index) throws CommandException
     {
         ScorePlayerTeam scoreplayerteam = this.getTeam(args[index++]);
 
@@ -576,7 +573,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void removeTeam(ICommandSender p_147194_1_, String[] p_147194_2_, int p_147194_3_) throws CommandException
+    protected void removeTeam(CommandSender p_147194_1_, String[] p_147194_2_, int p_147194_3_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
         ScorePlayerTeam scoreplayerteam = this.getTeam(p_147194_2_[p_147194_3_]);
@@ -588,7 +585,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void listTeams(ICommandSender p_147186_1_, String[] p_147186_2_, int p_147186_3_) throws CommandException
+    protected void listTeams(CommandSender p_147186_1_, String[] p_147186_2_, int p_147186_3_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
 
@@ -611,8 +608,8 @@ public class CommandScoreboard extends CommandBase
 
             ChatComponentTranslation chatcomponenttranslation = new ChatComponentTranslation("commands.scoreboard.teams.list.player.count", new Object[] {Integer.valueOf(collection.size()), scoreplayerteam.getRegisteredName()});
             chatcomponenttranslation.getChatStyle().setColor(EnumChatFormatting.DARK_GREEN);
-            p_147186_1_.addChatMessage(chatcomponenttranslation);
-            p_147186_1_.addChatMessage(new ChatComponentText(joinNiceString(collection.toArray())));
+            p_147186_1_.sendMessage(chatcomponenttranslation);
+            p_147186_1_.sendMessage(new ChatComponentText(joinNiceString(collection.toArray())));
         }
         else
         {
@@ -626,23 +623,23 @@ public class CommandScoreboard extends CommandBase
 
             ChatComponentTranslation chatcomponenttranslation1 = new ChatComponentTranslation("commands.scoreboard.teams.list.count", new Object[] {Integer.valueOf(collection1.size())});
             chatcomponenttranslation1.getChatStyle().setColor(EnumChatFormatting.DARK_GREEN);
-            p_147186_1_.addChatMessage(chatcomponenttranslation1);
+            p_147186_1_.sendMessage(chatcomponenttranslation1);
 
             for (ScorePlayerTeam scoreplayerteam1 : collection1)
             {
-                p_147186_1_.addChatMessage(new ChatComponentTranslation("commands.scoreboard.teams.list.entry", new Object[] {scoreplayerteam1.getRegisteredName(), scoreplayerteam1.getTeamName(), Integer.valueOf(scoreplayerteam1.getMembershipCollection().size())}));
+                p_147186_1_.sendMessage(new ChatComponentTranslation("commands.scoreboard.teams.list.entry", new Object[] {scoreplayerteam1.getRegisteredName(), scoreplayerteam1.getTeamName(), Integer.valueOf(scoreplayerteam1.getMembershipCollection().size())}));
             }
         }
     }
 
-    protected void joinTeam(ICommandSender p_147190_1_, String[] p_147190_2_, int p_147190_3_) throws CommandException
+    protected void joinTeam(CommandSender p_147190_1_, String[] p_147190_2_, int p_147190_3_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
         String s = p_147190_2_[p_147190_3_++];
         Set<String> set = Sets.<String>newHashSet();
         Set<String> set1 = Sets.<String>newHashSet();
 
-        if (p_147190_1_ instanceof EntityPlayer && p_147190_3_ == p_147190_2_.length)
+        if (p_147190_1_ instanceof Player && p_147190_3_ == p_147190_2_.length)
         {
             String s4 = getCommandSenderAsPlayer(p_147190_1_).getName();
 
@@ -705,13 +702,13 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void leaveTeam(ICommandSender p_147199_1_, String[] p_147199_2_, int p_147199_3_) throws CommandException
+    protected void leaveTeam(CommandSender p_147199_1_, String[] p_147199_2_, int p_147199_3_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
         Set<String> set = Sets.<String>newHashSet();
         Set<String> set1 = Sets.<String>newHashSet();
 
-        if (p_147199_1_ instanceof EntityPlayer && p_147199_3_ == p_147199_2_.length)
+        if (p_147199_1_ instanceof Player && p_147199_3_ == p_147199_2_.length)
         {
             String s3 = getCommandSenderAsPlayer(p_147199_1_).getName();
 
@@ -774,7 +771,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void emptyTeam(ICommandSender p_147188_1_, String[] p_147188_2_, int p_147188_3_) throws CommandException
+    protected void emptyTeam(CommandSender p_147188_1_, String[] p_147188_2_, int p_147188_3_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
         ScorePlayerTeam scoreplayerteam = this.getTeam(p_147188_2_[p_147188_3_]);
@@ -800,7 +797,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void removeObjective(ICommandSender p_147191_1_, String p_147191_2_) throws CommandException
+    protected void removeObjective(CommandSender p_147191_1_, String p_147191_2_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
         ScoreObjective scoreobjective = this.getObjective(p_147191_2_, false);
@@ -808,7 +805,7 @@ public class CommandScoreboard extends CommandBase
         notifyOperators(p_147191_1_, this, "commands.scoreboard.objectives.remove.success", new Object[] {p_147191_2_});
     }
 
-    protected void listObjectives(ICommandSender p_147196_1_) throws CommandException
+    protected void listObjectives(CommandSender p_147196_1_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
         Collection<ScoreObjective> collection = scoreboard.getScoreObjectives();
@@ -821,16 +818,16 @@ public class CommandScoreboard extends CommandBase
         {
             ChatComponentTranslation chatcomponenttranslation = new ChatComponentTranslation("commands.scoreboard.objectives.list.count", new Object[] {Integer.valueOf(collection.size())});
             chatcomponenttranslation.getChatStyle().setColor(EnumChatFormatting.DARK_GREEN);
-            p_147196_1_.addChatMessage(chatcomponenttranslation);
+            p_147196_1_.sendMessage(chatcomponenttranslation);
 
             for (ScoreObjective scoreobjective : collection)
             {
-                p_147196_1_.addChatMessage(new ChatComponentTranslation("commands.scoreboard.objectives.list.entry", new Object[] {scoreobjective.getName(), scoreobjective.getDisplayName(), scoreobjective.getCriteria().getName()}));
+                p_147196_1_.sendMessage(new ChatComponentTranslation("commands.scoreboard.objectives.list.entry", new Object[] {scoreobjective.getName(), scoreobjective.getDisplayName(), scoreobjective.getCriteria().getName()}));
             }
         }
     }
 
-    protected void setObjectiveDisplay(ICommandSender p_147198_1_, String[] p_147198_2_, int p_147198_3_) throws CommandException
+    protected void setObjectiveDisplay(CommandSender p_147198_1_, String[] p_147198_2_, int p_147198_3_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
         String s = p_147198_2_[p_147198_3_++];
@@ -861,7 +858,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void listPlayers(ICommandSender p_147195_1_, String[] p_147195_2_, int p_147195_3_) throws CommandException
+    protected void listPlayers(CommandSender p_147195_1_, String[] p_147195_2_, int p_147195_3_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
 
@@ -878,11 +875,11 @@ public class CommandScoreboard extends CommandBase
 
             ChatComponentTranslation chatcomponenttranslation = new ChatComponentTranslation("commands.scoreboard.players.list.player.count", new Object[] {Integer.valueOf(map.size()), s});
             chatcomponenttranslation.getChatStyle().setColor(EnumChatFormatting.DARK_GREEN);
-            p_147195_1_.addChatMessage(chatcomponenttranslation);
+            p_147195_1_.sendMessage(chatcomponenttranslation);
 
             for (Score score : map.values())
             {
-                p_147195_1_.addChatMessage(new ChatComponentTranslation("commands.scoreboard.players.list.player.entry", new Object[] {Integer.valueOf(score.getScorePoints()), score.getObjective().getDisplayName(), score.getObjective().getName()}));
+                p_147195_1_.sendMessage(new ChatComponentTranslation("commands.scoreboard.players.list.player.entry", new Object[] {Integer.valueOf(score.getScorePoints()), score.getObjective().getDisplayName(), score.getObjective().getName()}));
             }
         }
         else
@@ -897,12 +894,12 @@ public class CommandScoreboard extends CommandBase
 
             ChatComponentTranslation chatcomponenttranslation1 = new ChatComponentTranslation("commands.scoreboard.players.list.count", new Object[] {Integer.valueOf(collection.size())});
             chatcomponenttranslation1.getChatStyle().setColor(EnumChatFormatting.DARK_GREEN);
-            p_147195_1_.addChatMessage(chatcomponenttranslation1);
-            p_147195_1_.addChatMessage(new ChatComponentText(joinNiceString(collection.toArray())));
+            p_147195_1_.sendMessage(chatcomponenttranslation1);
+            p_147195_1_.sendMessage(new ChatComponentText(joinNiceString(collection.toArray())));
         }
     }
 
-    protected void setPlayer(ICommandSender p_147197_1_, String[] p_147197_2_, int p_147197_3_) throws CommandException
+    protected void setPlayer(CommandSender p_147197_1_, String[] p_147197_2_, int p_147197_3_) throws CommandException
     {
         String s = p_147197_2_[p_147197_3_ - 1];
         int i = p_147197_3_;
@@ -958,7 +955,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void resetPlayers(ICommandSender p_147187_1_, String[] p_147187_2_, int p_147187_3_) throws CommandException
+    protected void resetPlayers(CommandSender p_147187_1_, String[] p_147187_2_, int p_147187_3_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
         String s = getEntityName(p_147187_1_, p_147187_2_[p_147187_3_++]);
@@ -976,7 +973,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void func_175779_n(ICommandSender p_175779_1_, String[] p_175779_2_, int p_175779_3_) throws CommandException
+    protected void func_175779_n(CommandSender p_175779_1_, String[] p_175779_2_, int p_175779_3_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
         String s = getPlayerName(p_175779_1_, p_175779_2_[p_175779_3_++]);
@@ -1002,7 +999,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void func_175781_o(ICommandSender p_175781_1_, String[] p_175781_2_, int p_175781_3_) throws CommandException
+    protected void func_175781_o(CommandSender p_175781_1_, String[] p_175781_2_, int p_175781_3_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
         String s = getEntityName(p_175781_1_, p_175781_2_[p_175781_3_++]);
@@ -1038,7 +1035,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    protected void func_175778_p(ICommandSender p_175778_1_, String[] p_175778_2_, int p_175778_3_) throws CommandException
+    protected void func_175778_p(CommandSender p_175778_1_, String[] p_175778_2_, int p_175778_3_) throws CommandException
     {
         Scoreboard scoreboard = this.getScoreboard();
         String s = getEntityName(p_175778_1_, p_175778_2_[p_175778_3_++]);
@@ -1122,7 +1119,7 @@ public class CommandScoreboard extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         if (args.length == 1)
         {

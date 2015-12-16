@@ -4,9 +4,9 @@ public class ServerCommand
 {
     /** The command string. */
     public final String command;
-    public final ICommandSender sender;
+    public final CommandSender sender;
 
-    public ServerCommand(String input, ICommandSender sender)
+    public ServerCommand(String input, CommandSender sender)
     {
         this.command = input;
         this.sender = sender;

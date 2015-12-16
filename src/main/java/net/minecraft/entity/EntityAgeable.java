@@ -1,6 +1,6 @@
 package net.minecraft.entity;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,7 +26,7 @@ public abstract class EntityAgeable extends EntityCreature
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer player)
+    public boolean interact(Player player)
     {
         ItemStack itemstack = player.inventory.getCurrentItem();
 

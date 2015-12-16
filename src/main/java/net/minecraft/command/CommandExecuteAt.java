@@ -31,7 +31,7 @@ public class CommandExecuteAt extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.execute.usage";
     }
@@ -39,7 +39,7 @@ public class CommandExecuteAt extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(final ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(final CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 5)
         {
@@ -74,7 +74,7 @@ public class CommandExecuteAt extends CommandBase
             }
 
             String s = buildString(args, i);
-            ICommandSender icommandsender = new ICommandSender()
+            CommandSender icommandsender = new CommandSender()
             {
                 public String getName()
                 {
@@ -84,9 +84,9 @@ public class CommandExecuteAt extends CommandBase
                 {
                     return entity.getDisplayName();
                 }
-                public void addChatMessage(IChatComponent component)
+                public void sendMessage(IChatComponent component)
                 {
-                    sender.addChatMessage(component);
+                    sender.sendMessage(component);
                 }
                 public boolean canCommandSenderUseCommand(int permLevel, String commandName)
                 {
@@ -136,7 +136,7 @@ public class CommandExecuteAt extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 1 ? getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames()) : (args.length > 1 && args.length <= 4 ? func_175771_a(args, 1, pos) : (args.length > 5 && args.length <= 8 && "detect".equals(args[4]) ? func_175771_a(args, 5, pos) : (args.length == 9 && "detect".equals(args[4]) ? getListOfStringsMatchingLastWord(args, Block.blockRegistry.getKeys()) : null)));
     }

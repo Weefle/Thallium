@@ -10,8 +10,8 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
@@ -90,7 +90,7 @@ public class BlockCauldron extends Block
         }
     }
 
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, Player playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (worldIn.isRemote)
         {
@@ -136,9 +136,9 @@ public class BlockCauldron extends Block
                             {
                                 worldIn.spawnEntityInWorld(new EntityItem(worldIn, (double)pos.getX() + 0.5D, (double)pos.getY() + 1.5D, (double)pos.getZ() + 0.5D, itemstack2));
                             }
-                            else if (playerIn instanceof EntityPlayerMP)
+                            else if (playerIn instanceof PlayerMP)
                             {
-                                ((EntityPlayerMP)playerIn).sendContainerToPlayer(playerIn.inventoryContainer);
+                                ((PlayerMP)playerIn).sendContainerToPlayer(playerIn.inventoryContainer);
                             }
 
                             playerIn.triggerAchievement(StatList.field_181726_J);
@@ -186,9 +186,9 @@ public class BlockCauldron extends Block
                             {
                                 worldIn.spawnEntityInWorld(new EntityItem(worldIn, (double)pos.getX() + 0.5D, (double)pos.getY() + 1.5D, (double)pos.getZ() + 0.5D, itemstack1));
                             }
-                            else if (playerIn instanceof EntityPlayerMP)
+                            else if (playerIn instanceof PlayerMP)
                             {
-                                ((EntityPlayerMP)playerIn).sendContainerToPlayer(playerIn.inventoryContainer);
+                                ((PlayerMP)playerIn).sendContainerToPlayer(playerIn.inventoryContainer);
                             }
 
                             playerIn.triggerAchievement(StatList.field_181728_L);

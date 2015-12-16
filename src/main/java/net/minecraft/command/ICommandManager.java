@@ -6,11 +6,11 @@ import net.minecraft.util.BlockPos;
 
 public interface ICommandManager
 {
-    int executeCommand(ICommandSender sender, String rawCommand);
+    int executeCommand(CommandSender sender, String rawCommand);
 
-    List<String> getTabCompletionOptions(ICommandSender sender, String input, BlockPos pos);
+    List<String> getTabCompletionOptions(CommandSender sender, String input, BlockPos pos);
 
-    List<ICommand> getPossibleCommands(ICommandSender sender);
+    List<ICommand> getPossibleCommands(CommandSender sender);
 
     Map<String, ICommand> getCommands();
 }

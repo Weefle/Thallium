@@ -13,15 +13,15 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockPattern;
 import net.minecraft.command.CommandResultStats;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.command.CommandSender;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -46,7 +46,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
-public abstract class Entity implements ICommandSender
+public abstract class Entity implements CommandSender
 {
     private static final AxisAlignedBB ZERO_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
     private static int nextEntityID;
@@ -569,7 +569,7 @@ public abstract class Entity implements ICommandSender
             double d3 = x;
             double d4 = y;
             double d5 = z;
-            boolean flag = this.onGround && this.isSneaking() && this instanceof EntityPlayer;
+            boolean flag = this.onGround && this.isSneaking() && this instanceof Player;
 
             if (flag)
             {
@@ -1151,7 +1151,7 @@ public abstract class Entity implements ICommandSender
             float f = BlockLiquid.getLiquidHeightPercent(iblockstate.getBlock().getMetaFromState(iblockstate)) - 0.11111111F;
             float f1 = (float)(blockpos.getY() + 1) - f;
             boolean flag = d0 < (double)f1;
-            return !flag && this instanceof EntityPlayer ? false : flag;
+            return !flag && this instanceof Player ? false : flag;
         }
         else
         {
@@ -1308,7 +1308,7 @@ public abstract class Entity implements ICommandSender
     /**
      * Called by a player entity when they collide with an entity
      */
-    public void onCollideWithPlayer(EntityPlayer entityIn)
+    public void onCollideWithPlayer(Player entityIn)
     {
     }
 
@@ -1751,7 +1751,7 @@ public abstract class Entity implements ICommandSender
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer playerIn)
+    public boolean interactFirst(Player playerIn)
     {
         return false;
     }
@@ -1947,7 +1947,7 @@ public abstract class Entity implements ICommandSender
     }
 
     /**
-     * returns the inventory of this entity (only used in EntityPlayerMP it seems)
+     * returns the inventory of this entity (only used in PlayerMP it seems)
      */
     public ItemStack[] getInventory()
     {
@@ -2479,7 +2479,7 @@ public abstract class Entity implements ICommandSender
         return new HoverEvent(HoverEvent.Action.SHOW_ENTITY, new ChatComponentText(nbttagcompound.toString()));
     }
 
-    public boolean isSpectatedByPlayer(EntityPlayerMP player)
+    public boolean isSpectatedByPlayer(PlayerMP player)
     {
         return true;
     }
@@ -2517,7 +2517,7 @@ public abstract class Entity implements ICommandSender
     /**
      * Send a chat message to the CommandSender
      */
-    public void addChatMessage(IChatComponent component)
+    public void sendMessage(IChatComponent component)
     {
     }
 
@@ -2595,7 +2595,7 @@ public abstract class Entity implements ICommandSender
     /**
      * New version of interactWith that includes vector information on where precisely the player targeted.
      */
-    public boolean interactAt(EntityPlayer player, Vec3 targetVec3)
+    public boolean interactAt(Player player, Vec3 targetVec3)
     {
         return false;
     }

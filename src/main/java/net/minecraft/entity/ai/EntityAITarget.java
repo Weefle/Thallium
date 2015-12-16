@@ -6,7 +6,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.scoreboard.Team;
@@ -103,7 +103,7 @@ public abstract class EntityAITarget extends EntityAIBase
                         }
                     }
 
-                    return !(entitylivingbase instanceof EntityPlayer) || !((EntityPlayer)entitylivingbase).capabilities.disableDamage;
+                    return !(entitylivingbase instanceof Player) || !((Player)entitylivingbase).capabilities.disableDamage;
                 }
             }
         }
@@ -177,7 +177,7 @@ public abstract class EntityAITarget extends EntityAIBase
                         return false;
                     }
                 }
-                else if (target instanceof EntityPlayer && !includeInvincibles && ((EntityPlayer)target).capabilities.disableDamage)
+                else if (target instanceof Player && !includeInvincibles && ((Player)target).capabilities.disableDamage)
                 {
                     return false;
                 }

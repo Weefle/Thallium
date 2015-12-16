@@ -1,6 +1,6 @@
 package net.minecraft.command;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
@@ -10,7 +10,7 @@ public class CommandShowSeed extends CommandBase
     /**
      * Returns true if the given command sender is allowed to use this command.
      */
-    public boolean canCommandSenderUseCommand(ICommandSender sender)
+    public boolean canCommandSenderUseCommand(CommandSender sender)
     {
         return MinecraftServer.getServer().isSinglePlayer() || super.canCommandSenderUseCommand(sender);
     }
@@ -34,7 +34,7 @@ public class CommandShowSeed extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.seed.usage";
     }
@@ -42,9 +42,9 @@ public class CommandShowSeed extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
-        World world = (World)(sender instanceof EntityPlayer ? ((EntityPlayer)sender).worldObj : MinecraftServer.getServer().worldServerForDimension(0));
-        sender.addChatMessage(new ChatComponentTranslation("commands.seed.success", new Object[] {Long.valueOf(world.getSeed())}));
+        World world = (World)(sender instanceof Player ? ((Player)sender).worldObj : MinecraftServer.getServer().worldServerForDimension(0));
+        sender.sendMessage(new ChatComponentTranslation("commands.seed.success", new Object[] {Long.valueOf(world.getSeed())}));
     }
 }

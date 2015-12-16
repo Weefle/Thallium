@@ -8,7 +8,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockPos;
@@ -31,7 +31,7 @@ public class BlockBed extends BlockDirectional
         this.setBedBounds();
     }
 
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, Player playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (worldIn.isRemote)
         {
@@ -54,7 +54,7 @@ public class BlockBed extends BlockDirectional
             {
                 if (((Boolean)state.getValue(OCCUPIED)).booleanValue())
                 {
-                    EntityPlayer entityplayer = this.getPlayerInBed(worldIn, pos);
+                    Player entityplayer = this.getPlayerInBed(worldIn, pos);
 
                     if (entityplayer != null)
                     {
@@ -66,9 +66,9 @@ public class BlockBed extends BlockDirectional
                     worldIn.setBlockState(pos, state, 4);
                 }
 
-                EntityPlayer.EnumStatus entityplayer$enumstatus = playerIn.trySleep(pos);
+                Player.EnumStatus entityplayer$enumstatus = playerIn.trySleep(pos);
 
-                if (entityplayer$enumstatus == EntityPlayer.EnumStatus.OK)
+                if (entityplayer$enumstatus == Player.EnumStatus.OK)
                 {
                     state = state.withProperty(OCCUPIED, Boolean.valueOf(true));
                     worldIn.setBlockState(pos, state, 4);
@@ -76,11 +76,11 @@ public class BlockBed extends BlockDirectional
                 }
                 else
                 {
-                    if (entityplayer$enumstatus == EntityPlayer.EnumStatus.NOT_POSSIBLE_NOW)
+                    if (entityplayer$enumstatus == Player.EnumStatus.NOT_POSSIBLE_NOW)
                     {
                         playerIn.addChatComponentMessage(new ChatComponentTranslation("tile.bed.noSleep", new Object[0]));
                     }
-                    else if (entityplayer$enumstatus == EntityPlayer.EnumStatus.NOT_SAFE)
+                    else if (entityplayer$enumstatus == Player.EnumStatus.NOT_SAFE)
                     {
                         playerIn.addChatComponentMessage(new ChatComponentTranslation("tile.bed.notSafe", new Object[0]));
                     }
@@ -104,9 +104,9 @@ public class BlockBed extends BlockDirectional
         }
     }
 
-    private EntityPlayer getPlayerInBed(World worldIn, BlockPos pos)
+    private Player getPlayerInBed(World worldIn, BlockPos pos)
     {
-        for (EntityPlayer entityplayer : worldIn.playerEntities)
+        for (Player entityplayer : worldIn.playerEntities)
         {
             if (entityplayer.isPlayerSleeping() && entityplayer.playerLocation.equals(pos))
             {
@@ -233,7 +233,7 @@ public class BlockBed extends BlockDirectional
         return 1;
     }
 
-    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
+    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, Player player)
     {
         if (player.capabilities.isCreativeMode && state.getValue(PART) == BlockBed.EnumPartType.HEAD)
         {

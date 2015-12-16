@@ -14,7 +14,7 @@ import net.minecraft.block.state.pattern.BlockStateHelper;
 import net.minecraft.block.state.pattern.FactoryBlockPattern;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityWither;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -137,7 +137,7 @@ public class BlockSkull extends BlockContainer
     {
     }
 
-    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
+    public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, Player player)
     {
         if (player.capabilities.isCreativeMode)
         {
@@ -221,7 +221,7 @@ public class BlockSkull extends BlockContainer
                 entitywither.renderYawOffset = blockpattern$patternhelper.getFinger().getAxis() == EnumFacing.Axis.X ? 0.0F : 90.0F;
                 entitywither.func_82206_m();
 
-                for (EntityPlayer entityplayer : worldIn.getEntitiesWithinAABB(EntityPlayer.class, entitywither.getEntityBoundingBox().expand(50.0D, 50.0D, 50.0D)))
+                for (Player entityplayer : worldIn.getEntitiesWithinAABB(Player.class, entitywither.getEntityBoundingBox().expand(50.0D, 50.0D, 50.0D)))
                 {
                     entityplayer.triggerAchievement(AchievementList.spawnWither);
                 }

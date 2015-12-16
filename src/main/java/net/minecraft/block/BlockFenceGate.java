@@ -7,7 +7,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
@@ -103,7 +103,7 @@ public class BlockFenceGate extends BlockDirectional
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing()).withProperty(OPEN, Boolean.valueOf(false)).withProperty(POWERED, Boolean.valueOf(false)).withProperty(IN_WALL, Boolean.valueOf(false));
     }
 
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, Player playerIn, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         if (((Boolean)state.getValue(OPEN)).booleanValue())
         {
@@ -141,12 +141,12 @@ public class BlockFenceGate extends BlockDirectional
                 if (flag && !((Boolean)state.getValue(OPEN)).booleanValue() && !((Boolean)state.getValue(POWERED)).booleanValue())
                 {
                     worldIn.setBlockState(pos, state.withProperty(OPEN, Boolean.valueOf(true)).withProperty(POWERED, Boolean.valueOf(true)), 2);
-                    worldIn.playAuxSFXAtEntity((EntityPlayer)null, 1003, pos, 0);
+                    worldIn.playAuxSFXAtEntity((Player)null, 1003, pos, 0);
                 }
                 else if (!flag && ((Boolean)state.getValue(OPEN)).booleanValue() && ((Boolean)state.getValue(POWERED)).booleanValue())
                 {
                     worldIn.setBlockState(pos, state.withProperty(OPEN, Boolean.valueOf(false)).withProperty(POWERED, Boolean.valueOf(false)), 2);
-                    worldIn.playAuxSFXAtEntity((EntityPlayer)null, 1006, pos, 0);
+                    worldIn.playAuxSFXAtEntity((Player)null, 1006, pos, 0);
                 }
                 else if (flag != ((Boolean)state.getValue(POWERED)).booleanValue())
                 {

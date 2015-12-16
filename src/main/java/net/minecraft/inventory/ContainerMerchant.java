@@ -1,7 +1,7 @@
 package net.minecraft.inventory;
 
 import net.minecraft.entity.IMerchant;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -70,7 +70,7 @@ public class ContainerMerchant extends Container
         this.merchantInventory.setCurrentRecipeIndex(currentRecipeIndex);
     }
 
-    public boolean canInteractWith(EntityPlayer playerIn)
+    public boolean canInteractWith(Player playerIn)
     {
         return this.theMerchant.getCustomer() == playerIn;
     }
@@ -78,7 +78,7 @@ public class ContainerMerchant extends Container
     /**
      * Take a stack from the specified inventory slot.
      */
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    public ItemStack transferStackInSlot(Player playerIn, int index)
     {
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(index);
@@ -139,10 +139,10 @@ public class ContainerMerchant extends Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer playerIn)
+    public void onContainerClosed(Player playerIn)
     {
         super.onContainerClosed(playerIn);
-        this.theMerchant.setCustomer((EntityPlayer)null);
+        this.theMerchant.setCustomer((Player)null);
         super.onContainerClosed(playerIn);
 
         if (!this.theWorld.isRemote)

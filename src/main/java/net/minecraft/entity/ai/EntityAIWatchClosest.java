@@ -2,7 +2,7 @@ package net.minecraft.entity.ai;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 
 public class EntityAIWatchClosest extends EntityAIBase
 {
@@ -51,7 +51,7 @@ public class EntityAIWatchClosest extends EntityAIBase
                 this.closestEntity = this.theWatcher.getAttackTarget();
             }
 
-            if (this.watchedClass == EntityPlayer.class)
+            if (this.watchedClass == Player.class)
             {
                 this.closestEntity = this.theWatcher.worldObj.getClosestPlayerToEntity(this.theWatcher, (double)this.maxDistanceForPlayer);
             }

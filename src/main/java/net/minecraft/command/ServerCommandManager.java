@@ -27,7 +27,7 @@ import net.minecraft.command.server.CommandTeleport;
 import net.minecraft.command.server.CommandTestFor;
 import net.minecraft.command.server.CommandTestForBlock;
 import net.minecraft.command.server.CommandWhitelist;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.network.rcon.RConConsoleSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
@@ -115,7 +115,7 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
     /**
      * Send an informative message to the server operators
      */
-    public void notifyOperators(ICommandSender sender, ICommand command, int flags, String msgFormat, Object... msgParams)
+    public void notifyOperators(CommandSender sender, ICommand command, int flags, String msgFormat, Object... msgParams)
     {
         boolean flag = true;
         MinecraftServer minecraftserver = MinecraftServer.getServer();
@@ -131,7 +131,7 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
 
         if (flag)
         {
-            for (EntityPlayer entityplayer : minecraftserver.getConfigurationManager().func_181057_v())
+            for (Player entityplayer : minecraftserver.getConfigurationManager().func_181057_v())
             {
                 if (entityplayer != sender && minecraftserver.getConfigurationManager().canSendCommands(entityplayer.getGameProfile()) && command.canCommandSenderUseCommand(sender))
                 {
@@ -140,7 +140,7 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
 
                     if (flag1 || flag2 || !(sender instanceof RConConsoleSource) && !(sender instanceof MinecraftServer))
                     {
-                        entityplayer.addChatMessage(ichatcomponent);
+                        entityplayer.sendMessage(ichatcomponent);
                     }
                 }
             }
@@ -148,7 +148,7 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
 
         if (sender != minecraftserver && minecraftserver.worldServers[0].getGameRules().getBoolean("logAdminCommands"))
         {
-            minecraftserver.addChatMessage(ichatcomponent);
+            minecraftserver.sendMessage(ichatcomponent);
         }
 
         boolean flag3 = minecraftserver.worldServers[0].getGameRules().getBoolean("sendCommandFeedback");
@@ -160,7 +160,7 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
 
         if ((flags & 1) != 1 && flag3 || sender instanceof MinecraftServer)
         {
-            sender.addChatMessage(new ChatComponentTranslation(msgFormat, msgParams));
+            sender.sendMessage(new ChatComponentTranslation(msgFormat, msgParams));
         }
     }
 }

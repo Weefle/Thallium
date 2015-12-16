@@ -11,7 +11,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityMinecartCommandBlock;
 import net.minecraft.entity.ai.EntityMinecartMobSpawner;
 import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -161,7 +161,7 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
                 this.setRollingAmplitude(10);
                 this.setBeenAttacked();
                 this.setDamage(this.getDamage() + amount * 10.0F);
-                boolean flag = source.getEntity() instanceof EntityPlayer && ((EntityPlayer)source.getEntity()).capabilities.isCreativeMode;
+                boolean flag = source.getEntity() instanceof Player && ((Player)source.getEntity()).capabilities.isCreativeMode;
 
                 if (flag || this.getDamage() > 40.0F)
                 {
@@ -820,7 +820,7 @@ public abstract class EntityMinecart extends Entity implements IWorldNameable
             {
                 if (entityIn != this.riddenByEntity)
                 {
-                    if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer) && !(entityIn instanceof EntityIronGolem) && this.getMinecartType() == EntityMinecart.EnumMinecartType.RIDEABLE && this.motionX * this.motionX + this.motionZ * this.motionZ > 0.01D && this.riddenByEntity == null && entityIn.ridingEntity == null)
+                    if (entityIn instanceof EntityLivingBase && !(entityIn instanceof Player) && !(entityIn instanceof EntityIronGolem) && this.getMinecartType() == EntityMinecart.EnumMinecartType.RIDEABLE && this.motionX * this.motionX + this.motionZ * this.motionZ > 0.01D && this.riddenByEntity == null && entityIn.ridingEntity == null)
                     {
                         entityIn.mountEntity(this);
                     }

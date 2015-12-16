@@ -1,6 +1,6 @@
 package net.minecraft.inventory;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
@@ -147,18 +147,18 @@ public class InventoryLargeChest implements ILockableContainer
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
-    public boolean isUseableByPlayer(EntityPlayer player)
+    public boolean isUseableByPlayer(Player player)
     {
         return this.upperChest.isUseableByPlayer(player) && this.lowerChest.isUseableByPlayer(player);
     }
 
-    public void openInventory(EntityPlayer player)
+    public void openInventory(Player player)
     {
         this.upperChest.openInventory(player);
         this.lowerChest.openInventory(player);
     }
 
-    public void closeInventory(EntityPlayer player)
+    public void closeInventory(Player player)
     {
         this.upperChest.closeInventory(player);
         this.lowerChest.closeInventory(player);
@@ -207,7 +207,7 @@ public class InventoryLargeChest implements ILockableContainer
         return this.upperChest.getGuiID();
     }
 
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+    public Container createContainer(InventoryPlayer playerInventory, Player playerIn)
     {
         return new ContainerChest(playerInventory, this, playerIn);
     }

@@ -1,7 +1,7 @@
 package net.minecraft.command;
 
 import java.util.List;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 
@@ -26,7 +26,7 @@ public class CommandXP extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.xp.usage";
     }
@@ -34,7 +34,7 @@ public class CommandXP extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length <= 0)
         {
@@ -58,7 +58,7 @@ public class CommandXP extends CommandBase
                 i *= -1;
             }
 
-            EntityPlayer entityplayer = args.length > 1 ? getPlayer(sender, args[1]) : getCommandSenderAsPlayer(sender);
+            Player entityplayer = args.length > 1 ? getPlayer(sender, args[1]) : getCommandSenderAsPlayer(sender);
 
             if (flag)
             {
@@ -90,7 +90,7 @@ public class CommandXP extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 2 ? getListOfStringsMatchingLastWord(args, this.getAllUsernames()) : null;
     }

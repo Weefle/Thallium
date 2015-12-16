@@ -27,8 +27,8 @@ import net.minecraft.entity.INpc;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityWaterMob;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -247,7 +247,7 @@ public class WorldServer extends World implements IThreadListener
             int i = 0;
             int j = 0;
 
-            for (EntityPlayer entityplayer : this.playerEntities)
+            for (Player entityplayer : this.playerEntities)
             {
                 if (entityplayer.isSpectator())
                 {
@@ -267,7 +267,7 @@ public class WorldServer extends World implements IThreadListener
     {
         this.allPlayersSleeping = false;
 
-        for (EntityPlayer entityplayer : this.playerEntities)
+        for (Player entityplayer : this.playerEntities)
         {
             if (entityplayer.isPlayerSleeping())
             {
@@ -290,7 +290,7 @@ public class WorldServer extends World implements IThreadListener
     {
         if (this.allPlayersSleeping && !this.isRemote)
         {
-            for (EntityPlayer entityplayer : this.playerEntities)
+            for (Player entityplayer : this.playerEntities)
             {
                 if (entityplayer.isSpectator() || !entityplayer.isPlayerFullyAsleep())
                 {
@@ -710,7 +710,7 @@ public class WorldServer extends World implements IThreadListener
         return list;
     }
 
-    public boolean isBlockModifiable(EntityPlayer player, BlockPos pos)
+    public boolean isBlockModifiable(Player player, BlockPos pos)
     {
         return !this.mcServer.isBlockProtected(this, pos, player) && this.getWorldBorder().contains(pos);
     }
@@ -982,11 +982,11 @@ public class WorldServer extends World implements IThreadListener
             explosion.func_180342_d();
         }
 
-        for (EntityPlayer entityplayer : this.playerEntities)
+        for (Player entityplayer : this.playerEntities)
         {
             if (entityplayer.getDistanceSq(x, y, z) < 4096.0D)
             {
-                ((EntityPlayerMP)entityplayer).playerNetServerHandler.sendPacket(new S27PacketExplosion(x, y, z, strength, explosion.getAffectedBlockPositions(), (Vec3)explosion.getPlayerKnockbackMap().get(entityplayer)));
+                ((PlayerMP)entityplayer).playerNetServerHandler.sendPacket(new S27PacketExplosion(x, y, z, strength, explosion.getAffectedBlockPositions(), (Vec3)explosion.getPlayerKnockbackMap().get(entityplayer)));
             }
         }
 
@@ -1120,7 +1120,7 @@ public class WorldServer extends World implements IThreadListener
 
         for (int i = 0; i < this.playerEntities.size(); ++i)
         {
-            EntityPlayerMP entityplayermp = (EntityPlayerMP)this.playerEntities.get(i);
+            PlayerMP entityplayermp = (PlayerMP)this.playerEntities.get(i);
             BlockPos blockpos = entityplayermp.getPosition();
             double d0 = blockpos.distanceSq(xCoord, yCoord, zCoord);
 

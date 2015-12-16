@@ -34,7 +34,7 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryBasic;
@@ -68,7 +68,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
     Village villageObj;
 
     /** This villager's current customer. */
-    private EntityPlayer buyingPlayer;
+    private Player buyingPlayer;
 
     /** Initialises the MerchantRecipeList.java */
     private MerchantRecipeList buyingList;
@@ -117,7 +117,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 0.6D));
         this.tasks.addTask(6, new EntityAIVillagerMate(this));
         this.tasks.addTask(7, new EntityAIFollowGolem(this));
-        this.tasks.addTask(9, new EntityAIWatchClosest2(this, EntityPlayer.class, 3.0F, 1.0F));
+        this.tasks.addTask(9, new EntityAIWatchClosest2(this, Player.class, 3.0F, 1.0F));
         this.tasks.addTask(9, new EntityAIVillagerInteract(this));
         this.tasks.addTask(9, new EntityAIWander(this, 0.6D));
         this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityLiving.class, 8.0F));
@@ -223,7 +223,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer player)
+    public boolean interact(Player player)
     {
         ItemStack itemstack = player.inventory.getCurrentItem();
         boolean flag = itemstack != null && itemstack.getItem() == Items.spawn_egg;
@@ -387,7 +387,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
         {
             this.villageObj.addOrRenewAgressor(livingBase);
 
-            if (livingBase instanceof EntityPlayer)
+            if (livingBase instanceof Player)
             {
                 int i = -1;
 
@@ -417,7 +417,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
 
             if (entity != null)
             {
-                if (entity instanceof EntityPlayer)
+                if (entity instanceof Player)
                 {
                     this.villageObj.setReputationForPlayer(entity.getName(), -2);
                 }
@@ -428,7 +428,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
             }
             else
             {
-                EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 16.0D);
+                Player entityplayer = this.worldObj.getClosestPlayerToEntity(this, 16.0D);
 
                 if (entityplayer != null)
                 {
@@ -440,12 +440,12 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
         super.onDeath(cause);
     }
 
-    public void setCustomer(EntityPlayer p_70932_1_)
+    public void setCustomer(Player p_70932_1_)
     {
         this.buyingPlayer = p_70932_1_;
     }
 
-    public EntityPlayer getCustomer()
+    public Player getCustomer()
     {
         return this.buyingPlayer;
     }
@@ -556,7 +556,7 @@ public class EntityVillager extends EntityAgeable implements IMerchant, INpc
         }
     }
 
-    public MerchantRecipeList getRecipes(EntityPlayer p_70934_1_)
+    public MerchantRecipeList getRecipes(Player p_70934_1_)
     {
         if (this.buyingList == null)
         {

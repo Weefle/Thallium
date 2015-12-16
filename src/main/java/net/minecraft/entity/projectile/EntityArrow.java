@@ -9,8 +9,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -70,7 +70,7 @@ public class EntityArrow extends Entity implements IProjectile
         this.renderDistanceWeight = 10.0D;
         this.shootingEntity = shooter;
 
-        if (shooter instanceof EntityPlayer)
+        if (shooter instanceof Player)
         {
             this.canBePickedUp = 1;
         }
@@ -99,7 +99,7 @@ public class EntityArrow extends Entity implements IProjectile
         this.renderDistanceWeight = 10.0D;
         this.shootingEntity = shooter;
 
-        if (shooter instanceof EntityPlayer)
+        if (shooter instanceof Player)
         {
             this.canBePickedUp = 1;
         }
@@ -248,11 +248,11 @@ public class EntityArrow extends Entity implements IProjectile
                 movingobjectposition = new MovingObjectPosition(entity);
             }
 
-            if (movingobjectposition != null && movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof EntityPlayer)
+            if (movingobjectposition != null && movingobjectposition.entityHit != null && movingobjectposition.entityHit instanceof Player)
             {
-                EntityPlayer entityplayer = (EntityPlayer)movingobjectposition.entityHit;
+                Player entityplayer = (Player)movingobjectposition.entityHit;
 
-                if (entityplayer.capabilities.disableDamage || this.shootingEntity instanceof EntityPlayer && !((EntityPlayer)this.shootingEntity).canAttackPlayer(entityplayer))
+                if (entityplayer.capabilities.disableDamage || this.shootingEntity instanceof Player && !((Player)this.shootingEntity).canAttackPlayer(entityplayer))
                 {
                     movingobjectposition = null;
                 }
@@ -313,9 +313,9 @@ public class EntityArrow extends Entity implements IProjectile
                                 EnchantmentHelper.applyArthropodEnchantments((EntityLivingBase)this.shootingEntity, entitylivingbase);
                             }
 
-                            if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity && movingobjectposition.entityHit instanceof EntityPlayer && this.shootingEntity instanceof EntityPlayerMP)
+                            if (this.shootingEntity != null && movingobjectposition.entityHit != this.shootingEntity && movingobjectposition.entityHit instanceof Player && this.shootingEntity instanceof PlayerMP)
                             {
-                                ((EntityPlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
+                                ((PlayerMP)this.shootingEntity).playerNetServerHandler.sendPacket(new S2BPacketChangeGameState(6, 0.0F));
                             }
                         }
 
@@ -487,7 +487,7 @@ public class EntityArrow extends Entity implements IProjectile
     /**
      * Called by a player entity when they collide with an entity
      */
-    public void onCollideWithPlayer(EntityPlayer entityIn)
+    public void onCollideWithPlayer(Player entityIn)
     {
         if (!this.worldObj.isRemote && this.inGround && this.arrowShake <= 0)
         {

@@ -28,7 +28,7 @@ public class CommandWorldBorder extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.worldborder.usage";
     }
@@ -36,7 +36,7 @@ public class CommandWorldBorder extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 1)
         {
@@ -192,7 +192,7 @@ public class CommandWorldBorder extends CommandBase
 
                 double d7 = worldborder.getDiameter();
                 sender.setCommandStat(CommandResultStats.Type.QUERY_RESULT, MathHelper.floor_double(d7 + 0.5D));
-                sender.addChatMessage(new ChatComponentTranslation("commands.worldborder.get.success", new Object[] {String.format("%.0f", new Object[]{Double.valueOf(d7)})}));
+                sender.sendMessage(new ChatComponentTranslation("commands.worldborder.get.success", new Object[] {String.format("%.0f", new Object[]{Double.valueOf(d7)})}));
             }
         }
     }
@@ -202,7 +202,7 @@ public class CommandWorldBorder extends CommandBase
         return MinecraftServer.getServer().worldServers[0].getWorldBorder();
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 1 ? getListOfStringsMatchingLastWord(args, new String[] {"set", "center", "damage", "warning", "add", "get"}): (args.length == 2 && args[0].equals("damage") ? getListOfStringsMatchingLastWord(args, new String[] {"buffer", "amount"}): (args.length >= 2 && args.length <= 3 && args[0].equals("center") ? func_181043_b(args, 1, pos) : (args.length == 2 && args[0].equals("warning") ? getListOfStringsMatchingLastWord(args, new String[] {"time", "distance"}): null)));
     }

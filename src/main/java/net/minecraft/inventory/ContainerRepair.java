@@ -6,7 +6,7 @@ import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -46,9 +46,9 @@ public class ContainerRepair extends Container
     private String repairedItemName;
 
     /** The player that has this container open. */
-    private final EntityPlayer thePlayer;
+    private final Player thePlayer;
 
-    public ContainerRepair(InventoryPlayer playerInventory, final World worldIn, final BlockPos blockPosIn, EntityPlayer player)
+    public ContainerRepair(InventoryPlayer playerInventory, final World worldIn, final BlockPos blockPosIn, Player player)
     {
         this.selfPosition = blockPosIn;
         this.theWorld = worldIn;
@@ -61,11 +61,11 @@ public class ContainerRepair extends Container
             {
                 return false;
             }
-            public boolean canTakeStack(EntityPlayer playerIn)
+            public boolean canTakeStack(Player playerIn)
             {
                 return (playerIn.capabilities.isCreativeMode || playerIn.experienceLevel >= ContainerRepair.this.maximumCost) && ContainerRepair.this.maximumCost > 0 && this.getHasStack();
             }
-            public void onPickupFromSlot(EntityPlayer playerIn, ItemStack stack)
+            public void onPickupFromSlot(Player playerIn, ItemStack stack)
             {
                 if (!playerIn.capabilities.isCreativeMode)
                 {
@@ -388,7 +388,7 @@ public class ContainerRepair extends Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer playerIn)
+    public void onContainerClosed(Player playerIn)
     {
         super.onContainerClosed(playerIn);
 
@@ -406,7 +406,7 @@ public class ContainerRepair extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer playerIn)
+    public boolean canInteractWith(Player playerIn)
     {
         return this.theWorld.getBlockState(this.selfPosition).getBlock() != Blocks.anvil ? false : playerIn.getDistanceSq((double)this.selfPosition.getX() + 0.5D, (double)this.selfPosition.getY() + 0.5D, (double)this.selfPosition.getZ() + 0.5D) <= 64.0D;
     }
@@ -414,7 +414,7 @@ public class ContainerRepair extends Container
     /**
      * Take a stack from the specified inventory slot.
      */
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    public ItemStack transferStackInSlot(Player playerIn, int index)
     {
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(index);

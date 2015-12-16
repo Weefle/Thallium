@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.server.dedicated.PropertyManager;
@@ -72,7 +72,7 @@ public class PreYggdrasilConverter
         {
             for (String s : astring)
             {
-                UUID uuid = EntityPlayer.getUUID(new GameProfile((UUID)null, s));
+                UUID uuid = Player.getUUID(new GameProfile((UUID)null, s));
                 GameProfile gameprofile = new GameProfile(uuid, s);
                 callback.onProfileLookupSucceeded(gameprofile);
             }
@@ -354,7 +354,7 @@ public class PreYggdrasilConverter
             }
             else
             {
-                return EntityPlayer.getUUID(new GameProfile((UUID)null, p_152719_0_)).toString();
+                return Player.getUUID(new GameProfile((UUID)null, p_152719_0_)).toString();
             }
         }
         else

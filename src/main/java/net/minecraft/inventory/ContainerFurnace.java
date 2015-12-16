@@ -1,6 +1,6 @@
 package net.minecraft.inventory;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -79,7 +79,7 @@ public class ContainerFurnace extends Container
         this.field_178153_g = this.tileFurnace.getField(3);
     }
 
-    public boolean canInteractWith(EntityPlayer playerIn)
+    public boolean canInteractWith(Player playerIn)
     {
         return this.tileFurnace.isUseableByPlayer(playerIn);
     }
@@ -87,7 +87,7 @@ public class ContainerFurnace extends Container
     /**
      * Take a stack from the specified inventory slot.
      */
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    public ItemStack transferStackInSlot(Player playerIn, int index)
     {
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(index);

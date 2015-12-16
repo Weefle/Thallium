@@ -7,7 +7,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIFindEntityNearestPlayer;
 import net.minecraft.entity.ai.EntityMoveHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -71,10 +71,10 @@ public class EntityGhast extends EntityFlying implements IMob
         {
             return false;
         }
-        else if ("fireball".equals(source.getDamageType()) && source.getEntity() instanceof EntityPlayer)
+        else if ("fireball".equals(source.getDamageType()) && source.getEntity() instanceof Player)
         {
             super.attackEntityFrom(source, 1000.0F);
-            ((EntityPlayer)source.getEntity()).triggerAchievement(AchievementList.ghast);
+            ((Player)source.getEntity()).triggerAchievement(AchievementList.ghast);
             return true;
         }
         else
@@ -233,7 +233,7 @@ public class EntityGhast extends EntityFlying implements IMob
 
                 if (this.attackTimer == 10)
                 {
-                    world.playAuxSFXAtEntity((EntityPlayer)null, 1007, new BlockPos(this.parentEntity), 0);
+                    world.playAuxSFXAtEntity((Player)null, 1007, new BlockPos(this.parentEntity), 0);
                 }
 
                 if (this.attackTimer == 20)
@@ -243,7 +243,7 @@ public class EntityGhast extends EntityFlying implements IMob
                     double d2 = entitylivingbase.posX - (this.parentEntity.posX + vec3.xCoord * d1);
                     double d3 = entitylivingbase.getEntityBoundingBox().minY + (double)(entitylivingbase.height / 2.0F) - (0.5D + this.parentEntity.posY + (double)(this.parentEntity.height / 2.0F));
                     double d4 = entitylivingbase.posZ - (this.parentEntity.posZ + vec3.zCoord * d1);
-                    world.playAuxSFXAtEntity((EntityPlayer)null, 1008, new BlockPos(this.parentEntity), 0);
+                    world.playAuxSFXAtEntity((Player)null, 1008, new BlockPos(this.parentEntity), 0);
                     EntityLargeFireball entitylargefireball = new EntityLargeFireball(world, this.parentEntity, d2, d3, d4);
                     entitylargefireball.explosionPower = this.parentEntity.getFireballStrength();
                     entitylargefireball.posX = this.parentEntity.posX + vec3.xCoord * d1;

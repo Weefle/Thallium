@@ -1,7 +1,7 @@
 package net.minecraft.entity.item;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.world.World;
 
 public class EntityMinecartEmpty extends EntityMinecart
@@ -19,9 +19,9 @@ public class EntityMinecartEmpty extends EntityMinecart
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer playerIn)
+    public boolean interactFirst(Player playerIn)
     {
-        if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != playerIn)
+        if (this.riddenByEntity != null && this.riddenByEntity instanceof Player && this.riddenByEntity != playerIn)
         {
             return true;
         }

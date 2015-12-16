@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
@@ -80,7 +80,7 @@ public class ItemPotion extends Item
      * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
      * the Item before the action is complete.
      */
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityPlayer playerIn)
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, Player playerIn)
     {
         if (!playerIn.capabilities.isCreativeMode)
         {
@@ -134,7 +134,7 @@ public class ItemPotion extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, Player playerIn)
     {
         if (isSplash(itemStackIn.getMetadata()))
         {

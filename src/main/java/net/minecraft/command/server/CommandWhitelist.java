@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import java.util.List;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.command.CommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
@@ -32,7 +32,7 @@ public class CommandWhitelist extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.whitelist.usage";
     }
@@ -40,7 +40,7 @@ public class CommandWhitelist extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 1)
         {
@@ -62,9 +62,9 @@ public class CommandWhitelist extends CommandBase
             }
             else if (args[0].equals("list"))
             {
-                sender.addChatMessage(new ChatComponentTranslation("commands.whitelist.list", new Object[] {Integer.valueOf(minecraftserver.getConfigurationManager().getWhitelistedPlayerNames().length), Integer.valueOf(minecraftserver.getConfigurationManager().getAvailablePlayerDat().length)}));
+                sender.sendMessage(new ChatComponentTranslation("commands.whitelist.list", new Object[] {Integer.valueOf(minecraftserver.getConfigurationManager().getWhitelistedPlayerNames().length), Integer.valueOf(minecraftserver.getConfigurationManager().getAvailablePlayerDat().length)}));
                 String[] astring = minecraftserver.getConfigurationManager().getWhitelistedPlayerNames();
-                sender.addChatMessage(new ChatComponentText(joinNiceString(astring)));
+                sender.sendMessage(new ChatComponentText(joinNiceString(astring)));
             }
             else if (args[0].equals("add"))
             {
@@ -108,7 +108,7 @@ public class CommandWhitelist extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         if (args.length == 1)
         {

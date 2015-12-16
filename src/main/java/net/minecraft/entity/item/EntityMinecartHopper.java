@@ -2,7 +2,7 @@ package net.minecraft.entity.item;
 
 import java.util.List;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
@@ -59,7 +59,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer playerIn)
+    public boolean interactFirst(Player playerIn)
     {
         if (!this.worldObj.isRemote)
         {
@@ -231,7 +231,7 @@ public class EntityMinecartHopper extends EntityMinecartContainer implements IHo
         return "minecraft:hopper";
     }
 
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+    public Container createContainer(InventoryPlayer playerInventory, Player playerIn)
     {
         return new ContainerHopper(playerInventory, this, playerIn);
     }

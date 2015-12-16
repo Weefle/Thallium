@@ -26,7 +26,7 @@ public class CommandTime extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.time.usage";
     }
@@ -34,7 +34,7 @@ public class CommandTime extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length > 1)
         {
@@ -91,7 +91,7 @@ public class CommandTime extends CommandBase
         throw new WrongUsageException("commands.time.usage", new Object[0]);
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 1 ? getListOfStringsMatchingLastWord(args, new String[] {"set", "add", "query"}): (args.length == 2 && args[0].equals("set") ? getListOfStringsMatchingLastWord(args, new String[] {"day", "night"}): (args.length == 2 && args[0].equals("query") ? getListOfStringsMatchingLastWord(args, new String[] {"daytime", "gametime"}): null));
     }
@@ -99,7 +99,7 @@ public class CommandTime extends CommandBase
     /**
      * Set the time in the server object.
      */
-    protected void setTime(ICommandSender p_71552_1_, int p_71552_2_)
+    protected void setTime(CommandSender p_71552_1_, int p_71552_2_)
     {
         for (int i = 0; i < MinecraftServer.getServer().worldServers.length; ++i)
         {
@@ -110,7 +110,7 @@ public class CommandTime extends CommandBase
     /**
      * Adds (or removes) time in the server object.
      */
-    protected void addTime(ICommandSender p_71553_1_, int p_71553_2_)
+    protected void addTime(CommandSender p_71553_1_, int p_71553_2_)
     {
         for (int i = 0; i < MinecraftServer.getServer().worldServers.length; ++i)
         {

@@ -2,7 +2,7 @@ package net.minecraft.command;
 
 import java.util.List;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 
@@ -27,7 +27,7 @@ public class CommandKill extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.kill.usage";
     }
@@ -35,11 +35,11 @@ public class CommandKill extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length == 0)
         {
-            EntityPlayer entityplayer = getCommandSenderAsPlayer(sender);
+            Player entityplayer = getCommandSenderAsPlayer(sender);
             entityplayer.onKillCommand();
             notifyOperators(sender, this, "commands.kill.successful", new Object[] {entityplayer.getDisplayName()});
         }
@@ -59,7 +59,7 @@ public class CommandKill extends CommandBase
         return index == 0;
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 1 ? getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames()) : null;
     }

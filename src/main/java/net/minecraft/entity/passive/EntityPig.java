@@ -14,7 +14,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,7 +42,7 @@ public class EntityPig extends EntityAnimal
         this.tasks.addTask(4, new EntityAITempt(this, 1.2D, Items.carrot, false));
         this.tasks.addTask(5, new EntityAIFollowParent(this, 1.1D));
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+        this.tasks.addTask(7, new EntityAIWatchClosest(this, Player.class, 6.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
     }
 
@@ -59,7 +59,7 @@ public class EntityPig extends EntityAnimal
      */
     public boolean canBeSteered()
     {
-        ItemStack itemstack = ((EntityPlayer)this.riddenByEntity).getHeldItem();
+        ItemStack itemstack = ((Player)this.riddenByEntity).getHeldItem();
         return itemstack != null && itemstack.getItem() == Items.carrot_on_a_stick;
     }
 
@@ -119,7 +119,7 @@ public class EntityPig extends EntityAnimal
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer player)
+    public boolean interact(Player player)
     {
         if (super.interact(player))
         {
@@ -216,9 +216,9 @@ public class EntityPig extends EntityAnimal
     {
         super.fall(distance, damageMultiplier);
 
-        if (distance > 5.0F && this.riddenByEntity instanceof EntityPlayer)
+        if (distance > 5.0F && this.riddenByEntity instanceof Player)
         {
-            ((EntityPlayer)this.riddenByEntity).triggerAchievement(AchievementList.flyPig);
+            ((Player)this.riddenByEntity).triggerAchievement(AchievementList.flyPig);
         }
     }
 

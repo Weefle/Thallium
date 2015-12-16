@@ -9,8 +9,8 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.scoreboard.Team;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,11 +36,11 @@ public class EntityAIFindEntityNearestPlayer extends EntityAIBase
         {
             public boolean apply(Entity p_apply_1_)
             {
-                if (!(p_apply_1_ instanceof EntityPlayer))
+                if (!(p_apply_1_ instanceof Player))
                 {
                     return false;
                 }
-                else if (((EntityPlayer)p_apply_1_).capabilities.disableDamage)
+                else if (((Player)p_apply_1_).capabilities.disableDamage)
                 {
                     return false;
                 }
@@ -55,7 +55,7 @@ public class EntityAIFindEntityNearestPlayer extends EntityAIBase
 
                     if (p_apply_1_.isInvisible())
                     {
-                        float f = ((EntityPlayer)p_apply_1_).getArmorVisibility();
+                        float f = ((Player)p_apply_1_).getArmorVisibility();
 
                         if (f < 0.1F)
                         {
@@ -78,7 +78,7 @@ public class EntityAIFindEntityNearestPlayer extends EntityAIBase
     public boolean shouldExecute()
     {
         double d0 = this.func_179431_f();
-        List<EntityPlayer> list = this.field_179434_b.worldObj.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, this.field_179434_b.getEntityBoundingBox().expand(d0, 4.0D, d0), this.field_179435_c);
+        List<Player> list = this.field_179434_b.worldObj.<Player>getEntitiesWithinAABB(Player.class, this.field_179434_b.getEntityBoundingBox().expand(d0, 4.0D, d0), this.field_179435_c);
         Collections.sort(list, this.field_179432_d);
 
         if (list.isEmpty())
@@ -107,7 +107,7 @@ public class EntityAIFindEntityNearestPlayer extends EntityAIBase
         {
             return false;
         }
-        else if (entitylivingbase instanceof EntityPlayer && ((EntityPlayer)entitylivingbase).capabilities.disableDamage)
+        else if (entitylivingbase instanceof Player && ((Player)entitylivingbase).capabilities.disableDamage)
         {
             return false;
         }
@@ -123,7 +123,7 @@ public class EntityAIFindEntityNearestPlayer extends EntityAIBase
             else
             {
                 double d0 = this.func_179431_f();
-                return this.field_179434_b.getDistanceSqToEntity(entitylivingbase) > d0 * d0 ? false : !(entitylivingbase instanceof EntityPlayerMP) || !((EntityPlayerMP)entitylivingbase).theItemInWorldManager.isCreative();
+                return this.field_179434_b.getDistanceSqToEntity(entitylivingbase) > d0 * d0 ? false : !(entitylivingbase instanceof PlayerMP) || !((PlayerMP)entitylivingbase).theItemInWorldManager.isCreative();
             }
         }
     }

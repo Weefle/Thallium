@@ -20,7 +20,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityWitherSkull;
 import net.minecraft.init.Blocks;
@@ -66,7 +66,7 @@ public class EntityWither extends EntityMob implements IRangedAttackMob
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 40, 20.0F));
         this.tasks.addTask(5, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(6, new EntityAIWatchClosest(this, Player.class, 8.0F));
         this.tasks.addTask(7, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, false, false, attackEntitySelector));
@@ -283,7 +283,7 @@ public class EntityWither extends EntityMob implements IRangedAttackMob
 
                         if (entity != null && entity.isEntityAlive() && this.getDistanceSqToEntity(entity) <= 900.0D && this.canEntityBeSeen(entity))
                         {
-                            if (entity instanceof EntityPlayer && ((EntityPlayer)entity).capabilities.disableDamage)
+                            if (entity instanceof Player && ((Player)entity).capabilities.disableDamage)
                             {
                                 this.updateWatchedTargetId(i, 0);
                             }
@@ -309,9 +309,9 @@ public class EntityWither extends EntityMob implements IRangedAttackMob
 
                             if (entitylivingbase != this && entitylivingbase.isEntityAlive() && this.canEntityBeSeen(entitylivingbase))
                             {
-                                if (entitylivingbase instanceof EntityPlayer)
+                                if (entitylivingbase instanceof Player)
                                 {
-                                    if (!((EntityPlayer)entitylivingbase).capabilities.disableDamage)
+                                    if (!((Player)entitylivingbase).capabilities.disableDamage)
                                     {
                                         this.updateWatchedTargetId(i, entitylivingbase.getEntityId());
                                     }
@@ -372,7 +372,7 @@ public class EntityWither extends EntityMob implements IRangedAttackMob
 
                     if (flag)
                     {
-                        this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1012, new BlockPos(this), 0);
+                        this.worldObj.playAuxSFXAtEntity((Player)null, 1012, new BlockPos(this), 0);
                     }
                 }
             }
@@ -470,7 +470,7 @@ public class EntityWither extends EntityMob implements IRangedAttackMob
      */
     private void launchWitherSkullToCoords(int p_82209_1_, double x, double y, double z, boolean invulnerable)
     {
-        this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1014, new BlockPos(this), 0);
+        this.worldObj.playAuxSFXAtEntity((Player)null, 1014, new BlockPos(this), 0);
         double d0 = this.func_82214_u(p_82209_1_);
         double d1 = this.func_82208_v(p_82209_1_);
         double d2 = this.func_82213_w(p_82209_1_);
@@ -527,7 +527,7 @@ public class EntityWither extends EntityMob implements IRangedAttackMob
 
                 Entity entity1 = source.getEntity();
 
-                if (entity1 != null && !(entity1 instanceof EntityPlayer) && entity1 instanceof EntityLivingBase && ((EntityLivingBase)entity1).getCreatureAttribute() == this.getCreatureAttribute())
+                if (entity1 != null && !(entity1 instanceof Player) && entity1 instanceof EntityLivingBase && ((EntityLivingBase)entity1).getCreatureAttribute() == this.getCreatureAttribute())
                 {
                     return false;
                 }
@@ -567,7 +567,7 @@ public class EntityWither extends EntityMob implements IRangedAttackMob
 
         if (!this.worldObj.isRemote)
         {
-            for (EntityPlayer entityplayer : this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(50.0D, 100.0D, 50.0D)))
+            for (Player entityplayer : this.worldObj.getEntitiesWithinAABB(Player.class, this.getEntityBoundingBox().expand(50.0D, 100.0D, 50.0D)))
             {
                 entityplayer.triggerAchievement(AchievementList.killWither);
             }

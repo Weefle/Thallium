@@ -12,7 +12,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.BaseAttributeMap;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 
@@ -166,15 +166,15 @@ public class Potion
         {
             entityLivingBaseIn.attackEntityFrom(DamageSource.wither, 1.0F);
         }
-        else if (this.id == hunger.id && entityLivingBaseIn instanceof EntityPlayer)
+        else if (this.id == hunger.id && entityLivingBaseIn instanceof Player)
         {
-            ((EntityPlayer)entityLivingBaseIn).addExhaustion(0.025F * (float)(p_76394_2_ + 1));
+            ((Player)entityLivingBaseIn).addExhaustion(0.025F * (float)(p_76394_2_ + 1));
         }
-        else if (this.id == saturation.id && entityLivingBaseIn instanceof EntityPlayer)
+        else if (this.id == saturation.id && entityLivingBaseIn instanceof Player)
         {
             if (!entityLivingBaseIn.worldObj.isRemote)
             {
-                ((EntityPlayer)entityLivingBaseIn).getFoodStats().addStats(p_76394_2_ + 1, 1.0F);
+                ((Player)entityLivingBaseIn).getFoodStats().addStats(p_76394_2_ + 1, 1.0F);
             }
         }
         else if ((this.id != heal.id || entityLivingBaseIn.isEntityUndead()) && (this.id != harm.id || !entityLivingBaseIn.isEntityUndead()))

@@ -2,7 +2,7 @@ package net.minecraft.command;
 
 import com.google.gson.JsonParseException;
 import java.util.List;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.network.play.server.S45PacketTitle;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
@@ -35,7 +35,7 @@ public class CommandTitle extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.title.usage";
     }
@@ -43,7 +43,7 @@ public class CommandTitle extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 2)
         {
@@ -64,7 +64,7 @@ public class CommandTitle extends CommandBase
                 }
             }
 
-            EntityPlayerMP entityplayermp = getPlayer(sender, args[0]);
+            PlayerMP entityplayermp = getPlayer(sender, args[0]);
             S45PacketTitle.Type s45packettitle$type = S45PacketTitle.Type.byName(args[1]);
 
             if (s45packettitle$type != S45PacketTitle.Type.CLEAR && s45packettitle$type != S45PacketTitle.Type.RESET)
@@ -122,7 +122,7 @@ public class CommandTitle extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 1 ? getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames()) : (args.length == 2 ? getListOfStringsMatchingLastWord(args, S45PacketTitle.Type.getNames()) : null);
     }

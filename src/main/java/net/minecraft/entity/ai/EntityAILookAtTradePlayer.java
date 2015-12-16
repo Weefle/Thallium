@@ -1,7 +1,7 @@
 package net.minecraft.entity.ai;
 
 import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 
 public class EntityAILookAtTradePlayer extends EntityAIWatchClosest
 {
@@ -9,7 +9,7 @@ public class EntityAILookAtTradePlayer extends EntityAIWatchClosest
 
     public EntityAILookAtTradePlayer(EntityVillager theMerchantIn)
     {
-        super(theMerchantIn, EntityPlayer.class, 8.0F);
+        super(theMerchantIn, Player.class, 8.0F);
         this.theMerchant = theMerchantIn;
     }
 

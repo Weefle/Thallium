@@ -33,15 +33,13 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import javax.imageio.ImageIO;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandResultStats;
-import net.minecraft.command.ICommandManager;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.ServerCommandManager;
+
+import net.minecraft.command.*;
+import net.minecraft.command.CommandSender;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.init.Bootstrap;
 import net.minecraft.network.NetworkSystem;
 import net.minecraft.network.ServerStatusResponse;
@@ -82,7 +80,7 @@ import org.thallium.ThalliumHandler;
 import org.thallium.plugin.MinecraftPlugin;
 import org.thallium.plugin.loader.PluginLoader;
 
-public abstract class MinecraftServer implements Runnable, ICommandSender, IThreadListener, IPlayerUsage
+public abstract class MinecraftServer implements Runnable, CommandSender, IThreadListener, IPlayerUsage
 {
     private static final Logger logger = LogManager.getLogger();
     public static final File USER_CACHE_FILE = new File("usercache.json");
@@ -691,7 +689,7 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
 
             for (int k = 0; k < agameprofile.length; ++k)
             {
-                agameprofile[k] = ((EntityPlayerMP)this.serverConfigManager.func_181057_v().get(j + k)).getGameProfile();
+                agameprofile[k] = ((PlayerMP)this.serverConfigManager.func_181057_v().get(j + k)).getGameProfile();
             }
 
             Collections.shuffle(Arrays.asList(agameprofile));
@@ -1091,7 +1089,7 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
         return report;
     }
 
-    public List<String> getTabCompletions(ICommandSender sender, String input, BlockPos pos)
+    public List<String> getTabCompletions(CommandSender sender, String input, BlockPos pos)
     {
         List<String> list = Lists.<String>newArrayList();
 
@@ -1159,7 +1157,7 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     /**
      * Send a chat message to the CommandSender
      */
-    public void addChatMessage(IChatComponent component)
+    public void sendMessage(IChatComponent component)
     {
         logger.info(component.getUnformattedText());
     }
@@ -1562,7 +1560,7 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
         return 16;
     }
 
-    public boolean isBlockProtected(World worldIn, BlockPos pos, EntityPlayer playerIn)
+    public boolean isBlockProtected(World worldIn, BlockPos pos, Player playerIn)
     {
         return false;
     }

@@ -5,7 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -121,7 +121,7 @@ public class EntityBoat extends Entity
                 this.setTimeSinceHit(10);
                 this.setDamageTaken(this.getDamageTaken() + amount * 10.0F);
                 this.setBeenAttacked();
-                boolean flag = source.getEntity() instanceof EntityPlayer && ((EntityPlayer)source.getEntity()).capabilities.isCreativeMode;
+                boolean flag = source.getEntity() instanceof Player && ((Player)source.getEntity()).capabilities.isCreativeMode;
 
                 if (flag || this.getDamageTaken() > 40.0F)
                 {
@@ -441,9 +441,9 @@ public class EntityBoat extends Entity
     /**
      * First layer of player interaction
      */
-    public boolean interactFirst(EntityPlayer playerIn)
+    public boolean interactFirst(Player playerIn)
     {
-        if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayer && this.riddenByEntity != playerIn)
+        if (this.riddenByEntity != null && this.riddenByEntity instanceof Player && this.riddenByEntity != playerIn)
         {
             return true;
         }

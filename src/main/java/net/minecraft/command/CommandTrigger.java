@@ -3,7 +3,7 @@ package net.minecraft.command;
 import com.google.common.collect.Lists;
 import java.util.List;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.scoreboard.IScoreObjectiveCriteria;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
@@ -32,7 +32,7 @@ public class CommandTrigger extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.trigger.usage";
     }
@@ -40,7 +40,7 @@ public class CommandTrigger extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 3)
         {
@@ -48,22 +48,22 @@ public class CommandTrigger extends CommandBase
         }
         else
         {
-            EntityPlayerMP entityplayermp;
+            PlayerMP entityplayermp;
 
-            if (sender instanceof EntityPlayerMP)
+            if (sender instanceof PlayerMP)
             {
-                entityplayermp = (EntityPlayerMP)sender;
+                entityplayermp = (PlayerMP)sender;
             }
             else
             {
                 Entity entity = sender.getCommandSenderEntity();
 
-                if (!(entity instanceof EntityPlayerMP))
+                if (!(entity instanceof PlayerMP))
                 {
                     throw new CommandException("commands.trigger.invalidPlayer", new Object[0]);
                 }
 
-                entityplayermp = (EntityPlayerMP)entity;
+                entityplayermp = (PlayerMP)entity;
             }
 
             Scoreboard scoreboard = MinecraftServer.getServer().worldServerForDimension(0).getScoreboard();
@@ -117,7 +117,7 @@ public class CommandTrigger extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         if (args.length == 1)
         {

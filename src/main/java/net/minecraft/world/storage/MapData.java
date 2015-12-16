@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
 import net.minecraft.entity.item.EntityItemFrame;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -27,7 +27,7 @@ public class MapData extends WorldSavedData
     /** colours */
     public byte[] colors = new byte[16384];
     public List<MapData.MapInfo> playersArrayList = Lists.<MapData.MapInfo>newArrayList();
-    private Map<EntityPlayer, MapData.MapInfo> playersHashMap = Maps.<EntityPlayer, MapData.MapInfo>newHashMap();
+    private Map<Player, MapData.MapInfo> playersHashMap = Maps.<Player, MapData.MapInfo>newHashMap();
     public Map<String, Vec4b> mapDecorations = Maps.<String, Vec4b>newLinkedHashMap();
 
     public MapData(String mapname)
@@ -105,7 +105,7 @@ public class MapData extends WorldSavedData
     /**
      * Adds the player passed to the list of visible players and checks to see which players are visible
      */
-    public void updateVisiblePlayers(EntityPlayer player, ItemStack mapStack)
+    public void updateVisiblePlayers(Player player, ItemStack mapStack)
     {
         if (!this.playersHashMap.containsKey(player))
         {
@@ -216,7 +216,7 @@ public class MapData extends WorldSavedData
         this.mapDecorations.put(entityIdentifier, new Vec4b((byte)type, b0, b1, b2));
     }
 
-    public Packet getMapPacket(ItemStack mapStack, World worldIn, EntityPlayer player)
+    public Packet getMapPacket(ItemStack mapStack, World worldIn, Player player)
     {
         MapData.MapInfo mapdata$mapinfo = (MapData.MapInfo)this.playersHashMap.get(player);
         return mapdata$mapinfo == null ? null : mapdata$mapinfo.getPacket(mapStack);
@@ -232,7 +232,7 @@ public class MapData extends WorldSavedData
         }
     }
 
-    public MapData.MapInfo getMapInfo(EntityPlayer player)
+    public MapData.MapInfo getMapInfo(Player player)
     {
         MapData.MapInfo mapdata$mapinfo = (MapData.MapInfo)this.playersHashMap.get(player);
 
@@ -248,7 +248,7 @@ public class MapData extends WorldSavedData
 
     public class MapInfo
     {
-        public final EntityPlayer entityplayerObj;
+        public final Player entityplayerObj;
         private boolean field_176105_d = true;
         private int minX = 0;
         private int minY = 0;
@@ -257,7 +257,7 @@ public class MapData extends WorldSavedData
         private int field_176109_i;
         public int field_82569_d;
 
-        public MapInfo(EntityPlayer player)
+        public MapInfo(Player player)
         {
             this.entityplayerObj = player;
         }

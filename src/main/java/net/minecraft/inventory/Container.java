@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -26,7 +26,7 @@ public abstract class Container
     private int dragEvent;
     private final Set<Slot> dragSlots = Sets.<Slot>newHashSet();
     protected List<ICrafting> crafters = Lists.<ICrafting>newArrayList();
-    private Set<EntityPlayer> playerList = Sets.<EntityPlayer>newHashSet();
+    private Set<Player> playerList = Sets.<Player>newHashSet();
 
     /**
      * Adds an item slot to this container
@@ -91,7 +91,7 @@ public abstract class Container
     /**
      * Handles the given Button-click on the server, currently only used by enchanting. Name is for legacy.
      */
-    public boolean enchantItem(EntityPlayer playerIn, int id)
+    public boolean enchantItem(Player playerIn, int id)
     {
         return false;
     }
@@ -119,7 +119,7 @@ public abstract class Container
     /**
      * Take a stack from the specified inventory slot.
      */
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    public ItemStack transferStackInSlot(Player playerIn, int index)
     {
         Slot slot = (Slot)this.inventorySlots.get(index);
         return slot != null ? slot.getStack() : null;
@@ -128,7 +128,7 @@ public abstract class Container
     /**
      * Handles slot click.
      */
-    public ItemStack slotClick(int slotId, int clickedButton, int mode, EntityPlayer playerIn)
+    public ItemStack slotClick(int slotId, int clickedButton, int mode, Player playerIn)
     {
         ItemStack itemstack = null;
         InventoryPlayer inventoryplayer = playerIn.inventory;
@@ -496,7 +496,7 @@ public abstract class Container
     /**
      * Retries slotClick() in case of failure
      */
-    protected void retrySlotClick(int slotId, int clickedButton, boolean mode, EntityPlayer playerIn)
+    protected void retrySlotClick(int slotId, int clickedButton, boolean mode, Player playerIn)
     {
         this.slotClick(slotId, clickedButton, 1, playerIn);
     }
@@ -504,7 +504,7 @@ public abstract class Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer playerIn)
+    public void onContainerClosed(Player playerIn)
     {
         InventoryPlayer inventoryplayer = playerIn.inventory;
 
@@ -534,7 +534,7 @@ public abstract class Container
     /**
      * gets whether or not the player can craft in this inventory or not
      */
-    public boolean getCanCraft(EntityPlayer p_75129_1_)
+    public boolean getCanCraft(Player p_75129_1_)
     {
         return !this.playerList.contains(p_75129_1_);
     }
@@ -542,7 +542,7 @@ public abstract class Container
     /**
      * sets whether the player can craft in this inventory or not
      */
-    public void setCanCraft(EntityPlayer p_75128_1_, boolean p_75128_2_)
+    public void setCanCraft(Player p_75128_1_, boolean p_75128_2_)
     {
         if (p_75128_2_)
         {
@@ -554,7 +554,7 @@ public abstract class Container
         }
     }
 
-    public abstract boolean canInteractWith(EntityPlayer playerIn);
+    public abstract boolean canInteractWith(Player playerIn);
 
     /**
      * Merges provided ItemStack with the first avaliable one in the container/player inventor between minIndex
@@ -664,7 +664,7 @@ public abstract class Container
         return p_94532_0_ & 3;
     }
 
-    public static boolean isValidDragMode(int dragModeIn, EntityPlayer player)
+    public static boolean isValidDragMode(int dragModeIn, Player player)
     {
         return dragModeIn == 0 ? true : (dragModeIn == 1 ? true : dragModeIn == 2 && player.capabilities.isCreativeMode);
     }

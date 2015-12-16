@@ -1,7 +1,7 @@
 package net.minecraft.network.play.server;
 
 import java.io.IOException;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayClient;
@@ -18,7 +18,7 @@ public class S0APacketUseBed implements Packet<INetHandlerPlayClient>
     {
     }
 
-    public S0APacketUseBed(EntityPlayer player, BlockPos bedPosIn)
+    public S0APacketUseBed(Player player, BlockPos bedPosIn)
     {
         this.playerID = player.getEntityId();
         this.bedPos = bedPosIn;

@@ -1,10 +1,10 @@
 package org.thallium.command;
 
 import net.minecraft.command.CommandException;
+import net.minecraft.command.CommandSender;
 import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import org.thallium.plugin.MinecraftPlugin;
@@ -22,7 +22,7 @@ public class CommandPlugin implements ICommand{
         return "plugins";
     }
 
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(CommandSender sender) {
         return "/plugins";
     }
 
@@ -33,25 +33,25 @@ public class CommandPlugin implements ICommand{
         return aliases;
     }
 
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
+    public void processCommand(CommandSender sender, String[] args) throws CommandException {
         StringBuilder builder = new StringBuilder();
         for (MinecraftPlugin plugin : PluginLoader.plugins){
             builder.append(plugin.getName() + " ,");
         }
         String before = builder.toString();
         String after = "Plugins: " + before;
-        sender.addChatMessage(new ChatComponentText(after));
+        sender.sendMessage(new ChatComponentText(after));
     }
 
-    public boolean canCommandSenderUseCommand(ICommandSender sender) {
-        if(!(sender instanceof EntityPlayer)){
+    public boolean canCommandSenderUseCommand(CommandSender sender) {
+        if(!(sender instanceof Player)){
             return true;
         }
-        EntityPlayerMP player = (EntityPlayerMP) sender;
+        PlayerMP player = (PlayerMP) sender;
         return player.isOp();
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos) {
         return null;
     }
 

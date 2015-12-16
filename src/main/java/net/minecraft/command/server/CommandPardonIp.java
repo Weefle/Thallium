@@ -2,11 +2,9 @@ package net.minecraft.command.server;
 
 import java.util.List;
 import java.util.regex.Matcher;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.SyntaxErrorException;
-import net.minecraft.command.WrongUsageException;
+
+import net.minecraft.command.*;
+import net.minecraft.command.CommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 
@@ -31,7 +29,7 @@ public class CommandPardonIp extends CommandBase
     /**
      * Returns true if the given command sender is allowed to use this command.
      */
-    public boolean canCommandSenderUseCommand(ICommandSender sender)
+    public boolean canCommandSenderUseCommand(CommandSender sender)
     {
         return MinecraftServer.getServer().getConfigurationManager().getBannedIPs().isLanServer() && super.canCommandSenderUseCommand(sender);
     }
@@ -39,7 +37,7 @@ public class CommandPardonIp extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.unbanip.usage";
     }
@@ -47,7 +45,7 @@ public class CommandPardonIp extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length == 1 && args[0].length() > 1)
         {
@@ -69,7 +67,7 @@ public class CommandPardonIp extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 1 ? getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getConfigurationManager().getBannedIPs().getKeys()) : null;
     }

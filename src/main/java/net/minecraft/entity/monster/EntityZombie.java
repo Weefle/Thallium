@@ -26,7 +26,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -70,10 +70,10 @@ public class EntityZombie extends EntityMob
         super(worldIn);
         ((PathNavigateGround)this.getNavigator()).setBreakDoors(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, false));
+        this.tasks.addTask(2, new EntityAIAttackOnCollide(this, Player.class, 1.0D, false));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, Player.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.applyEntityAI();
         this.setSize(0.6F, 1.95F);
@@ -85,7 +85,7 @@ public class EntityZombie extends EntityMob
         this.tasks.addTask(4, new EntityAIAttackOnCollide(this, EntityIronGolem.class, 1.0D, true));
         this.tasks.addTask(6, new EntityAIMoveThroughVillage(this, 1.0D, false));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[] {EntityPigZombie.class}));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, Player.class, true));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityIronGolem.class, true));
     }
@@ -158,7 +158,7 @@ public class EntityZombie extends EntityMob
     /**
      * Get the experience points the entity currently has.
      */
-    protected int getExperiencePoints(EntityPlayer player)
+    protected int getExperiencePoints(Player player)
     {
         if (this.isChild())
         {
@@ -505,7 +505,7 @@ public class EntityZombie extends EntityMob
             }
 
             this.worldObj.spawnEntityInWorld(entityzombie);
-            this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1016, new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ), 0);
+            this.worldObj.playAuxSFXAtEntity((Player)null, 1016, new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ), 0);
         }
     }
 
@@ -613,7 +613,7 @@ public class EntityZombie extends EntityMob
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer player)
+    public boolean interact(Player player)
     {
         ItemStack itemstack = player.getCurrentEquippedItem();
 
@@ -697,7 +697,7 @@ public class EntityZombie extends EntityMob
 
         this.worldObj.spawnEntityInWorld(entityvillager);
         entityvillager.addPotionEffect(new PotionEffect(Potion.confusion.id, 200, 0));
-        this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1017, new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ), 0);
+        this.worldObj.playAuxSFXAtEntity((Player)null, 1017, new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ), 0);
     }
 
     /**

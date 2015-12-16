@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -278,7 +278,7 @@ public abstract class EntityThrowable extends Entity implements IProjectile
         tagCompound.setByte("shake", (byte)this.throwableShake);
         tagCompound.setByte("inGround", (byte)(this.inGround ? 1 : 0));
 
-        if ((this.throwerName == null || this.throwerName.length() == 0) && this.thrower instanceof EntityPlayer)
+        if ((this.throwerName == null || this.throwerName.length() == 0) && this.thrower instanceof Player)
         {
             this.throwerName = this.thrower.getName();
         }

@@ -8,7 +8,7 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.util.EntitySelectors;
 
 public class EntityAINearestAttackableTarget<T extends EntityLivingBase> extends EntityAITarget
@@ -48,7 +48,7 @@ public class EntityAINearestAttackableTarget<T extends EntityLivingBase> extends
                 }
                 else
                 {
-                    if (p_apply_1_ instanceof EntityPlayer)
+                    if (p_apply_1_ instanceof Player)
                     {
                         double d0 = EntityAINearestAttackableTarget.this.getTargetDistance();
 
@@ -59,7 +59,7 @@ public class EntityAINearestAttackableTarget<T extends EntityLivingBase> extends
 
                         if (p_apply_1_.isInvisible())
                         {
-                            float f = ((EntityPlayer)p_apply_1_).getArmorVisibility();
+                            float f = ((Player)p_apply_1_).getArmorVisibility();
 
                             if (f < 0.1F)
                             {

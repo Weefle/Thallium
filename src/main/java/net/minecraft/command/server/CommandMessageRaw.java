@@ -2,12 +2,10 @@ package net.minecraft.command.server;
 
 import com.google.gson.JsonParseException;
 import java.util.List;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.SyntaxErrorException;
-import net.minecraft.command.WrongUsageException;
-import net.minecraft.entity.player.EntityPlayer;
+
+import net.minecraft.command.*;
+import net.minecraft.command.CommandSender;
+import net.minecraft.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentProcessor;
@@ -35,7 +33,7 @@ public class CommandMessageRaw extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.tellraw.usage";
     }
@@ -43,7 +41,7 @@ public class CommandMessageRaw extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length < 2)
         {
@@ -51,13 +49,13 @@ public class CommandMessageRaw extends CommandBase
         }
         else
         {
-            EntityPlayer entityplayer = getPlayer(sender, args[0]);
+            Player entityplayer = getPlayer(sender, args[0]);
             String s = buildString(args, 1);
 
             try
             {
                 IChatComponent ichatcomponent = IChatComponent.Serializer.jsonToComponent(s);
-                entityplayer.addChatMessage(ChatComponentProcessor.processComponent(sender, ichatcomponent, entityplayer));
+                entityplayer.sendMessage(ChatComponentProcessor.processComponent(sender, ichatcomponent, entityplayer));
             }
             catch (JsonParseException jsonparseexception)
             {
@@ -67,7 +65,7 @@ public class CommandMessageRaw extends CommandBase
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         return args.length == 1 ? getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames()) : null;
     }

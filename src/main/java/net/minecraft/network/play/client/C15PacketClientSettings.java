@@ -1,7 +1,7 @@
 package net.minecraft.network.play.client;
 
 import java.io.IOException;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.INetHandlerPlayServer;
@@ -10,7 +10,7 @@ public class C15PacketClientSettings implements Packet<INetHandlerPlayServer>
 {
     private String lang;
     private int view;
-    private EntityPlayer.EnumChatVisibility chatVisibility;
+    private Player.EnumChatVisibility chatVisibility;
     private boolean enableColors;
     private int modelPartFlags;
 
@@ -21,7 +21,7 @@ public class C15PacketClientSettings implements Packet<INetHandlerPlayServer>
     {
         this.lang = buf.readStringFromBuffer(7);
         this.view = buf.readByte();
-        this.chatVisibility = EntityPlayer.EnumChatVisibility.getEnumChatVisibility(buf.readByte());
+        this.chatVisibility = Player.EnumChatVisibility.getEnumChatVisibility(buf.readByte());
         this.enableColors = buf.readBoolean();
         this.modelPartFlags = buf.readUnsignedByte();
     }
@@ -51,7 +51,7 @@ public class C15PacketClientSettings implements Packet<INetHandlerPlayServer>
         return this.lang;
     }
 
-    public EntityPlayer.EnumChatVisibility getChatVisibility()
+    public Player.EnumChatVisibility getChatVisibility()
     {
         return this.chatVisibility;
     }

@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
 import org.apache.commons.io.IOUtils;
 
@@ -99,7 +99,7 @@ public class PlayerProfileCache
 
         if (!server.isServerInOnlineMode() && agameprofile[0] == null)
         {
-            UUID uuid = EntityPlayer.getUUID(new GameProfile((UUID)null, username));
+            UUID uuid = Player.getUUID(new GameProfile((UUID)null, username));
             GameProfile gameprofile = new GameProfile(uuid, username);
             profilelookupcallback.onProfileLookupSucceeded(gameprofile);
         }

@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.util.EnumChatFormatting;
 
 public class Scoreboard
@@ -508,7 +508,7 @@ public class Scoreboard
 
     public void func_181140_a(Entity p_181140_1_)
     {
-        if (p_181140_1_ != null && !(p_181140_1_ instanceof EntityPlayer) && !p_181140_1_.isEntityAlive())
+        if (p_181140_1_ != null && !(p_181140_1_ instanceof Player) && !p_181140_1_.isEntityAlive())
         {
             String s = p_181140_1_.getUniqueID().toString();
             this.removeObjectiveFromEntity(s, (ScoreObjective)null);

@@ -1,6 +1,6 @@
 package net.minecraft.entity;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.village.MerchantRecipe;
@@ -8,11 +8,11 @@ import net.minecraft.village.MerchantRecipeList;
 
 public interface IMerchant
 {
-    void setCustomer(EntityPlayer p_70932_1_);
+    void setCustomer(Player p_70932_1_);
 
-    EntityPlayer getCustomer();
+    Player getCustomer();
 
-    MerchantRecipeList getRecipes(EntityPlayer p_70934_1_);
+    MerchantRecipeList getRecipes(Player p_70934_1_);
 
     void useRecipe(MerchantRecipe recipe);
 

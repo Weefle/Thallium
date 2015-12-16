@@ -10,7 +10,7 @@ import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.network.Packet;
@@ -49,7 +49,7 @@ public class ItemMap extends ItemMapBase
 
     public void updateMapData(World worldIn, Entity viewer, MapData data)
     {
-        if (worldIn.provider.getDimensionId() == data.dimension && viewer instanceof EntityPlayer)
+        if (worldIn.provider.getDimensionId() == data.dimension && viewer instanceof Player)
         {
             int i = 1 << data.scale;
             int j = data.xCenter;
@@ -63,7 +63,7 @@ public class ItemMap extends ItemMapBase
                 j1 /= 2;
             }
 
-            MapData.MapInfo mapdata$mapinfo = data.getMapInfo((EntityPlayer)viewer);
+            MapData.MapInfo mapdata$mapinfo = data.getMapInfo((Player)viewer);
             ++mapdata$mapinfo.field_82569_d;
             boolean flag = false;
 
@@ -223,9 +223,9 @@ public class ItemMap extends ItemMapBase
         {
             MapData mapdata = this.getMapData(stack, worldIn);
 
-            if (entityIn instanceof EntityPlayer)
+            if (entityIn instanceof Player)
             {
-                EntityPlayer entityplayer = (EntityPlayer)entityIn;
+                Player entityplayer = (Player)entityIn;
                 mapdata.updateVisiblePlayers(entityplayer, stack);
             }
 
@@ -236,7 +236,7 @@ public class ItemMap extends ItemMapBase
         }
     }
 
-    public Packet createMapDataPacket(ItemStack stack, World worldIn, EntityPlayer player)
+    public Packet createMapDataPacket(ItemStack stack, World worldIn, Player player)
     {
         return this.getMapData(stack, worldIn).getMapPacket(stack, worldIn, player);
     }
@@ -244,7 +244,7 @@ public class ItemMap extends ItemMapBase
     /**
      * Called when item is crafted/smelted. Used only by maps so far.
      */
-    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn)
+    public void onCreated(ItemStack stack, World worldIn, Player playerIn)
     {
         if (stack.hasTagCompound() && stack.getTagCompound().getBoolean("map_is_scaling"))
         {

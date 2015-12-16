@@ -1,7 +1,7 @@
 package net.minecraft.entity.passive;
 
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
@@ -52,7 +52,7 @@ public abstract class EntityWaterMob extends EntityLiving implements IAnimals
     /**
      * Get the experience points the entity currently has.
      */
-    protected int getExperiencePoints(EntityPlayer player)
+    protected int getExperiencePoints(Player player)
     {
         return 1 + this.worldObj.rand.nextInt(3);
     }

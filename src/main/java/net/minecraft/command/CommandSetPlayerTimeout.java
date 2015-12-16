@@ -23,7 +23,7 @@ public class CommandSetPlayerTimeout extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.setidletimeout.usage";
     }
@@ -31,7 +31,7 @@ public class CommandSetPlayerTimeout extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length != 1)
         {

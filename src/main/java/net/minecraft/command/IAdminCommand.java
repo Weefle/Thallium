@@ -5,5 +5,5 @@ public interface IAdminCommand
     /**
      * Send an informative message to the server operators
      */
-    void notifyOperators(ICommandSender sender, ICommand command, int flags, String msgFormat, Object... msgParams);
+    void notifyOperators(CommandSender sender, ICommand command, int flags, String msgFormat, Object... msgParams);
 }

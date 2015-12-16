@@ -1,7 +1,7 @@
 package net.minecraft.network.rcon;
 
 import net.minecraft.command.CommandResultStats;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.command.CommandSender;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
@@ -10,7 +10,7 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class RConConsoleSource implements ICommandSender
+public class RConConsoleSource implements CommandSender
 {
     /** Single instance of RConConsoleSource */
     private static final RConConsoleSource instance = new RConConsoleSource();
@@ -58,7 +58,7 @@ public class RConConsoleSource implements ICommandSender
     /**
      * Send a chat message to the CommandSender
      */
-    public void addChatMessage(IChatComponent component)
+    public void sendMessage(IChatComponent component)
     {
         this.buffer.append(component.getUnformattedText());
     }

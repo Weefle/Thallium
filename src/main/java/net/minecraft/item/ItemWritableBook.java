@@ -1,6 +1,6 @@
 package net.minecraft.item;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.stats.StatList;
@@ -16,7 +16,7 @@ public class ItemWritableBook extends Item
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
-    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, Player playerIn)
     {
         playerIn.displayGUIBook(itemStackIn);
         playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);

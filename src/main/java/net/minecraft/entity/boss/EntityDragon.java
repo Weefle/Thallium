@@ -14,7 +14,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
@@ -463,12 +463,12 @@ public class EntityDragon extends EntityLiving implements IEntityMultiPart, IMob
     private void setNewTarget()
     {
         this.forceNewTarget = false;
-        List<EntityPlayer> list = Lists.newArrayList(this.worldObj.playerEntities);
-        Iterator<EntityPlayer> iterator = list.iterator();
+        List<Player> list = Lists.newArrayList(this.worldObj.playerEntities);
+        Iterator<Player> iterator = list.iterator();
 
         while (iterator.hasNext())
         {
-            if (((EntityPlayer)iterator.next()).isSpectator())
+            if (((Player)iterator.next()).isSpectator())
             {
                 iterator.remove();
             }
@@ -574,7 +574,7 @@ public class EntityDragon extends EntityLiving implements IEntityMultiPart, IMob
         this.targetZ = this.posZ - (double)(f2 * 5.0F) + (double)((this.rand.nextFloat() - 0.5F) * 2.0F);
         this.target = null;
 
-        if (source.getEntity() instanceof EntityPlayer || source.isExplosion())
+        if (source.getEntity() instanceof Player || source.isExplosion())
         {
             this.attackDragonFrom(source, p_70965_3_);
         }

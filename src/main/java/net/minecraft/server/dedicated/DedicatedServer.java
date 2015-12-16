@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.command.CommandSender;
 import net.minecraft.command.ServerCommand;
 import net.minecraft.crash.CrashReport;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.network.rcon.IServer;
 import net.minecraft.network.rcon.RConConsoleSource;
 import net.minecraft.network.rcon.RConThreadMain;
@@ -401,7 +401,7 @@ public class DedicatedServer extends MinecraftServer implements IServer
         return this.settings.getBooleanProperty("snooper-enabled", true);
     }
 
-    public void addPendingCommand(String input, ICommandSender sender)
+    public void addPendingCommand(String input, CommandSender sender)
     {
         this.pendingCommandList.add(new ServerCommand(input, sender));
     }
@@ -514,7 +514,7 @@ public class DedicatedServer extends MinecraftServer implements IServer
         return this.settings.getIntProperty("spawn-protection", super.getSpawnProtectionSize());
     }
 
-    public boolean isBlockProtected(World worldIn, BlockPos pos, EntityPlayer playerIn)
+    public boolean isBlockProtected(World worldIn, BlockPos pos, Player playerIn)
     {
         if (worldIn.provider.getDimensionId() != 0)
         {

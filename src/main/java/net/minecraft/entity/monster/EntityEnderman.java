@@ -23,8 +23,8 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.Player;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -54,7 +54,7 @@ public class EntityEnderman extends EntityMob
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(2, new EntityAIAttackOnCollide(this, 1.0D, false));
         this.tasks.addTask(7, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, Player.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.tasks.addTask(10, new EntityEnderman.AIPlaceBlock(this));
         this.tasks.addTask(11, new EntityEnderman.AITakeBlock(this));
@@ -120,7 +120,7 @@ public class EntityEnderman extends EntityMob
     /**
      * Checks to see if this enderman should be attacking this player
      */
-    private boolean shouldAttackPlayer(EntityPlayer player)
+    private boolean shouldAttackPlayer(Player player)
     {
         ItemStack itemstack = player.inventory.armorInventory[3];
 
@@ -368,9 +368,9 @@ public class EntityEnderman extends EntityMob
                     this.setScreaming(true);
                 }
 
-                if (source instanceof EntityDamageSource && source.getEntity() instanceof EntityPlayer)
+                if (source instanceof EntityDamageSource && source.getEntity() instanceof Player)
                 {
-                    if (source.getEntity() instanceof EntityPlayerMP && ((EntityPlayerMP)source.getEntity()).theItemInWorldManager.isCreative())
+                    if (source.getEntity() instanceof PlayerMP && ((PlayerMP)source.getEntity()).theItemInWorldManager.isCreative())
                     {
                         this.setScreaming(false);
                     }
@@ -437,21 +437,21 @@ public class EntityEnderman extends EntityMob
 
     static class AIFindPlayer extends EntityAINearestAttackableTarget
     {
-        private EntityPlayer player;
+        private Player player;
         private int field_179450_h;
         private int field_179451_i;
         private EntityEnderman enderman;
 
         public AIFindPlayer(EntityEnderman p_i45842_1_)
         {
-            super(p_i45842_1_, EntityPlayer.class, true);
+            super(p_i45842_1_, Player.class, true);
             this.enderman = p_i45842_1_;
         }
 
         public boolean shouldExecute()
         {
             double d0 = this.getTargetDistance();
-            List<EntityPlayer> list = this.taskOwner.worldObj.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, this.taskOwner.getEntityBoundingBox().expand(d0, 4.0D, d0), this.targetEntitySelector);
+            List<Player> list = this.taskOwner.worldObj.<Player>getEntitiesWithinAABB(Player.class, this.taskOwner.getEntityBoundingBox().expand(d0, 4.0D, d0), this.targetEntitySelector);
             Collections.sort(list, this.theNearestAttackableTargetSorter);
 
             if (list.isEmpty())
@@ -460,7 +460,7 @@ public class EntityEnderman extends EntityMob
             }
             else
             {
-                this.player = (EntityPlayer)list.get(0);
+                this.player = (Player)list.get(0);
                 return true;
             }
         }
@@ -520,7 +520,7 @@ public class EntityEnderman extends EntityMob
             {
                 if (this.targetEntity != null)
                 {
-                    if (this.targetEntity instanceof EntityPlayer && this.enderman.shouldAttackPlayer((EntityPlayer)this.targetEntity))
+                    if (this.targetEntity instanceof Player && this.enderman.shouldAttackPlayer((Player)this.targetEntity))
                     {
                         if (this.targetEntity.getDistanceSqToEntity(this.enderman) < 16.0D)
                         {

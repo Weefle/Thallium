@@ -59,7 +59,7 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.entity.projectile.EntityLargeFireball;
@@ -273,7 +273,7 @@ public class EntityList
     {
         String s = getEntityString(entityIn);
 
-        if (s == null && entityIn instanceof EntityPlayer)
+        if (s == null && entityIn instanceof Player)
         {
             s = "Player";
         }

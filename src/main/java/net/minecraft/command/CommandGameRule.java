@@ -1,7 +1,7 @@
 package net.minecraft.command;
 
 import java.util.List;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.network.play.server.S19PacketEntityStatus;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
@@ -29,7 +29,7 @@ public class CommandGameRule extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.gamerule.usage";
     }
@@ -37,7 +37,7 @@ public class CommandGameRule extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         GameRules gamerules = this.getGameRules();
         String s = args.length > 0 ? args[0] : "";
@@ -46,7 +46,7 @@ public class CommandGameRule extends CommandBase
         switch (args.length)
         {
             case 0:
-                sender.addChatMessage(new ChatComponentText(joinNiceString(gamerules.getRules())));
+                sender.sendMessage(new ChatComponentText(joinNiceString(gamerules.getRules())));
                 break;
 
             case 1:
@@ -56,7 +56,7 @@ public class CommandGameRule extends CommandBase
                 }
 
                 String s2 = gamerules.getString(s);
-                sender.addChatMessage((new ChatComponentText(s)).appendText(" = ").appendText(s2));
+                sender.sendMessage((new ChatComponentText(s)).appendText(" = ").appendText(s2));
                 sender.setCommandStat(CommandResultStats.Type.QUERY_RESULT, gamerules.getInt(s));
                 break;
 
@@ -78,14 +78,14 @@ public class CommandGameRule extends CommandBase
         {
             byte b0 = (byte)(p_175773_0_.getBoolean(p_175773_1_) ? 22 : 23);
 
-            for (EntityPlayerMP entityplayermp : MinecraftServer.getServer().getConfigurationManager().func_181057_v())
+            for (PlayerMP entityplayermp : MinecraftServer.getServer().getConfigurationManager().func_181057_v())
             {
                 entityplayermp.playerNetServerHandler.sendPacket(new S19PacketEntityStatus(entityplayermp, b0));
             }
         }
     }
 
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos)
+    public List<String> addTabCompletionOptions(CommandSender sender, String[] args, BlockPos pos)
     {
         if (args.length == 1)
         {

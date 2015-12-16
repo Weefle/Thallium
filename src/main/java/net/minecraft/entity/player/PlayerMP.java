@@ -70,7 +70,6 @@ import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.ItemInWorldManager;
-import net.minecraft.server.management.UserListOps;
 import net.minecraft.server.management.UserListOpsEntry;
 import net.minecraft.stats.AchievementList;
 import net.minecraft.stats.StatBase;
@@ -97,7 +96,7 @@ import net.minecraft.world.chunk.Chunk;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class EntityPlayerMP extends EntityPlayer implements ICrafting
+public class PlayerMP extends Player implements ICrafting
 {
     private static final Logger logger = LogManager.getLogger();
     private String translator = "en_US";
@@ -139,7 +138,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /** Amount of experience the client was last set to */
     private int lastExperience = -99999999;
     private int respawnInvulnerabilityTicks = 60;
-    private EntityPlayer.EnumChatVisibility chatVisibility;
+    private Player.EnumChatVisibility chatVisibility;
     private boolean chatColours = true;
     private long playerLastActiveTime = System.currentTimeMillis();
 
@@ -164,7 +163,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      */
     public boolean playerConqueredTheEnd;
 
-    public EntityPlayerMP(MinecraftServer server, WorldServer worldIn, GameProfile profile, ItemInWorldManager interactionManager)
+    public PlayerMP(MinecraftServer server, WorldServer worldIn, GameProfile profile, ItemInWorldManager interactionManager)
     {
         super(worldIn, profile);
         interactionManager.thisPlayerMP = this;
@@ -423,7 +422,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
 
                 for (ScoreObjective scoreobjective : this.getWorldScoreboard().getObjectivesFromCriteria(IScoreObjectiveCriteria.health))
                 {
-                    this.getWorldScoreboard().getValueFromObjective(this.getName(), scoreobjective).func_96651_a(Arrays.<EntityPlayer>asList(new EntityPlayer[] {this}));
+                    this.getWorldScoreboard().getValueFromObjective(this.getName(), scoreobjective).func_96651_a(Arrays.<Player>asList(new Player[] {this}));
                 }
             }
 
@@ -573,7 +572,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
                 {
                     Entity entity = source.getEntity();
 
-                    if (entity instanceof EntityPlayer && !this.canAttackPlayer((EntityPlayer)entity))
+                    if (entity instanceof Player && !this.canAttackPlayer((Player)entity))
                     {
                         return false;
                     }
@@ -582,7 +581,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
                     {
                         EntityArrow entityarrow = (EntityArrow)entity;
 
-                        if (entityarrow.shootingEntity instanceof EntityPlayer && !this.canAttackPlayer((EntityPlayer)entityarrow.shootingEntity))
+                        if (entityarrow.shootingEntity instanceof Player && !this.canAttackPlayer((Player)entityarrow.shootingEntity))
                         {
                             return false;
                         }
@@ -594,7 +593,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         }
     }
 
-    public boolean canAttackPlayer(EntityPlayer other)
+    public boolean canAttackPlayer(Player other)
     {
         return !this.canPlayersAttack() ? false : super.canAttackPlayer(other);
     }
@@ -645,7 +644,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         }
     }
 
-    public boolean isSpectatedByPlayer(EntityPlayerMP player)
+    public boolean isSpectatedByPlayer(PlayerMP player)
     {
         return player.isSpectator() ? this.getSpectatingEntity() == this : (this.isSpectator() ? false : super.isSpectatedByPlayer(player));
     }
@@ -672,11 +671,11 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.openContainer.detectAndSendChanges();
     }
 
-    public EntityPlayer.EnumStatus trySleep(BlockPos bedLocation)
+    public Player.EnumStatus trySleep(BlockPos bedLocation)
     {
-        EntityPlayer.EnumStatus entityplayer$enumstatus = super.trySleep(bedLocation);
+        Player.EnumStatus entityplayer$enumstatus = super.trySleep(bedLocation);
 
-        if (entityplayer$enumstatus == EntityPlayer.EnumStatus.OK)
+        if (entityplayer$enumstatus == Player.EnumStatus.OK)
         {
             Packet packet = new S0APacketUseBed(this, bedLocation);
             this.getServerForPlayer().getEntityTracker().sendToAllTrackingEntity(this, packet);
@@ -1045,13 +1044,13 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      * Copies the values from the given player into this player if boolean par2 is true. Always clones Ender Chest
      * Inventory.
      */
-    public void clonePlayer(EntityPlayer oldPlayer, boolean respawnFromEnd)
+    public void clonePlayer(Player oldPlayer, boolean respawnFromEnd)
     {
         super.clonePlayer(oldPlayer, respawnFromEnd);
         this.lastExperience = -1;
         this.lastHealth = -1.0F;
         this.lastFoodLevel = -1;
-        this.destroyedItemsNetCache.addAll(((EntityPlayerMP)oldPlayer).destroyedItemsNetCache);
+        this.destroyedItemsNetCache.addAll(((PlayerMP)oldPlayer).destroyedItemsNetCache);
     }
 
     protected void onNewPotionEffect(PotionEffect id)
@@ -1142,7 +1141,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
     /**
      * Send a chat message to the CommandSender
      */
-    public void addChatMessage(IChatComponent component)
+    public void sendMessage(IChatComponent component)
     {
         this.playerNetServerHandler.sendPacket(new S02PacketChat(component));
     }
@@ -1193,7 +1192,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         this.getDataWatcher().updateObject(10, Byte.valueOf((byte)packetIn.getModelPartFlags()));
     }
 
-    public EntityPlayer.EnumChatVisibility getChatVisibility()
+    public Player.EnumChatVisibility getChatVisibility()
     {
         return this.chatVisibility;
     }
@@ -1230,7 +1229,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
      */
     public void removeEntity(Entity p_152339_1_)
     {
-        if (p_152339_1_ instanceof EntityPlayer)
+        if (p_152339_1_ instanceof Player)
         {
             this.playerNetServerHandler.sendPacket(new S13PacketDestroyEntities(new int[] {p_152339_1_.getEntityId()}));
         }

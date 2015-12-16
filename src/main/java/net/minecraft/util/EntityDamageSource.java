@@ -2,7 +2,7 @@ package net.minecraft.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.item.ItemStack;
 
 public class EntityDamageSource extends DamageSource
@@ -55,6 +55,6 @@ public class EntityDamageSource extends DamageSource
      */
     public boolean isDifficultyScaled()
     {
-        return this.damageSourceEntity != null && this.damageSourceEntity instanceof EntityLivingBase && !(this.damageSourceEntity instanceof EntityPlayer);
+        return this.damageSourceEntity != null && this.damageSourceEntity instanceof EntityLivingBase && !(this.damageSourceEntity instanceof Player);
     }
 }

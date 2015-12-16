@@ -1,7 +1,7 @@
 package net.minecraft.inventory;
 
 import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -10,7 +10,7 @@ public class ContainerHorseInventory extends Container
     private IInventory horseInventory;
     private EntityHorse theHorse;
 
-    public ContainerHorseInventory(IInventory playerInventory, final IInventory horseInventoryIn, final EntityHorse horse, EntityPlayer player)
+    public ContainerHorseInventory(IInventory playerInventory, final IInventory horseInventoryIn, final EntityHorse horse, Player player)
     {
         this.horseInventory = horseInventoryIn;
         this.theHorse = horse;
@@ -57,7 +57,7 @@ public class ContainerHorseInventory extends Container
         }
     }
 
-    public boolean canInteractWith(EntityPlayer playerIn)
+    public boolean canInteractWith(Player playerIn)
     {
         return this.horseInventory.isUseableByPlayer(playerIn) && this.theHorse.isEntityAlive() && this.theHorse.getDistanceToEntity(playerIn) < 8.0F;
     }
@@ -65,7 +65,7 @@ public class ContainerHorseInventory extends Container
     /**
      * Take a stack from the specified inventory slot.
      */
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    public ItemStack transferStackInSlot(Player playerIn, int index)
     {
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(index);
@@ -117,7 +117,7 @@ public class ContainerHorseInventory extends Container
     /**
      * Called when the container is closed.
      */
-    public void onContainerClosed(EntityPlayer playerIn)
+    public void onContainerClosed(Player playerIn)
     {
         super.onContainerClosed(playerIn);
         this.horseInventory.closeInventory(playerIn);

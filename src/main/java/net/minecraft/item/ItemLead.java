@@ -5,7 +5,7 @@ import net.minecraft.block.BlockFence;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLeashKnot;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -21,7 +21,7 @@ public class ItemLead extends Item
     /**
      * Called when a Block is right-clicked with this Item
      */
-    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack stack, Player playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         Block block = worldIn.getBlockState(pos).getBlock();
 
@@ -43,7 +43,7 @@ public class ItemLead extends Item
         }
     }
 
-    public static boolean attachToFence(EntityPlayer player, World worldIn, BlockPos fence)
+    public static boolean attachToFence(Player player, World worldIn, BlockPos fence)
     {
         EntityLeashKnot entityleashknot = EntityLeashKnot.getKnotForPosition(worldIn, fence);
         boolean flag = false;

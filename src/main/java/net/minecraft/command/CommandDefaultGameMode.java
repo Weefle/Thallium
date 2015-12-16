@@ -1,6 +1,6 @@
 package net.minecraft.command;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.WorldSettings;
@@ -18,7 +18,7 @@ public class CommandDefaultGameMode extends CommandGameMode
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.defaultgamemode.usage";
     }
@@ -26,7 +26,7 @@ public class CommandDefaultGameMode extends CommandGameMode
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         if (args.length <= 0)
         {
@@ -47,7 +47,7 @@ public class CommandDefaultGameMode extends CommandGameMode
 
         if (minecraftserver.getForceGamemode())
         {
-            for (EntityPlayerMP entityplayermp : MinecraftServer.getServer().getConfigurationManager().func_181057_v())
+            for (PlayerMP entityplayermp : MinecraftServer.getServer().getConfigurationManager().func_181057_v())
             {
                 entityplayermp.setGameType(p_71541_1_);
                 entityplayermp.fallDistance = 0.0F;

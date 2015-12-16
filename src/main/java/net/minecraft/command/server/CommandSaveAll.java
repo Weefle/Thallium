@@ -2,7 +2,7 @@ package net.minecraft.command.server;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.command.CommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IProgressUpdate;
@@ -22,7 +22,7 @@ public class CommandSaveAll extends CommandBase
     /**
      * Gets the usage string for the command.
      */
-    public String getCommandUsage(ICommandSender sender)
+    public String getCommandUsage(CommandSender sender)
     {
         return "commands.save.usage";
     }
@@ -30,10 +30,10 @@ public class CommandSaveAll extends CommandBase
     /**
      * Callback when the command is invoked
      */
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException
+    public void processCommand(CommandSender sender, String[] args) throws CommandException
     {
         MinecraftServer minecraftserver = MinecraftServer.getServer();
-        sender.addChatMessage(new ChatComponentTranslation("commands.save.start", new Object[0]));
+        sender.sendMessage(new ChatComponentTranslation("commands.save.start", new Object[0]));
 
         if (minecraftserver.getConfigurationManager() != null)
         {
@@ -56,7 +56,7 @@ public class CommandSaveAll extends CommandBase
 
             if (args.length > 0 && "flush".equals(args[0]))
             {
-                sender.addChatMessage(new ChatComponentTranslation("commands.save.flushStart", new Object[0]));
+                sender.sendMessage(new ChatComponentTranslation("commands.save.flushStart", new Object[0]));
 
                 for (int j = 0; j < minecraftserver.worldServers.length; ++j)
                 {
@@ -70,7 +70,7 @@ public class CommandSaveAll extends CommandBase
                     }
                 }
 
-                sender.addChatMessage(new ChatComponentTranslation("commands.save.flushEnd", new Object[0]));
+                sender.sendMessage(new ChatComponentTranslation("commands.save.flushEnd", new Object[0]));
             }
         }
         catch (MinecraftException minecraftexception)

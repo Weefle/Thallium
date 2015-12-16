@@ -3,7 +3,7 @@ package net.minecraft.item;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 
 public class ItemSaddle extends Item
 {
@@ -16,7 +16,7 @@ public class ItemSaddle extends Item
     /**
      * Returns true if the item can be used on the given entity, e.g. shears on sheep.
      */
-    public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target)
+    public boolean itemInteractionForEntity(ItemStack stack, Player playerIn, EntityLivingBase target)
     {
         if (target instanceof EntityPig)
         {
@@ -43,7 +43,7 @@ public class ItemSaddle extends Item
      */
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
-        this.itemInteractionForEntity(stack, (EntityPlayer)null, target);
+        this.itemInteractionForEntity(stack, (Player)null, target);
         return true;
     }
 }

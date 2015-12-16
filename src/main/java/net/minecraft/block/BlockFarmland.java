@@ -8,7 +8,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
@@ -76,7 +76,7 @@ public class BlockFarmland extends Block
         {
             if (!worldIn.isRemote && worldIn.rand.nextFloat() < fallDistance - 0.5F)
             {
-                if (!(entityIn instanceof EntityPlayer) && !worldIn.getGameRules().getBoolean("mobGriefing"))
+                if (!(entityIn instanceof Player) && !worldIn.getGameRules().getBoolean("mobGriefing"))
                 {
                     return;
                 }

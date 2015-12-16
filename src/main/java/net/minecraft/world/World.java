@@ -23,7 +23,7 @@ import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.Player;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
@@ -66,7 +66,7 @@ public abstract class World implements IBlockAccess
     public final List<TileEntity> tickableTileEntities = Lists.<TileEntity>newArrayList();
     private final List<TileEntity> addedTileEntityList = Lists.<TileEntity>newArrayList();
     private final List<TileEntity> tileEntitiesToBeRemoved = Lists.<TileEntity>newArrayList();
-    public final List<EntityPlayer> playerEntities = Lists.<EntityPlayer>newArrayList();
+    public final List<Player> playerEntities = Lists.<Player>newArrayList();
     public final List<Entity> weatherEffects = Lists.<Entity>newArrayList();
     protected final IntHashMap<Entity> entitiesById = new IntHashMap();
     private long cloudColour = 16777215L;
@@ -999,7 +999,7 @@ public abstract class World implements IBlockAccess
     /**
      * Plays sound to all near players except the player reference given
      */
-    public void playSoundToNearExcept(EntityPlayer player, String name, float volume, float pitch)
+    public void playSoundToNearExcept(Player player, String name, float volume, float pitch)
     {
         for (int i = 0; i < this.worldAccesses.size(); ++i)
         {
@@ -1066,7 +1066,7 @@ public abstract class World implements IBlockAccess
         int j = MathHelper.floor_double(entityIn.posZ / 16.0D);
         boolean flag = entityIn.forceSpawn;
 
-        if (entityIn instanceof EntityPlayer)
+        if (entityIn instanceof Player)
         {
             flag = true;
         }
@@ -1077,9 +1077,9 @@ public abstract class World implements IBlockAccess
         }
         else
         {
-            if (entityIn instanceof EntityPlayer)
+            if (entityIn instanceof Player)
             {
-                EntityPlayer entityplayer = (EntityPlayer)entityIn;
+                Player entityplayer = (Player)entityIn;
                 this.playerEntities.add(entityplayer);
                 this.updateAllPlayersSleepingFlag();
             }
@@ -1124,7 +1124,7 @@ public abstract class World implements IBlockAccess
 
         entityIn.setDead();
 
-        if (entityIn instanceof EntityPlayer)
+        if (entityIn instanceof Player)
         {
             this.playerEntities.remove(entityIn);
             this.updateAllPlayersSleepingFlag();
@@ -1139,7 +1139,7 @@ public abstract class World implements IBlockAccess
     {
         entityIn.setDead();
 
-        if (entityIn instanceof EntityPlayer)
+        if (entityIn instanceof Player)
         {
             this.playerEntities.remove(entityIn);
             this.updateAllPlayersSleepingFlag();
@@ -2040,7 +2040,7 @@ public abstract class World implements IBlockAccess
     /**
      * Attempts to extinguish a fire
      */
-    public boolean extinguishFire(EntityPlayer player, BlockPos pos, EnumFacing side)
+    public boolean extinguishFire(Player player, BlockPos pos, EnumFacing side)
     {
         pos = pos.offset(side);
 
@@ -2350,7 +2350,7 @@ public abstract class World implements IBlockAccess
 
         for (int i = 0; i < this.playerEntities.size(); ++i)
         {
-            EntityPlayer entityplayer = (EntityPlayer)this.playerEntities.get(i);
+            Player entityplayer = (Player)this.playerEntities.get(i);
             int j = MathHelper.floor_double(entityplayer.posX / 16.0D);
             int k = MathHelper.floor_double(entityplayer.posZ / 16.0D);
             int l = this.getRenderDistanceChunks();
@@ -2376,7 +2376,7 @@ public abstract class World implements IBlockAccess
         if (!this.playerEntities.isEmpty())
         {
             int k1 = this.rand.nextInt(this.playerEntities.size());
-            EntityPlayer entityplayer1 = (EntityPlayer)this.playerEntities.get(k1);
+            Player entityplayer1 = (Player)this.playerEntities.get(k1);
             int l1 = MathHelper.floor_double(entityplayer1.posX) + this.rand.nextInt(11) - 5;
             int i2 = MathHelper.floor_double(entityplayer1.posY) + this.rand.nextInt(11) - 5;
             int j2 = MathHelper.floor_double(entityplayer1.posZ) + this.rand.nextInt(11) - 5;
@@ -2406,7 +2406,7 @@ public abstract class World implements IBlockAccess
 
             if (block.getMaterial() == Material.air && this.getLight(blockpos) <= this.rand.nextInt(8) && this.getLightFor(EnumSkyBlock.SKY, blockpos) <= 0)
             {
-                EntityPlayer entityplayer = this.getClosestPlayer((double)j + 0.5D, (double)l + 0.5D, (double)k + 0.5D, 8.0D);
+                Player entityplayer = this.getClosestPlayer((double)j + 0.5D, (double)l + 0.5D, (double)k + 0.5D, 8.0D);
 
                 if (entityplayer != null && entityplayer.getDistanceSq((double)j + 0.5D, (double)l + 0.5D, (double)k + 0.5D) > 4.0D)
                 {
@@ -3029,7 +3029,7 @@ public abstract class World implements IBlockAccess
      * Gets the closest player to the entity within the specified distance (if distance is less than 0 then ignored).
      * Args: entity, dist
      */
-    public EntityPlayer getClosestPlayerToEntity(Entity entityIn, double distance)
+    public Player getClosestPlayerToEntity(Entity entityIn, double distance)
     {
         return this.getClosestPlayer(entityIn.posX, entityIn.posY, entityIn.posZ, distance);
     }
@@ -3038,14 +3038,14 @@ public abstract class World implements IBlockAccess
      * Gets the closest player to the point within the specified distance (distance can be set to less than 0 to not
      * limit the distance). Args: x, y, z, dist
      */
-    public EntityPlayer getClosestPlayer(double x, double y, double z, double distance)
+    public Player getClosestPlayer(double x, double y, double z, double distance)
     {
         double d0 = -1.0D;
-        EntityPlayer entityplayer = null;
+        Player entityplayer = null;
 
         for (int i = 0; i < this.playerEntities.size(); ++i)
         {
-            EntityPlayer entityplayer1 = (EntityPlayer)this.playerEntities.get(i);
+            Player entityplayer1 = (Player)this.playerEntities.get(i);
 
             if (EntitySelectors.NOT_SPECTATING.apply(entityplayer1))
             {
@@ -3066,7 +3066,7 @@ public abstract class World implements IBlockAccess
     {
         for (int i = 0; i < this.playerEntities.size(); ++i)
         {
-            EntityPlayer entityplayer = (EntityPlayer)this.playerEntities.get(i);
+            Player entityplayer = (Player)this.playerEntities.get(i);
 
             if (EntitySelectors.NOT_SPECTATING.apply(entityplayer))
             {
@@ -3085,11 +3085,11 @@ public abstract class World implements IBlockAccess
     /**
      * Find a player by name in this world.
      */
-    public EntityPlayer getPlayerEntityByName(String name)
+    public Player getPlayerEntityByName(String name)
     {
         for (int i = 0; i < this.playerEntities.size(); ++i)
         {
-            EntityPlayer entityplayer = (EntityPlayer)this.playerEntities.get(i);
+            Player entityplayer = (Player)this.playerEntities.get(i);
 
             if (name.equals(entityplayer.getName()))
             {
@@ -3100,11 +3100,11 @@ public abstract class World implements IBlockAccess
         return null;
     }
 
-    public EntityPlayer getPlayerEntityByUUID(UUID uuid)
+    public Player getPlayerEntityByUUID(UUID uuid)
     {
         for (int i = 0; i < this.playerEntities.size(); ++i)
         {
-            EntityPlayer entityplayer = (EntityPlayer)this.playerEntities.get(i);
+            Player entityplayer = (Player)this.playerEntities.get(i);
 
             if (uuid.equals(entityplayer.getUniqueID()))
             {
@@ -3169,7 +3169,7 @@ public abstract class World implements IBlockAccess
         this.worldInfo.setSpawn(pos);
     }
 
-    public boolean isBlockModifiable(EntityPlayer player, BlockPos pos)
+    public boolean isBlockModifiable(Player player, BlockPos pos)
     {
         return true;
     }
@@ -3323,10 +3323,10 @@ public abstract class World implements IBlockAccess
 
     public void playAuxSFX(int p_175718_1_, BlockPos pos, int p_175718_3_)
     {
-        this.playAuxSFXAtEntity((EntityPlayer)null, p_175718_1_, pos, p_175718_3_);
+        this.playAuxSFXAtEntity((Player)null, p_175718_1_, pos, p_175718_3_);
     }
 
-    public void playAuxSFXAtEntity(EntityPlayer player, int sfxType, BlockPos pos, int p_180498_4_)
+    public void playAuxSFXAtEntity(Player player, int sfxType, BlockPos pos, int p_180498_4_)
     {
         try
         {

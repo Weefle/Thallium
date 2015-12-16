@@ -24,13 +24,13 @@ public class CommandResultStats
         this.field_179673_d = STRING_RESULT_TYPES;
     }
 
-    public void func_179672_a(final ICommandSender sender, CommandResultStats.Type resultTypeIn, int p_179672_3_)
+    public void func_179672_a(final CommandSender sender, CommandResultStats.Type resultTypeIn, int p_179672_3_)
     {
         String s = this.field_179675_c[resultTypeIn.getTypeID()];
 
         if (s != null)
         {
-            ICommandSender icommandsender = new ICommandSender()
+            CommandSender icommandsender = new CommandSender()
             {
                 public String getName()
                 {
@@ -40,9 +40,9 @@ public class CommandResultStats
                 {
                     return sender.getDisplayName();
                 }
-                public void addChatMessage(IChatComponent component)
+                public void sendMessage(IChatComponent component)
                 {
-                    sender.addChatMessage(component);
+                    sender.sendMessage(component);
                 }
                 public boolean canCommandSenderUseCommand(int permLevel, String commandName)
                 {
