@@ -20,6 +20,8 @@ mvnw clean package
 - [x] Events
 - [x] Plugin loading
 - [x] Tests
+- [ ] Lua plugin support
+- [ ] Add basic commands (/plugins, /about, /reload)
 - [ ] Roll out release
   
 ## Sources
