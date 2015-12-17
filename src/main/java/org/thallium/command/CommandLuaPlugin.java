@@ -7,35 +7,35 @@ import net.minecraft.entity.player.Player;
 import net.minecraft.entity.player.PlayerMP;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import org.thallium.plugin.MinecraftPlugin;
+import org.thallium.lua.LuaPlugin;
 import org.thallium.plugin.loader.PluginLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A plugins command for Thallium
+ * A command that shows the names of the lua plugins
  * @author PizzaCrust
  */
-public class CommandPlugin implements ICommand{
+public class CommandLuaPlugin implements ICommand{
     public String getCommandName() {
-        return "plugins";
+        return "luaplugins";
     }
 
     public String getCommandUsage(CommandSender sender) {
-        return "/plugins";
+        return "/luaplugins";
     }
 
     public List<String> getCommandAliases() {
         ArrayList<String> aliases = new ArrayList<String>();
-        aliases.add("pl");
-        aliases.add("plugin");
+        aliases.add("luapl");
+        aliases.add("lpl");
         return aliases;
     }
 
     public void processCommand(CommandSender sender, String[] args) throws CommandException {
         StringBuilder builder = new StringBuilder();
-        for (MinecraftPlugin plugin : PluginLoader.plugins){
+        for (LuaPlugin plugin : PluginLoader.luaPlugins){
             builder.append(plugin.getName() + ", ");
         }
         String before = builder.toString();

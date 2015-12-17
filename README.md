@@ -20,10 +20,9 @@ mvnw clean package
 - [x] Events
 - [x] Plugin loading
 - [x] Tests
-- [x] ~~Lua plugin support~~ Moved to next release
+- [x] Lua plugin support
 - [x] Add basic commands (/plugins and /about)
 - [x] Plugins disable when the server stop
-- [x] ~~JavaScript (Rhino) support~~ Moved to next release
 - [ ] Roll out release
   
 ## Sources

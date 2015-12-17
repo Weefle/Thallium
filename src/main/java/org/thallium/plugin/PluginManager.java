@@ -1,5 +1,6 @@
 package org.thallium.plugin;
 
+import org.thallium.lua.LuaPlugin;
 import org.thallium.plugin.loader.PluginLoader;
 
 /**
@@ -31,5 +32,14 @@ public class PluginManager {
 
     public void enablePlugin(String name){
         getPlugin(name).start();
+    }
+
+    /** @deprecated **/
+    public LuaPlugin getLuaPlugin(String name){
+        return PluginLoader.nameToLuaPlugin.get(name);
+    }
+    /** @deprecated **/
+    public LuaPlugin[] getLuaPlugins(){
+        return PluginLoader.luaPlugins.toArray(new LuaPlugin[PluginLoader.luaPlugins.size()]);
     }
 }

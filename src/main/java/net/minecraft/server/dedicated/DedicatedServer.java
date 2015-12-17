@@ -251,7 +251,7 @@ public class DedicatedServer extends MinecraftServer implements IServer
                 this.settings.setProperty("max-build-height", Integer.valueOf(this.getBuildLimit()));
                 logger.info("Preparing level \"" + this.getFolderName() + "\"");
                 this.loadAllWorlds(this.getFolderName(), this.getFolderName(), k, worldtype, s2);
-                logger.info("Starting to load plugins");
+                logger.info("Starting to load java plugins");
                 File[] pluginFiles = pluginsFolder.listFiles(new FilenameFilter() {
                     public boolean accept(File dir, String name) {
                         return name.endsWith(".jar");
@@ -261,11 +261,26 @@ public class DedicatedServer extends MinecraftServer implements IServer
                     try {
                         PluginLoader.loadPluginExternal(pluginFile);
                     } catch (Exception e) {
-                        logger.fatal("Failed to load plugin " + pluginFile.getName());
+                        logger.fatal("Failed to load java plugin " + pluginFile.getName());
                         e.printStackTrace();
                     }
                 }
-                logger.info("Plugins are now loaded");
+                logger.info("Java plugins are now loaded");
+                logger.info("Starting to load lua plugins");
+                File[] luaPluginFiles = pluginsFolder.listFiles(new FilenameFilter() {
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith(".lua");
+                    }
+                });
+                for (File file : luaPluginFiles){
+                    try {
+                        PluginLoader.loadLuaPlugin(file);
+                    } catch (Exception e) {
+                        logger.fatal("Failed to load lua plugin " + file.getName());
+                        e.printStackTrace();
+                    }
+                }
+                logger.info("Lua plugins are now loaded");
                 long i1 = System.nanoTime() - j;
                 String s3 = String.format("%.3fs", new Object[] {Double.valueOf((double)i1 / 1.0E9D)});
                 logger.info("Done (" + s3 + ")! For help, type \"help\" or \"?\"");
