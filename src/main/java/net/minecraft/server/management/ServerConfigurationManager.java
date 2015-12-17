@@ -145,7 +145,7 @@ public abstract class ServerConfigurationManager
         nethandlerplayserver.sendPacket(new S41PacketServerDifficulty(worldinfo.getDifficulty(), worldinfo.isDifficultyLocked()));
         nethandlerplayserver.sendPacket(new S05PacketSpawnPosition(blockpos));
         nethandlerplayserver.sendPacket(new S39PacketPlayerAbilities(playerIn.capabilities));
-        nethandlerplayserver.sendPacket(new S09PacketHeldItemChange(playerIn.inventory.currentItem));
+        nethandlerplayserver.sendPacket(new S09PacketHeldItemChange(playerIn, playerIn.inventory.currentItem, playerIn.inventory.getCurrentItem()));
         playerIn.getStatFile().func_150877_d();
         playerIn.getStatFile().sendAchievements(playerIn);
         this.sendScoreboard((ServerScoreboard)worldserver.getScoreboard(), playerIn);
@@ -896,7 +896,7 @@ public abstract class ServerConfigurationManager
     {
         playerIn.sendContainerToPlayer(playerIn.inventoryContainer);
         playerIn.setPlayerHealthUpdated();
-        playerIn.playerNetServerHandler.sendPacket(new S09PacketHeldItemChange(playerIn.inventory.currentItem));
+        playerIn.playerNetServerHandler.sendPacket(new S09PacketHeldItemChange(playerIn, playerIn.inventory.currentItem, playerIn.inventory.getCurrentItem()));
     }
 
     /**

@@ -3,10 +3,7 @@ package org.thallium.plugin;
 import net.minecraft.server.MinecraftServer;
 import org.apache.commons.lang3.Validate;
 import org.thallium.ThalliumHandler;
-import org.thallium.event.EntityAddedEvent;
-import org.thallium.event.EntityRemovedEvent;
-import org.thallium.event.PlayerJoinEvent;
-import org.thallium.event.PluginStartEvent;
+import org.thallium.event.*;
 import org.thallium.event.types.Event;
 
 import java.lang.reflect.Method;
@@ -99,6 +96,21 @@ public class EventManager {
                             method.invoke(method.getDeclaringClass().newInstance(), (PlayerJoinEvent) event);
                         } catch (Exception e){
                             ThalliumHandler.apiLogger.info("Failed to pass event EntityRemovedEvent!");
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        if(event instanceof PlayerHeldItemChangeEvent){
+            for(Method method : eventMethods){
+                Class[] parameterClasses = method.getParameterTypes();
+                for (Class parameterClass : parameterClasses){
+                    if(parameterClass == PlayerHeldItemChangeEvent.class){
+                        try {
+                            method.invoke(method.getDeclaringClass().newInstance(), (PlayerJoinEvent) event);
+                        } catch (Exception e){
+                            ThalliumHandler.apiLogger.info("Failed to pass event PlayerHeldItemChangeEvent!");
                             e.printStackTrace();
                         }
                     }
