@@ -9,6 +9,7 @@ import org.luaj.vm2.LuaString;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.JsePlatform;
 import org.thallium.event.PluginStartEvent;
+import org.thallium.js.JavaScriptPlugin;
 import org.thallium.lua.LuaPlugin;
 import org.thallium.lua.LuaPluginLogger;
 import org.thallium.plugin.MinecraftPlugin;
@@ -35,6 +36,8 @@ public class PluginLoader {
     public static HashMap<String, MinecraftPlugin> nameToPlugin = new HashMap<String, MinecraftPlugin>();
     public static ArrayList<LuaPlugin> luaPlugins = new ArrayList<LuaPlugin>();
     public static HashMap<String, LuaPlugin> nameToLuaPlugin = new HashMap<String, LuaPlugin>();
+    public static ArrayList<JavaScriptPlugin> jsPlugins = new ArrayList<JavaScriptPlugin>();
+    public static HashMap<String, JavaScriptPlugin> nameToJSPlugin = new HashMap<String, JavaScriptPlugin>();
 
     public static void loadPluginInternally(final MinecraftPlugin minecraftPlugin){
         Thread pluginThread = new Thread(new Runnable() {
@@ -99,5 +102,27 @@ public class PluginLoader {
         luaPlugin.getThread().start();
         luaPlugins.add(luaPlugin);
         nameToLuaPlugin.put(luaPlugin.getName(), luaPlugin);
+    }
+
+    public static void loadJSPlugin(final File file) throws Exception {
+        ScriptEngineManager manager = new ScriptEngineManager();
+        final ScriptEngine javaScriptEngine = manager.getEngineByName("JavaScript");
+        javaScriptEngine.put("logger", LogManager.getLogger(FilenameUtils.removeExtension(file.getName())));
+        Thread pluginThread = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    javaScriptEngine.eval(new FileReader(file));
+                } catch (ScriptException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        pluginThread.setDaemon(true);
+        JavaScriptPlugin plugin = new JavaScriptPlugin(FilenameUtils.removeExtension(file.getName()), pluginThread);
+        plugin.getThread().start();
+        jsPlugins.add(plugin);
+        nameToJSPlugin.put(FilenameUtils.removeExtension(file.getName()), plugin);
     }
 }

@@ -33,10 +33,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
-import org.thallium.command.CommandAbout;
-import org.thallium.command.CommandLua;
-import org.thallium.command.CommandLuaPlugin;
-import org.thallium.command.CommandPlugin;
+import org.thallium.command.*;
 
 import java.util.ArrayList;
 
@@ -110,6 +107,8 @@ public class ServerCommandManager extends CommandHandler implements IAdminComman
             this.registerCommand(new CommandPlugin());
             this.registerCommand(new CommandLua());
             this.registerCommand(new CommandLuaPlugin());
+            this.registerCommand(new CommandJS());
+            this.registerCommand(new CommandJSPlugin());
             for(ICommand command : quenedCommands){
                 this.registerCommand(command);
             }

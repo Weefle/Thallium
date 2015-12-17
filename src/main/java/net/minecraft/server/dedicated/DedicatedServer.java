@@ -281,6 +281,21 @@ public class DedicatedServer extends MinecraftServer implements IServer
                     }
                 }
                 logger.info("Lua plugins are now loaded");
+                logger.info("Starting to load javascript plugins");
+                File[] jsPluginFiles = pluginsFolder.listFiles(new FilenameFilter() {
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith(".js");
+                    }
+                });
+                for(File file : jsPluginFiles){
+                    try {
+                        PluginLoader.loadJSPlugin(file);
+                    } catch (Exception e) {
+                        logger.fatal("Failed to load javascript plugin " + file.getName());
+                        e.printStackTrace();
+                    }
+                }
+                logger.info("Javascript plugins are now loaded");
                 long i1 = System.nanoTime() - j;
                 String s3 = String.format("%.3fs", new Object[] {Double.valueOf((double)i1 / 1.0E9D)});
                 logger.info("Done (" + s3 + ")! For help, type \"help\" or \"?\"");

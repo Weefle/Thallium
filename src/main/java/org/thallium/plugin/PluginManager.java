@@ -1,5 +1,6 @@
 package org.thallium.plugin;
 
+import org.thallium.js.JavaScriptPlugin;
 import org.thallium.lua.LuaPlugin;
 import org.thallium.plugin.loader.PluginLoader;
 
@@ -41,5 +42,15 @@ public class PluginManager {
     /** @deprecated **/
     public LuaPlugin[] getLuaPlugins(){
         return PluginLoader.luaPlugins.toArray(new LuaPlugin[PluginLoader.luaPlugins.size()]);
+    }
+
+    /** @deprecated **/
+    public JavaScriptPlugin getJSPlugin(String name){
+        return PluginLoader.nameToJSPlugin.get(name);
+    }
+
+    /** @deprecated **/
+    public JavaScriptPlugin[] getJSPlugins(){
+        return PluginLoader.jsPlugins.toArray(new JavaScriptPlugin[PluginLoader.jsPlugins.size()]);
     }
 }
