@@ -93,7 +93,7 @@ public class EventManager {
                 for (Class parameterClass : parameterClasses){
                     if(parameterClass == EntityRemovedEvent.class){
                         try {
-                            method.invoke(method.getDeclaringClass().newInstance(), (PlayerJoinEvent) event);
+                            method.invoke(method.getDeclaringClass().newInstance(), (EntityRemovedEvent) event);
                         } catch (Exception e){
                             ThalliumHandler.apiLogger.info("Failed to pass event EntityRemovedEvent!");
                             e.printStackTrace();
@@ -108,9 +108,24 @@ public class EventManager {
                 for (Class parameterClass : parameterClasses){
                     if(parameterClass == PlayerHeldItemChangeEvent.class){
                         try {
-                            method.invoke(method.getDeclaringClass().newInstance(), (PlayerJoinEvent) event);
+                            method.invoke(method.getDeclaringClass().newInstance(), (PlayerHeldItemChangeEvent) event);
                         } catch (Exception e){
                             ThalliumHandler.apiLogger.info("Failed to pass event PlayerHeldItemChangeEvent!");
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        if(event instanceof EntityMoveEvent){
+            for(Method method : eventMethods){
+                Class[] parameterClasses = method.getParameterTypes();
+                for (Class parameterClass : parameterClasses){
+                    if(parameterClass == EntityMoveEvent.class){
+                        try {
+                            method.invoke(method.getDeclaringClass().newInstance(), (EntityMoveEvent) event);
+                        } catch (Exception e){
+                            ThalliumHandler.apiLogger.info("Failed to pass event EntityMoveEvent!");
                             e.printStackTrace();
                         }
                     }

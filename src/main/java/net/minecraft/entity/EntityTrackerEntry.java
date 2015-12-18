@@ -202,7 +202,7 @@ public class EntityTrackerEntry
                         {
                             if (flag)
                             {
-                                packet1 = new S14PacketEntity.S15PacketEntityRelMove(this.trackedEntity.getEntityId(), (byte)j2, (byte)k2, (byte)i, this.trackedEntity.onGround);
+                                packet1 = new S14PacketEntity.S15PacketEntityRelMove(this.trackedEntity, this.trackedEntity.getEntityId(), (byte)j2, (byte)k2, (byte)i, this.trackedEntity.onGround);
                             }
                             else if (flag1)
                             {
